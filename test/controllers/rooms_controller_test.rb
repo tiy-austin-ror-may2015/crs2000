@@ -2,7 +2,13 @@ require 'test_helper'
 
 class RoomsControllerTest < ActionController::TestCase
   setup do
-    @room = rooms(:one)
+    company  = Company.create(name: 'foobar')
+    @room    = Room.create(name: Faker::Name.last_name,
+                  max_occupancy: Faker::Number.number(2),
+                    room_number: Faker::PhoneNumber.area_code,
+                         imgurl: "",
+                       location: Faker::App.name,
+                     company_id: company.id)
   end
 
   test "should get index" do
