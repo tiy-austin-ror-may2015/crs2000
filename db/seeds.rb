@@ -24,5 +24,5 @@
                          room_id: room.id, employee_id: employee.id)
   employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
                                          employee_id: employee.id,
-                                         meetings_id: meeting.id)
+                                         meeting_id: meeting.id)
 end
