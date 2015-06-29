@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CompaniesControllerTest < ActionController::TestCase
   setup do
-    @company = companies(:one)
+    @company = Company.create(name: 'foo-llc')
   end
 
   test "should get index" do
