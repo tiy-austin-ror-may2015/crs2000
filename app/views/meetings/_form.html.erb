@@ -20,6 +20,10 @@
     <%= f.text_field :agenda %>
   </div>
   <div class="field">
+    <%= f.label :room %><br>
+    <%= f.select :room, @all_rooms %>
+  </div>
+  <div class="field">
     <%= f.label :start_time %><br>
     <%= f.datetime_select :start_time %>
   </div>
