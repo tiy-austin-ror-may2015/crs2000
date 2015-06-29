@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :meetings
   devise_for :employees
+  get 'employee/:id', to: 'employees#show', as: 'employee'
   resources :rooms
   resources :companies
 

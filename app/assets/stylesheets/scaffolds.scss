@@ -70,8 +70,8 @@ div {
 
 // Bootstrap overrides
 
-h2 {
-  margin-bottom: 20px; //Overriding Bootstrap default to give H2 more space
+h2, h3 {
+  margin-bottom: 20px; //Overriding Bootstrap default to make headings behave more logically
 }
 
 // Form overrides to add margin to individual items
