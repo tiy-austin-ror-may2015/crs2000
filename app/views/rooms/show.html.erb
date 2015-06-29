@@ -1,38 +1,32 @@
 <!-- The room show page should display all the current and past meetings for that room.
-It should show the title, and the photo for each room.
- -->
+It should show the title, and the photo for each room. -->
+
+
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
-    <h2><%= @room.name %></h2>
-    <p>  <%= @room.imgurl %></p>
+    <h2>The <%= @room.name %> Room</h2>
+    <img src="http://cdn.home-designing.com/wp-content/uploads/2009/06/large-meeting-room.jpg">
     <div class="col-md-6">
       <h3>Meetings</h3>
-      <% @room.meetings.each do |meeting| %>
+      <% @room.meetings.each do |meeting|%>
       <ul>
-        <li><%= link_to, meeting.name meeting %></li>
+        <li><%= meeting.title %></li>
+
       </ul>
+      <% end %>
     </div>
     <div class="col-md-6">
       <h3>Details</h3>
-      <p><strong>Room Number:</strong> <%=@room.room_number %></p>
-      <p><strong>Max Occupancy: </strong> <%= @room.max_occupancy %></p>
-      <p><strong>Location:</strong><%= @room.location %></p>
+      <p><strong>Location: </strong> <%= @room.location %></p>
+      <p><strong>Occupancy: </strong><%= @room.max_occupancy %></p>
+      <p><strong>Room Number: </strong><%= @room.room_number%></p>
     </div>
   </div>
 
-  <div class="row admin">
+  <!-- <div class="row admin">
     <button class="btn btn-primary">Edit meeting</button>
     <button class="btn btn-danger">Delete meeting</button>
   </div>
+  <%= link_to 'Edit', edit_room_path(@room) %> |
+<%= link_to 'Back', rooms_path %> -->
 </div>
-
-
-<p>
-  <strong>Imgurl:</strong>
-  <%= @room.imgurl %>
-</p>
-
-<p>
-
-</p>
