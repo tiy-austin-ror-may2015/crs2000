@@ -1,4 +1,4 @@
-# Conference Room Scheduler
+# Conference Room Scheduler [![Build Status](https://travis-ci.org/tiy-austin-ror-may2015/crs2000.svg?branch=master)](https://travis-ci.org/tiy-austin-ror-may2015/crs2000)
 
 ## Setup Steps
   1) `bundle install`
