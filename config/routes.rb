@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   resources :companies
 
   root to:'rooms#index'
-
+  get '/search/meetings', to: 'meetings#search'
 end

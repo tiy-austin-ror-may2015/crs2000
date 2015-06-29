@@ -1,8 +1,23 @@
 <p id="notice"><%= notice %></p>
 <div class="row">
-  <div>
-  <h2 class="col-md-offset-3 col-md-3">All Meetings</h2>
-  <%= link_to 'New Meeting', new_meeting_path, class: 'col-md-1 btn btn-info pull-right margin-top' %>
+  <div class="col-md-12">
+    <h2 class="center">All Meetings</h2>
+  <div class="center">
+  <div class="well pull-right">
+    <form action='/search/meetings' method='GET'>
+      <select>
+        <option id="title">Title</option>
+        <option id="Agenda">Agenda</option>
+        <option id="Room">Room</option>
+      </select>
+      <input type='text' name='search'/>
+      <input type='submit' value='Search' class="btn btn-primary" />
+    </form>
+  </div>
+    <%= link_to 'New Meeting', new_meeting_path, class: 'col-md-1 btn btn-info pull-left margin-top' %>
+  </div>
+
+  </div>
   </div>
 </div>
 <section class='panel panel-default'>
