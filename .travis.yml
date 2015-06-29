@@ -1,6 +1,6 @@
 language: ruby
 script: 
-  - rake db:test:prepare
+  - rake db:create db:migrate db:test:prepare
   - rake test:db
 rvm:
   - 2.2.2
