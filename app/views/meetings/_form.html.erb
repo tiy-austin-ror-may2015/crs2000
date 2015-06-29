@@ -24,8 +24,11 @@
     <%= f.datetime_select :start_time %>
   </div>
   <div class="field">
-    <%= f.label :end_time %><br>
+    <br>
     <%= f.datetime_select :end_time %>
+  </div>
+  <div>
+    <%= f.hidden_field :employee_id, value: current_employee.id %>
   </div>
   <div class="actions">
     <%= f.submit %>
