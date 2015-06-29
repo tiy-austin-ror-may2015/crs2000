@@ -2,7 +2,24 @@ require 'test_helper'
 
 class MeetingsControllerTest < ActionController::TestCase
   setup do
-    @meeting = meetings(:one)
+    company = Company.create(name: 'foobar')
+    room    = Room.create(name: Faker::Name.last_name,
+                  max_occupancy: Faker::Number.number(2),
+                    room_number: Faker::PhoneNumber.area_code,
+                         imgurl: "",
+                       location: Faker::App.name,
+                     company_id: company.id)
+    password = Faker::Internet.password
+    employee = Employee.create(name: Faker::Name.name,
+                              email: Faker::Internet.safe_email,
+                           password: password,
+              password_confirmation: password,
+                         company_id: company.id)
+    @meeting = Meeting.create(title: Faker::Company.bs,
+                             agenda: Faker::Lorem.paragraph,
+                         start_time: (Time.now + 10.hours),
+                           end_time: (Time.now + 15.hours),
+                            room_id: room.id, employee_id: employee.id)
   end
 
   test "should get index" do
