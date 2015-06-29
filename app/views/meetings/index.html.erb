@@ -1,8 +1,12 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Listing Meetings</h1>
-
-<table>
+<div class="row">
+  <div>
+  <h2 class="col-md-offset-3 col-md-3">All Meetings</h2>
+  <%= link_to 'New Meeting', new_meeting_path, class: 'col-md-1 btn btn-info pull-right margin-top' %>
+  </div>
+</div>
+<section class='panel panel-default'>
+<table class='table'>
   <thead>
     <tr>
       <th>Title</th>
@@ -16,18 +20,19 @@
   <tbody>
     <% @meetings.each do |meeting| %>
       <tr>
-        <td><%= meeting.title %></td>
+        <td class="well"><%= meeting.title %></td>
         <td><%= meeting.agenda %></td>
-        <td><%= meeting.start_time %></td>
+        <td class="well"><%= meeting.start_time %></td>
         <td><%= meeting.end_time %></td>
-        <td><%= link_to 'Show', meeting %></td>
+        <td class="well"><%= link_to 'Show', meeting %></td>
         <td><%= link_to 'Edit', edit_meeting_path(meeting) %></td>
-        <td><%= link_to 'Destroy', meeting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="well"><%= link_to 'Destroy', meeting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+</section>
+<div class="center">
+  <%= will_paginate @meetings, renderer: BootstrapPagination::Rails %>
+</div>
 <br>
-<%= will_paginate @meetings, renderer: renderer: BootstrapPagination::Rails %>
-<%= link_to 'New Meeting', new_meeting_path %>
