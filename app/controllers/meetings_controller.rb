@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.all.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /meetings/1
@@ -21,6 +21,9 @@ class MeetingsController < ApplicationController
   def edit
   end
 
+  def search
+    @meetings = Meeting.all
+  end
   # POST /meetings
   # POST /meetings.json
   def create

@@ -29,5 +29,5 @@
 </table>
 
 <br>
-
+<%= will_paginate @meetings, renderer: renderer: BootstrapPagination::Rails %>
 <%= link_to 'New Meeting', new_meeting_path %>
