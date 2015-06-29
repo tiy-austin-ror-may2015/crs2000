@@ -23,28 +23,19 @@ class RoomsController < ApplicationController
 
   # POST /rooms
   # POST /rooms.json
-  def create
+ def create
+   @room = Room.new(room_params)
 
-    if user_is_admin? # replace with actual method
-
-      @company = Company.find_by(employee_id: session[:user_id])
-      @room    = @company.rooms.build
-
-      @room[:name]          = params[:name]          if params[:name]
-      @room[:location]      = params[:location]      if params[:location]
-      @room[:room_number]   = params[:room_number]   if params[:room_number]
-      @room[:occupied]      = params[:occupied]      if params[:occupied]
-      @room[:imgurl]        = params[:imgurl]        if params[:imgurl]
-      @room[:max_occupancy] = params[:max_occupancy] if params[:max_occupancy]
-      if @room.save
-        redirect_to :back, notice: "#{@room.name} has been created"
-      else
-        redirect_to :back, alert: "Error occured, room not saved"
-      end
-    else
-    redirect_to :back, alert: "Access Denied"
-    end
-  end
+   respond_to do |format|
+     if @room.save
+       format.html { redirect_to @room, notice: 'Room was successfully created.' }
+       format.json { render :show, status: :created, location: @room }
+     else
+       format.html { render :new }
+       format.json { render json: @room.errors, status: :unprocessable_entity }
+     end
+   end
+ end
 
   # PATCH/PUT /rooms/1
   # PATCH/PUT /rooms/1.json
