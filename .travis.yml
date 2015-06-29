@@ -1,5 +1,7 @@
 language: ruby
-script: rake db:test:prepare
+script: 
+  - rake db:test:prepare
+  - rake test:db
 rvm:
   - 2.2.2
   - 2.2.1
