@@ -67,3 +67,22 @@ div {
     list-style: square;
   }
 }
+
+// Bootstrap overrides
+
+h2 {
+  margin-bottom: 20px; //Overriding Bootstrap default to give H2 more space
+}
+
+// Form overrides to add margin to individual items
+
+.form-inline {
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .control-label {
+    margin-right: 15px;
+    margin-bottom: 15px;
+  }
+}
