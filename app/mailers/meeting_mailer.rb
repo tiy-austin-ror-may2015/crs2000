@@ -1,0 +1,2 @@
+class MeetingMailer < ApplicationMailer
+end
