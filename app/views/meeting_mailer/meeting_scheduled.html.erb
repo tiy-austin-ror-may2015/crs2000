@@ -1,0 +1,21 @@
+<p>Hello <%=@user%>,</p>
+
+<p>This email is to confirm that you scheduled the following meeting:
+  <ul>
+    <li>Title: <%= @meeting.title %> </li>
+    <li>Location: <%= @meeting.location %> </li>
+    <li>Start Time: <%= @meeting.start_time %> </li>
+    <li>End Time: <%= @meeting.end_time %> </li>
+    <li>Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>) </li>
+    <li>Attendees:
+      <ol><% @meeting.employees.each do |employee| %>
+        <li><%= employee.name %></li>
+      <% end %>
+      </ol>
+    </li>
+  </ul>
+</p>
+<p>Please be sure to arrive on time. Thank you </p>
+
+<p> Sincerely,</p>
+<p><%= @meeting.employee.company.name %> Management</p>
