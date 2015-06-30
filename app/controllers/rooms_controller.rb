@@ -42,6 +42,27 @@ class RoomsController < ApplicationController
   def edit
   end
 
+<<<<<<< HEAD
+=======
+  def search
+    if params[:search].to_i > 0
+      @room_occupancy = Room.where("max_occupancy >" + params[:search])
+                            .paginate(:page => params[:page], :per_page => 10)
+      @room_name = []
+      @room_location = []
+    else
+      @room_name      = Room.where("lower(name) LIKE ?", "%" + params[:search] + "%")
+                            .paginate(:page => params[:page], :per_page => 10)
+
+      @room_location  = Room.where("lower(location) LIKE ?", "%" + params[:search] + "%")
+                            .paginate(:page => params[:page], :per_page => 10)
+      @room_occupancy = []
+    end
+  end
+
+  # POST /rooms
+  # POST /rooms.json
+>>>>>>> 4622d37afdf750746fe73b19112a520d583dcf4b
  def create
   if user_is_admin?
 

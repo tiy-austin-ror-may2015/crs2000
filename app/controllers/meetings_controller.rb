@@ -31,10 +31,18 @@ class MeetingsController < ApplicationController
 
   def new
     @meeting = Meeting.new
+    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
   end
 
   def edit
     @meeting = Meeting.find(params[:id])
+    if employee_signed_in?
+    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    end
+    current_meeting = Meeting.find(params[:id])
+    if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
+      redirect_to "/meetings", notice: 'You are not the owner of this meeting!'
+    end
   end
 
   def search
@@ -67,9 +75,14 @@ class MeetingsController < ApplicationController
 
   def destroy
     @meeting = Meeting.find(params[:id])
-    MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
-    @meeting.destroy
-    redirect_to meetings_url, notice: 'Meeting was successfully destroyed.'
+    current_meeting = Meeting.find(params[:id])
+    if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
+      redirect_to "/meetings", notice: 'You are not the owner of this meeting!'
+    else
+      MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
+      @meeting.destroy
+      redirect_to meetings_url, notice: 'Meeting was successfully destroyed.'
+    end
   end
 
 private
