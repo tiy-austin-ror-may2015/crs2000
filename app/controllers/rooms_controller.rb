@@ -22,6 +22,15 @@ class RoomsController < ApplicationController
   def edit
   end
 
+  def search
+    @room_name      = Room.all.where("name LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+    @room_occupancy = Room.all.where("max_occupancy LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+    @room_location  = Room.all.where("location LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+  end
+
   # POST /rooms
   # POST /rooms.json
  def create
