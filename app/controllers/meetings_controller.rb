@@ -2,6 +2,12 @@ class MeetingsController < ApplicationController
 
   def index
     @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
+    # company   = Company.find(current_employee.company.id)
+    # @meetings = company.meetings
+    # binding.pry
+    # @meetings = Meeting.send_meetings(@meetings)
+
+    # @meetings.paginate(:page => params[:page], :per_page =>10)
   end
 
   def show
@@ -31,15 +37,13 @@ class MeetingsController < ApplicationController
 
   def new
     @meeting = Meeting.new
-    all_rooms = Room.where(company_id: current_employee.company_id)
-    @room_options = all_rooms.map { |room| [room.name, room.id] }
+    @room_options = Room.company_rooms(current_employee.company_id)
   end
 
   def edit
     @meeting = Meeting.find(params[:id])
     if employee_signed_in?
-      all_rooms = Room.where(company_id: current_employee.company_id)
-      @room_options = all_rooms.map { |room| [room.name, room.id] }
+      @room_options = Room.company_rooms(current_employee.company_id)
     end
     current_meeting = Meeting.find(params[:id])
     if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
