@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   resources :companies
   get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
   resources :admin
-
   root to:'rooms#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
