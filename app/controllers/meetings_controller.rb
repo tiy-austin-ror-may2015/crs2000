@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /meetings/1
@@ -22,6 +22,14 @@ class MeetingsController < ApplicationController
   def edit
   end
 
+  def search
+    @meeting_title  = Meeting.all.where("title LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+    @meeting_agenda = Meeting.all.where("agenda LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+    @meeting_rooms  = Room.all.where("name LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+  end
   # POST /meetings
   # POST /meetings.json
   def create

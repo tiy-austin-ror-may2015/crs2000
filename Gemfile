@@ -52,6 +52,7 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'meta_request'
   gem 'faker'
 end
 
@@ -59,5 +60,7 @@ gem 'bullet', group: :development
 gem 'bootstrap-sass'
 gem 'react-rails'
 gem 'bcrypt'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem 'bootstrap_form'
 gem "codeclimate-test-reporter", group: :test, require: nil
