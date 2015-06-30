@@ -48,12 +48,12 @@ class MeetingsController < ApplicationController
   end
 
   def search
-    @meeting_title  = Meeting.all.where("title LIKE ?", "%" + params[:search] + "%")
-                                 .paginate(:page => params[:page], :per_page => 10)
-    @meeting_agenda = Meeting.all.where("agenda LIKE ?", "%" + params[:search] + "%")
-                                 .paginate(:page => params[:page], :per_page => 10)
-    @meeting_rooms  = Room.all.where("name LIKE ?", "%" + params[:search] + "%")
-                                 .paginate(:page => params[:page], :per_page => 10)
+    @meeting_title  = Meeting.where("title LIKE ?", "%" + params[:search] + "%")
+                             .paginate(:page => params[:page], :per_page => 10)
+    @meeting_agenda = Meeting.where("agenda LIKE ?", "%" + params[:search] + "%")
+                             .paginate(:page => params[:page], :per_page => 10)
+    @meeting_rooms  = Room.where("name LIKE ?", "%" + params[:search] + "%")
+                             .paginate(:page => params[:page], :per_page => 10)
   end
   # POST /meetings
   # POST /meetings.json
