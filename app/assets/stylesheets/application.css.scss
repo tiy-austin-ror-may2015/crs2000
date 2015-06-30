@@ -1,6 +1,7 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'rooms.scss';
+@import 'dataTables/jquery.dataTables';
 @import 'scaffolds.scss';
 
 
@@ -8,9 +9,35 @@
 .center{
   text-align: center;
 };
+
 .pull-right{
   margin-right: 20px;
 };
+
 .margin-top{
   margin-top: 15px;
 };
+.margin-bottom{
+  margin-bottom: 15px;
+};
+
+.panel-body{
+  font-size: 16px;
+};
+
+.report-container {
+  width: 95%;
+  padding: 20px;
+  margin-left: auto;
+  margin-right:auto;
+  border: 1px solid orange;
+  background-color: #eeeeee;
+}
+
+.report-inner {
+  padding: 20px;
+  margin: 40px;
+  border: 1px solid orange;
+  background-color: #eeeeee;
+}
+

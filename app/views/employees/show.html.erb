@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row">
+    <h2><%= @employee.name %></h2>
+    <p><strong>Company: </strong><%= link_to @employee.company.name, @employee.company %> </p>
+    <p><strong>Email: </strong><%= @employee.email %></p>
+  </div>
+  <div class="row">
+    <%= link_to 'Edit', edit_employee_path(@employee), class: "btn btn-success" %>
+    <%= link_to 'Back', employees_path, class: "btn btn-default" %>
+  </div>
+
+</div>
