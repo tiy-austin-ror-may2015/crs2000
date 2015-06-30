@@ -91,9 +91,8 @@ class RoomsController < ApplicationController
   # DELETE /rooms/1.json
   def destroy
     if user_is_admin?
-      user = current_employee
-      @company = user.company
-      @room = @company.rooms
+
+      @room = Room.find(params[:id])
 
       @room.destroy
       respond_to do |format|
