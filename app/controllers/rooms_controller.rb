@@ -21,20 +21,26 @@ class RoomsController < ApplicationController
   def edit
   end
 
+  def saving_room(room, params)
+    room[:name]          = params[:room][:name]
+    room[:location]      = params[:room][:location]
+    room[:room_number]   = params[:room][:room_number]
+    room[:imgurl]        = params[:room][:imgurl]
+    room[:max_occupancy] = params[:room][:max_occupancy]
+    room
+  end
+
   # POST /rooms
   # POST /rooms.json
  def create
   if user_is_admin?
 
-      user = current_employee
+      user     = current_employee
       @company = user.company
       @room    = @company.rooms.build
 
-      @room[:name]          = params[:room][:name]
-      @room[:location]      = params[:room][:location]
-      @room[:room_number]   = params[:room][:room_number]
-      @room[:imgurl]        = params[:room][:imgurl]
-      @room[:max_occupancy] = params[:room][:max_occupancy]
+      @room = saving_room(@room, params)
+
       if @room.save
         redirect_to :back, notice: "#{@room.name} has been created"
       else
@@ -50,15 +56,12 @@ class RoomsController < ApplicationController
   def update
       if user_is_admin?
 
-      user = current_employee
+      user     = current_employee
       @company = user.company
       @room    = @company.rooms.build
 
-      @room[:name]          = params[:room][:name]
-      @room[:location]      = params[:room][:location]
-      @room[:room_number]   = params[:room][:room_number]
-      @room[:imgurl]        = params[:room][:imgurl]
-      @room[:max_occupancy] = params[:room][:max_occupancy]
+      @room = saving_room(@room, params)
+
       if @room.save
         redirect_to :back, notice: "#{@room.name} has been updated"
       else
