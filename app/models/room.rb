@@ -37,4 +37,8 @@ class Room < ActiveRecord::Base
 
     self.update(hours_until_next_meeting: hours_until_next_meeting, available: available)
   end
+
+   def self.company_rooms(company)
+    self.where(company_id: company).map { |room| [room.name, room.id] }
+  end
 end
