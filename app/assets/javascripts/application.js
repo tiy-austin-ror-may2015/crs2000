@@ -13,8 +13,10 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
+//= require dataTables/jquery.dataTables
 //= require turbolinks
 //= require react
 //= require react_ujs
 //= require components
+//= require moment
 //= require_tree .
