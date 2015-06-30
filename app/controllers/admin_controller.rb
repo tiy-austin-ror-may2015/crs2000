@@ -13,4 +13,9 @@ class AdminController < ApplicationController
       redirect_to :back, alert: "Access Denied"
     end
   end
+
+  def index
+    @meetings = Meeting.all
+    @rooms = Room.all
+  end
 end

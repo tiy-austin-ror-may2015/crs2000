@@ -46,12 +46,14 @@ GEM
     bootstrap-sass (3.3.5.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.3.0)
+    bootstrap_form (2.3.0)
     builder (3.2.2)
     bullet (4.14.7)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.9.0)
     byebug (5.0.0)
       columnize (= 0.9.0)
+    callsite (0.0.11)
     codeclimate-test-reporter (0.4.7)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -85,6 +87,11 @@ GEM
     jbuilder (2.3.0)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jquery-datatables-rails (3.3.0)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
+      sass-rails
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -94,6 +101,10 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    meta_request (0.3.4)
+      callsite (~> 0.0, >= 0.0.11)
+      rack-contrib (~> 1.1)
+      railties (>= 3.0.0, < 5.0.0)
     method_source (0.8.2)
     mime-types (2.6.1)
     mini_portile (0.6.2)
@@ -110,6 +121,8 @@ GEM
     puma (2.11.3)
       rack (>= 1.1, < 2.0)
     rack (1.6.4)
+    rack-contrib (1.2.0)
+      rack (>= 0.9.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.2)
@@ -193,6 +206,9 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    will_paginate (3.0.7)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
 
 PLATFORMS
   ruby
@@ -200,6 +216,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   bootstrap-sass
+  bootstrap_form
   bullet
   byebug
   codeclimate-test-reporter
@@ -208,7 +225,9 @@ DEPENDENCIES
   faker
   figaro
   jbuilder (~> 2.0)
+  jquery-datatables-rails (~> 3.3.0)
   jquery-rails
+  meta_request
   pg
   pry
   puma
@@ -221,3 +240,5 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  will_paginate
+  will_paginate-bootstrap

@@ -1,4 +1,36 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 //You need to now manually import every other scss file.
-@import 'admin'
+@import 'admin';
+@import 'dataTables/jquery.dataTables';
+@import 'scaffolds.scss';
+
+//You need to now manually import every other scss file.
+.center{
+  text-align: center;
+};
+
+.pull-right{
+  margin-right: 20px;
+};
+
+.margin-top{
+  margin-top: 15px;
+};
+
+.report-container {
+  width: 95%;
+  padding: 20px;
+  margin-left: auto;
+  margin-right:auto;
+  border: 1px solid orange;
+  background-color: #eeeeee;
+}
+
+.report-inner {
+  padding: 20px;
+  margin: 40px;
+  border: 1px solid orange;
+  background-color: #eeeeee;
+}
+

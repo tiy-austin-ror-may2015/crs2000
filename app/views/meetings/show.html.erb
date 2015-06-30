@@ -1,24 +1,47 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <p id="notice" class="alert"><%= notice %></p>
+    <p style='color:red;'><%= flash[:alert] %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @meeting.title %>
-</p>
+    <h2><%= @meeting.title.capitalize %></h2>
 
-<p>
-  <strong>Agenda:</strong>
-  <%= @meeting.agenda %>
-</p>
+    <h3>Agenda</h3>
+    <div class="well">
+      <p><%= @meeting.agenda %></p>
+    </div>
 
-<p>
-  <strong>Start time:</strong>
-  <%= @meeting.start_time %>
-</p>
+    <h3>Max Occupancy:</h3>
+    <div class="well">
+      <p><%= @max_occupancy %></p>
+    </div>
 
-<p>
-  <strong>End time:</strong>
-  <%= @meeting.end_time %>
-</p>
+    <h3>Current Occupancy:</h3>
+    <div class="well">
+      <p><%= @current_occupancy %></p>
+    </div>
 
-<%= link_to 'Edit', edit_meeting_path(@meeting) %> |
-<%= link_to 'Back', meetings_path %>
+    <div class="col-md-6">
+      <h3>Attendees</h3>
+      <ul>
+        <% @attendees.each do |attendee| %>
+            <li><%= link_to attendee.employee.name, attendee.employee %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3>Meeting details</h3>
+        <ul>
+          <li><strong>Location:</strong> <%= link_to @meeting.room.name, @meeting.room %></li>
+          <li><strong>Start time:</strong> <%= @meeting.start_time %></li>
+          <li><strong>End time:</strong> <%= @meeting.end_time %></li>
+          <li><strong>Total time:</strong> <%= @meeting.end_time - @meeting.start_time %> hour(s) </li>
+        </ul>
+    </div>
+  </div>
+  <div class="row">
+    <%= link_to 'JOIN', join_employee_path(@meeting.id), method: 'POST', class: 'btn btn-default' %>
+    <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-success" %>
+    <%= link_to 'Back', meetings_path, class: "btn btn-default" %>
+  </div>
+</div>
+

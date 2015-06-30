@@ -13,6 +13,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'jquery-datatables-rails', '~> 3.3.0'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -52,6 +54,7 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'meta_request'
   gem 'faker'
 end
 
@@ -59,4 +62,7 @@ gem 'bullet', group: :development
 gem 'bootstrap-sass'
 gem 'react-rails'
 gem 'bcrypt'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+gem 'bootstrap_form'
 gem "codeclimate-test-reporter", group: :test, require: nil
