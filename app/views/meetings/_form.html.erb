@@ -1,5 +1,5 @@
 
-<%= form_for(@meeting) do |f| %>
+ <%= form_for(@meeting) do |f| %>
   <% if @meeting.errors.any? %>
     <div id="error_explanation">
      <h2><%= pluralize(@meeting.errors.count, "error") %> prohibited this meeting from being saved:</h2>
@@ -19,12 +19,20 @@
     <%= f.text_field :agenda %>
   </div>
   <div class="field">
+    <%= f.label :room_id %><br>
+    <%= f.select :room_id, @room_options %>
+  </div>
+  <div class="field">
     <%= f.label :start_time %><br>
     <%= f.datetime_select :start_time %>
   </div>
   <div class="field">
     <br>
     <%= f.datetime_select :end_time %>
+  </div>
+  <div class="field">
+    <%= f.label :private %><br>
+    <%= f.check_box :private %>
   </div>
   <div class="actions">
     <%= f.submit %>

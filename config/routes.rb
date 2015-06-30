@@ -6,11 +6,14 @@ Rails.application.routes.draw do
   get 'employees', to: 'employees#index', as: 'employees'
   get 'employees/:id/edit', to: 'employees#edit', as: 'edit_employee'
   patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
+  get '/search/meetings', to: 'meetings#search'
+  get '/search/rooms', to: 'rooms#search'
+
   resources :rooms
   resources :companies
+  get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
   resources :admin
   root to:'rooms#index'
-  get '/search/meetings', to: 'meetings#search'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
