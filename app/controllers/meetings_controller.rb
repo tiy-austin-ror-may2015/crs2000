@@ -1,13 +1,18 @@
 class MeetingsController < ApplicationController
 
   def index
-    @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
-    # company   = Company.find(current_employee.company.id)
-    # @meetings = company.meetings
-    # binding.pry
-    # @meetings = Meeting.send_meetings(@meetings)
+    # @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
+    company   = Company.find(current_employee.company.id)
 
-    # @meetings.paginate(:page => params[:page], :per_page =>10)
+    if user_is_admin?
+      @meetings = company.meetings
+      @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+    else
+      # current_user.invites.meetings
+      # @meetings
+      # # binding.pry
+      # @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+    end
   end
 
   def show
