@@ -28,19 +28,8 @@ class RoomsController < ApplicationController
   end
 
   def search
-    if params[:search].to_i > 0
-      @room_occupancy = Room.where("max_occupancy >" + params[:search])
+      @room_results   = Room.search_for(params[:search])
                             .paginate(:page => params[:page], :per_page => 10)
-      @room_name = []
-      @room_location = []
-    else
-      @room_name      = Room.search_for("name", params[:search])
-                            .paginate(:page => params[:page], :per_page => 10)
-
-      @room_location  = Room.search_for("location", params[:search])
-                            .paginate(:page => params[:page], :per_page => 10)
-      @room_occupancy = []
-    end
   end
 
  def create
