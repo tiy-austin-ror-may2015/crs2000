@@ -18,8 +18,9 @@ class Meeting < ActiveRecord::Base
   # end # send_meetings
 
 
-  def self.search_for(query, search)
-    self.where("lower(#{query}) LIKE ?", "%" + search.downcase + "%")
+  def self.search_for(search)
+    self.where("lower(title) LIKE ? OR lower(agenda) LIKE ?",
+               "%#{search.downcase}%", "%#{search.downcase}%")
   end
 
   def self.capacity(meeting)
