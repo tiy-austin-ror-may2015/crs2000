@@ -26,11 +26,13 @@
       <tbody>
         <% @employees.each do |employee| %>
           <tr>
-            <td class='well'><%= link_to employee.name, employee %></td>
+            <td class='well'><%= employee.name %></td>
             <td><%= employee.company.name %></td>
             <td class='well'><%= employee.email %></td>
-            <td><%= link_to 'Show', employee %></td>
-            <td class="well"><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% if user_is_admin? %>
+              <td><%= link_to 'Show', employee %></td>
+              <td class="well"><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
