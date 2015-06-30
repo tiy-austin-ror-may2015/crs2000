@@ -54,7 +54,7 @@ class MeetingsController < ApplicationController
   def search
     @meeting_title  = Meeting.search_for('title', params[:search])
                              .paginate(:page => params[:page], :per_page => 10)
-    @meeting_agenda = Meeting.search_for('agenda', params[:search])
+    @meeting_agenda  = Meeting.search_for('agenda', params[:search])
                              .paginate(:page => params[:page], :per_page => 10)
   end
 
