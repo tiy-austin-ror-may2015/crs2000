@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :meetings
+  post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
   devise_for :employees
   get 'employees/:id', to: 'employees#show', as: 'employee'
   get 'employees', to: 'employees#index', as: 'employees'
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
   patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
   resources :rooms
   resources :companies
+  resources :admin
 
   root to:'rooms#index'
   get '/search/meetings', to: 'meetings#search'

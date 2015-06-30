@@ -2,7 +2,9 @@ require 'test_helper'
 
 class CompaniesControllerTest < ActionController::TestCase
   setup do
+    @employee = Employee.create(email: 'user@example.com', password: 'foobar')
     @company = Company.create(name: 'foo-llc')
+    sign_in @employee
   end
 
   test "should get index" do
