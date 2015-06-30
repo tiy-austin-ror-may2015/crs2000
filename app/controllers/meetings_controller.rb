@@ -63,10 +63,15 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1
   # DELETE /meetings/1.json
   def destroy
+    current_meeting = Meeting.find(params[:id])
+    if current_employee.id != current_meeting.employee.id
+      redirect_to "/meetings", notice: 'You are not the owner of this meeting!'
+    else
     @meeting.destroy
     respond_to do |format|
       format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
       format.json { head :no_content }
+    end
     end
   end
 
