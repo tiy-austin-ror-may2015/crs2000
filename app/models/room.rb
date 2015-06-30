@@ -10,4 +10,8 @@ validates_presence_of :name, :max_occupancy, :location
 
  #    if room_capacity > attendants ? true : false
  #  end
+
+ def self.company_rooms(company)
+    self.where(company_id: company).map { |room| [room.name, room.id] }
+ end
 end
