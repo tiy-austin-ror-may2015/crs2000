@@ -31,6 +31,10 @@
     <br>
     <%= f.datetime_select :end_time %>
   </div>
+  <div class="field">
+    <%= f.label :private %><br>
+    <%= f.check_box :private %>
+  </div>
   <div>
     <%= f.hidden_field :employee_id, value: current_employee.id %>
   </div>

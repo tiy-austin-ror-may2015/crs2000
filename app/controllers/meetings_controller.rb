@@ -21,6 +21,7 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1/edit
   def edit
+    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
   end
 
   # POST /meetings
