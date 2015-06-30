@@ -4,7 +4,7 @@ class Meeting < ActiveRecord::Base
   has_many :employee_meetings
 
   def self.search_for(query, search)
-    self.where("#{query} LIKE ?", "%" + search + "%")
+    self.where("lower(#{query}) LIKE ?", "%" + search.downcase + "%")
   end
 
 end
