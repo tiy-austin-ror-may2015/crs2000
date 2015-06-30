@@ -19,7 +19,9 @@
           <th class='well'>Name</th>
           <th>Company</th>
           <th class='well'>Email</th>
-          <th colspan="3"></th>
+          <% if user_is_admin? %>
+            <th colspan="3"></th>
+          <% end %>
         </tr>
       </thead>
 
