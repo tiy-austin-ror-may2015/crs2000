@@ -7,6 +7,9 @@ class CreateRooms < ActiveRecord::Migration
       t.string :imgurl
       t.string :location
       t.references :company
+      t.integer :meetings_count
+      t.boolean :available, default: true
+      t.datetime :time_until_next_meeting
 
       t.timestamps null: false
     end

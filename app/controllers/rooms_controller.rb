@@ -4,7 +4,15 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
-    @rooms = Room.all
+    sort_by = room_params.fetch("sort_by", "created_at")
+    sort_dir = room_params.fetch("sort_dir", "ASC")
+    search_query = room_params["search_query"]
+    name = search_query.fetch("name", "")
+    @rooms = Room.where().order("#{sort_by} #{sort_dir}")
+    respond_to do |format|
+      format.html
+      format.json { render json: @rooms }
+    end
   end
 
   # GET /rooms/1

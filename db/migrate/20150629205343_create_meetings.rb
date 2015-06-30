@@ -7,7 +7,7 @@ class CreateMeetings < ActiveRecord::Migration
       t.datetime :end_time, null: false
       t.boolean :private, default: false
 
-      t.references :room
+      t.references :room, counter_cache: true
       t.references :employee
 
       t.timestamps null: false
