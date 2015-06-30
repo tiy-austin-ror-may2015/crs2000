@@ -1,0 +1,62 @@
+<div class="report-inner">
+  <h1>MEETINGS</h1>
+    <table class="report-container">
+      <table id="meetings">
+        <thead>
+          <tr>
+            <th>TITLE</th>
+            <th>AGENDA</th>
+            <th>STARTS</th>
+            <th>FINISHES</th>
+            <th>VISIBILITY</th>
+            <th>ROOM ID</th>
+            <th>HOST</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <% @meetings.each do |meeting| %>
+            <td><%= meeting.title %></td>
+            <td><%= meeting.agenda %></td>
+            <td><%= meeting.start_time %></td>
+            <td><%= meeting.end_time %></td>
+            <td>PRIVATE</td>
+            <td><%= meeting.room_id %></td>
+            <td><%= meeting.employee_id %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </table>
+</div>
+
+<div class="report-inner">
+  <h1>ROOMS</h1>
+    <table class="report-container">
+      <table id="rooms">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>MAX OCC</th>
+            <th>ROOM NUMBER</th>
+            <th>IMAGE</th>
+            <th>LOCATION</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <% @rooms.each do |room| %>
+            <td><%= room.name %></td>
+            <td><%= room.max_occupancy %></td>
+            <td><%= room.room_number %></td>
+            <td><%= room.imgurl %></td>
+            <td><%= room.location %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </table>
+</div>
+
