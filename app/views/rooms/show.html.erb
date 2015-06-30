@@ -6,7 +6,7 @@ It should show the title, and the photo for each room. -->
   <div class="row">
     <h2>The <%= @room.name %> Room</h2>
     <div class="room-image">
-      <img src="http://cdn.home-designing.com/wp-content/uploads/2009/06/large-meeting-room.jpg">
+      <%=image_tag(@room.imgurl) %>
     </div>
     <div class="col-md-6">
       <h3>Meetings</h3>
