@@ -29,7 +29,7 @@ random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12
                              company_id: company.id)
 
     2.times do
-      room = Room.create(name: "The #{Faker::Commerce.color} Room", max_occupancy: Faker::Number.number(2),
+      room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room", max_occupancy: Faker::Number.number(2),
                   room_number: rand(200..400),
                        imgurl: image.sample,
                      location: Faker::App.name, company_id: company.id)

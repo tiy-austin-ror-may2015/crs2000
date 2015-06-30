@@ -1,5 +1,6 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+//You need to now manually import every other scss file.
 @import 'admin';
 @import 'dataTables/jquery.dataTables';
 @import 'scaffolds.scss';
@@ -39,4 +40,3 @@
   border: 1px solid orange;
   background-color: #eeeeee;
 }
-
