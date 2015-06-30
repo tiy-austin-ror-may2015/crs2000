@@ -45,11 +45,9 @@ class MeetingsController < ApplicationController
   end
 
   def search
-    @meeting_title  = Meeting.where("title LIKE ?", "%" + params[:search] + "%")
+    @meeting_title  = Meeting.search_for('title', params[:search])
                              .paginate(:page => params[:page], :per_page => 10)
-    @meeting_agenda = Meeting.where("agenda LIKE ?", "%" + params[:search] + "%")
-                             .paginate(:page => params[:page], :per_page => 10)
-    @meeting_rooms  = Room.where("name LIKE ?", "%" + params[:search] + "%")
+    @meeting_agenda = Meeting.search_for('agenda', params[:search])
                              .paginate(:page => params[:page], :per_page => 10)
   end
   # POST /meetings
