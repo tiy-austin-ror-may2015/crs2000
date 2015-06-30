@@ -4,9 +4,13 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def user_is_admin?
-    user = current_employee
-    user.admin
+    if current_employee
+      user = current_employee
+      user.admin
+    end
   end
+
+  helper_method :user_is_admin?
 
   protected
 
