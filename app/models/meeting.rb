@@ -22,5 +22,9 @@ class Meeting < ActiveRecord::Base
     self.where("lower(#{query}) LIKE ?", "%" + search.downcase + "%")
   end
 
+  def self.capacity(meeting)
+    self.find(meeting).room.max_occupancy
+  end
+
 end
 

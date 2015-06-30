@@ -31,9 +31,9 @@ class MeetingsController < ApplicationController
   end
 
   def get_occupancy
-    @max_occupancy = Meeting.find(params[:id]).room.max_occupancy
-    attendees_num = EmployeeMeeting.where(meeting_id: params[:id]).count
-    @current_occupancy = @max_occupancy - attendees_num
+    capacity  = Meeting.capacity(params[:id])
+    attending = EmployeeMeeting.attending(params[:id])
+    @current_occupancy = capacity - attending
   end
 
   def new
@@ -55,7 +55,7 @@ class MeetingsController < ApplicationController
   def search
     @meeting_title  = Meeting.search_for('title', params[:search])
                              .paginate(:page => params[:page], :per_page => 10)
-    @meeting_agenda = Meeting.search_for('agenda', params[:search])
+    @meeting_agenda  = Meeting.search_for('agenda', params[:search])
                              .paginate(:page => params[:page], :per_page => 10)
   end
 
