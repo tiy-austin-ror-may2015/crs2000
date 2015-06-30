@@ -55,32 +55,24 @@ class MeetingsController < ApplicationController
   def create
     @meeting = Meeting.new(meeting_params)
     @meeting.employee = current_employee
-    respond_to do |format|
       if @meeting.save
         MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
-        format.json { render :show, status: :created, location: @meeting }
+        redirect_to @meeting, notice: 'Meeting was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        render :new
       end
-    end
   end
 
   # PATCH/PUT /meetings/1
   # PATCH/PUT /meetings/1.json
   def update
     @meeting = Meeting.find(params[:id])
-    respond_to do |format|
       if @meeting.update(meeting_params)
         MeetingMailer.meeting_changed(current_employee, @meeting).deliver_now
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully updated.' }
-        format.json { render :show, status: :ok, location: @meeting }
+        redirect_to @meeting, notice: 'Meeting was successfully updated.'
       else
-        format.html { render :edit }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        render :edit
       end
-    end
   end
 
   # DELETE /meetings/1
@@ -89,9 +81,7 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.find(params[:id])
     MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
     @meeting.destroy
-    respond_to do |format|
-      format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
-      format.json { head :no_content }
+    redirect_to meetings_url, notice: 'Meeting was successfully destroyed.'
     end
   end
 
