@@ -10,13 +10,10 @@ class EmployeesController < ApplicationController
 
   def update
   @employee = Employee.find(params[:id])
-  respond_to do |format|
     if @employee.update(employee_params)
-      format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-      format.json { render :show, status: :ok, location: @employee }
+      redirect_to @employee, notice: 'Employee was successfully updated.'
     else
-      format.html { render :edit }
-      format.json { render json: @employee.errors, status: :unprocessable_entity }
+      render :edit
     end
   end
 end
