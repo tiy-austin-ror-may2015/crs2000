@@ -1,0 +1,32 @@
+<div class="report-inner">
+  <h1>MEETINGS</h1>
+    <table class="report-container">
+      <table id="meetings">
+        <thead>
+          <tr>
+            <th>TITLE</th>
+            <th>AGENDA</th>
+            <th>STARTS</th>
+            <th>FINISHES</th>
+            <th>VISIBILITY</th>
+            <th>ROOM ID</th>
+            <th>HOST</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <% @reports_meetings.each do |reports_meeting| %>
+            <td><%= reports_meeting.title %></td>
+            <td><%= reports_meeting.agenda %></td>
+            <td><%= reports_meeting.start_time %></td>
+            <td><%= reports_meeting.end_time %></td>
+            <td>PRIVATE</td>
+            <td><%= reports_meeting.room_id %></td>
+            <td><%= reports_meeting.employee_id %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </table>
+</div>
