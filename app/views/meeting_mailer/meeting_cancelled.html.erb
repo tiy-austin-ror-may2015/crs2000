@@ -1,0 +1,15 @@
+<p>Hello <%=@employee.name%>,</p>
+
+<p>This email is to inform you that the following meeting has been cancelled:
+  <ul>
+    <li>Title: <%= @meeting.title %> </li>
+    <li>Location: <%= @meeting.location %> </li>
+    <li>Start Time: <%= @meeting.start_time %> </li>
+    <li>End Time: <%= @meeting.end_time %> </li>
+    <li>Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>) </li>
+  </ul>
+</p>
+<p>Contact your supervisor with any questions.</p>
+
+<p>Sincerely,</p>
+<p><%= @meeting.employee.company.name %> Management</p>
