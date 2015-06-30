@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :employees
   resources :rooms
   resources :companies
+  resources :admin
 
   root to:'rooms#index'
 
