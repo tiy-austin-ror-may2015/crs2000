@@ -31,13 +31,15 @@ class MeetingsController < ApplicationController
 
   def new
     @meeting = Meeting.new
-    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    all_rooms = Room.where(company_id: current_employee.company_id)
+    @room_options = all_rooms.map { |room| [room.name, room.id] }
   end
 
   def edit
     @meeting = Meeting.find(params[:id])
     if employee_signed_in?
-    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+      all_rooms = Room.where(company_id: current_employee.company_id)
+      @room_options = all_rooms.map { |room| [room.name, room.id] }
     end
     current_meeting = Meeting.find(params[:id])
     if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
@@ -91,6 +93,7 @@ private
   end
 
   def meeting_params
-    params.require(:meeting).permit(:title, :agenda, :start_time, :end_time)
+    params.require(:meeting).permit(:title, :agenda, :room_id, :start_time, :end_time)
   end
+
 end

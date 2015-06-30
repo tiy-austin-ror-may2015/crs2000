@@ -3,17 +3,10 @@ Hello <%=@user%>,
   This email is to confirm that you scheduled the following meeting:
 
     Title: <%= @meeting.title %>
-    Location: <%= @meeting.location %>
+    Location: <%= @meeting.room.location %>
     Start Time: <%= @meeting.start_time %>
     End Time: <%= @meeting.end_time %>
     Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>)
-    Attendees:
-      <% @meeting.employees.each do |employee| %>
-        <%= employee.name %>
-      <% end %>
-
-
-
 
 Please be sure to arrive on time. Thank you.
 
