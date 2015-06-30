@@ -21,9 +21,11 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1/edit
   def edit
+    if employee_signed_in?
     @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    end
     current_meeting = Meeting.find(params[:id])
-    if current_employee.id != current_meeting.employee.id
+    if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
       redirect_to "/meetings", notice: 'You are not the owner of this meeting!'
     end
   end
@@ -64,7 +66,7 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1.json
   def destroy
     current_meeting = Meeting.find(params[:id])
-    if current_employee.id != current_meeting.employee.id
+    if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
       redirect_to "/meetings", notice: 'You are not the owner of this meeting!'
     else
     @meeting.destroy
