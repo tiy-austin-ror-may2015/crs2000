@@ -1,6 +1,6 @@
 <h2 class="center">Search Results for <i><%= params[:search] %></i></h2>
-<!-- Shows all meetings where title like search params -->
 <% if @meeting_results.count > 0 %>
+  </div>
 <h3 class="center"><%= @meeting_results.count %> Topic(s) found.</h3>
   <section class='panel panel-default'>
   <table class='table'>
@@ -31,3 +31,9 @@
   <div class="center"><%= will_paginate @meeting_results,
                         renderer: BootstrapPagination::Rails %></div>
 <% end %>
+  <div class="well center">
+    <form action='/search/meetings' method='GET'>
+      <input type='text' name='search'/>
+      <input type='submit' value='Search' class="btn btn-primary" />
+    </form>
+  </div>

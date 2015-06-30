@@ -68,8 +68,9 @@ end
     self.where(company_id: company).map { |room| [room.name, room.id] }
   end
 
-  def self.search_for(query, search)
-    self.where("lower(#{query}) LIKE ?", "%" + search.downcase + "%")
+  def self.search_for(search)
+    self.where("lower(name) LIKE ? OR lower(location) LIKE ? OR max_occupancy > ?",
+               "%#{search.downcase}%", "%#{search.downcase}%", search.to_i)
   end
 
 end
