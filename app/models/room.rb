@@ -2,6 +2,7 @@ class Room < ActiveRecord::Base
 
 belongs_to :company
 has_many :meetings
+has_many :amenities
 validates_presence_of :name, :max_occupancy, :location
 
 def self.updated_room(room, params)
@@ -46,8 +47,8 @@ end
   end
 
   def self.sort_with(params)
-    sort_by = params.fetch("sort_by", "created_at||").split("||")
-    sort_dir = params.fetch("sort_dir", "ASC||").split("||")
+    sort_by   = params.fetch("sort_by", "created_at||").split("||")
+    sort_dir  = params.fetch("sort_dir", "ASC||").split("||")
     sort_hash = Hash[sort_by.zip(sort_dir)]
     order_query = []
     sort_hash.each { |sort_by, sort_dir| order_query << "#{sort_by} #{sort_dir}" }
@@ -68,8 +69,9 @@ end
     self.where(company_id: company).map { |room| [room.name, room.id] }
   end
 
-  def self.search_for(query, search)
-    self.where("lower(#{query}) LIKE ?", "%" + search.downcase + "%")
+  def self.search_for(search)
+    self.where("lower(name) LIKE ? OR lower(location) LIKE ? OR max_occupancy > ?",
+               "%#{search.downcase}%", "%#{search.downcase}%", search.to_i)
   end
 
 end
