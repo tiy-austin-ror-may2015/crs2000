@@ -20,5 +20,20 @@
   <%= @meeting.end_time %>
 </p>
 
+<p>
+  <strong>Max Occupancy:</strong>
+  <%= @max_occupancy %>
+</p>
+
+<p>
+  <strong>Current Occupancy:</strong>
+  <%= @current_occupancy %>
+</p>
+
+<div class='col-sm-6'>
+      <%= link_to 'JOIN', join_employee_path(@meeting.id, @employee.id), method: 'POST', class: 'btn btn-default' %>
+</div>
+
 <%= link_to 'Edit', edit_meeting_path(@meeting) %> |
 <%= link_to 'Back', meetings_path %>
+

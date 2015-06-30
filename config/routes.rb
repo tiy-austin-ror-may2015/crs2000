@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :meetings
+  post 'meetings/:id/join/:employee_id', to: 'meetings#join', as: :join_employee
   devise_for :employees
   resources :rooms
   resources :companies
