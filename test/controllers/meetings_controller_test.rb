@@ -20,6 +20,8 @@ class MeetingsControllerTest < ActionController::TestCase
                          start_time: (Time.now + 10.hours),
                            end_time: (Time.now + 15.hours),
                             room_id: room.id, employee_id: employee.id)
+
+    sign_in employee
   end
 
   test "should get index" do
