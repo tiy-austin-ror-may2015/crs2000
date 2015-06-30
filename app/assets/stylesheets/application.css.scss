@@ -1,4 +1,4 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'rooms'
-//You need to now manually import every other scss file.
+@import 'scaffolds.scss'
