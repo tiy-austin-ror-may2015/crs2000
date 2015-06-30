@@ -22,18 +22,19 @@ class MeetingsController < ApplicationController
   # GET /meetings/1/edit
   def edit
     @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
-    render json: params
     current_meeting = Meeting.find(params[:id])
-    if (current_employee != current_meeting.employee.id)
+    # render json: current_meeting
+    if (current_employee.id != current_meeting.employee.id)
       redirect_to meeting, notice: 'You are not the owner of this meeting!'
     end
-
   end
 
   # POST /meetings
   # POST /meetings.json
   def create
     @meeting = Meeting.new(meeting_params)
+    @meeting.employee_id = current_employee.id
+    @meeting.room_id = Room.where(company_id: current_employee.company_id, name: params[:name])
 
     respond_to do |format|
       if @meeting.save
