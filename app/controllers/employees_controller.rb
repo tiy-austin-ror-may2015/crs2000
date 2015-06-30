@@ -21,7 +21,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-
 private
 
   def employee_params
