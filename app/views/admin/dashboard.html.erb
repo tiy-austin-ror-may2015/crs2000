@@ -1,3 +1,11 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><%= link_to 'Admin Dashboard', dashboard_path %></li>
+  <li role="presentation"><a href="/rooms/new">Create a Room</a></li>
+  <li role="presentation"><a href="/meetings/new">Create a new Meeting</a></li>
+  <li role="presentation"><a href="/admin/reports/meetings">Meeting Report</a></li>
+  <li role="presentation"><a href="/admin/reports/rooms">Rooms Report</a></li>
+</ul>
+
 <div class="container">
   <div class="row">
     <div class='col-md-12 comp-name-dash'>
@@ -5,21 +13,23 @@
     </div>
   </div>
   <div class="row">
-    <div class='col-md-3 panel panel-default'>
-      <div class="panel-heading"><h3 class='panel-title'>Total Employees</h3></div>
-      <div class='panel-body'><%= @total_employees %></div>
+    <div class='col-md-4 col-md-offset-1 panel panel-default'>
+      <div class="panel-heading"><h3 class='panel-title'><%= link_to 'Total Employees', 'employees_path' %></h3></div>
+      <div class='panel-body dash-field'><%= @total_employees %></div>
     </div>
-    <div class='col-md-3 panel panel-default'>
-      <div class="panel-heading"><h3 class='panel-title'>Total Rooms</h3></div>
-      <div class='panel-body'><%= @total_rooms %></div>
+    <div class='col-md-4 col-md-offset-1 panel panel-default'>
+      <div class="panel-heading"><h3 class='panel-title'><%= link_to 'Total Rooms', rooms_path %></h3></div>
+      <div class='panel-body dash-field'><%= @total_rooms %></div>
     </div>
-    <div class='col-md-3 panel panel-default'>
+  </div>
+  <div class='row'>
+  <div class='col-md-4 col-md-offset-1 panel panel-default'>
       <div class="panel-heading"><h3 class='panel-title'>Total Meetings Today</h3></div>
-      <div class='panel-body'><%= @today_meetings.count %></div>
+      <div class='panel-body dash-field'><%= @today_meetings.count %></div>
     </div>
-    <div class='col-md-3 panel panel-default'>
+    <div class='col-md-4 col-md-offset-1 panel panel-default'>
       <div class="panel-heading"><h3 class='panel-title'>All Scheduled Meetings</h3></div>
-      <div class='panel-body'><%= @all_future_meetings.count %></div>
+      <div class='panel-body dash-field'><%= @all_future_meetings.count %></div>
     </div>
   </div>
 </div>
