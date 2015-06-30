@@ -17,4 +17,11 @@ class Meeting < ActiveRecord::Base
   #   end # loop
   #   all_meetings # send to display
   # end # send_meetings
-end # class
+
+
+  def self.search_for(query, search)
+    self.where("lower(#{query}) LIKE ?", "%" + search.downcase + "%")
+  end
+
+end
+
