@@ -48,13 +48,28 @@ class RoomsController < ApplicationController
   def edit
   end
 
+  def search
+    if params[:search].to_i > 0
+      @room_occupancy = Room.where("max_occupancy >" + params[:search])
+                            .paginate(:page => params[:page], :per_page => 10)
+      @room_name = []
+      @room_location = []
+    else
+      @room_name      = Room.where("lower(name) LIKE ?", "%" + params[:search] + "%")
+                            .paginate(:page => params[:page], :per_page => 10)
+
+      @room_location  = Room.where("lower(location) LIKE ?", "%" + params[:search] + "%")
+                            .paginate(:page => params[:page], :per_page => 10)
+      @room_occupancy = []
+    end
+  end
+
   # POST /rooms
   # POST /rooms.json
  def create
   if user_is_admin?
 
-      user = current_employee
-      @company = user.company
+      @company = employee_company
       @room    = @company.rooms.build
 
       @room[:name]          = params[:room][:name]
@@ -63,7 +78,7 @@ class RoomsController < ApplicationController
       @room[:imgurl]        = params[:room][:imgurl]
       @room[:max_occupancy] = params[:room][:max_occupancy]
       if @room.save
-        redirect_to :back, notice: "#{@room.name} has been created"
+        redirect_to @room, notice: "#{@room.name} has been created"
       else
         redirect_to :back, alert: "Error occured, room not saved"
       end
@@ -77,8 +92,7 @@ class RoomsController < ApplicationController
   def update
       if user_is_admin?
 
-      user = current_employee
-      @company = user.company
+      @company = employee_company
       @room    = @company.rooms.build
 
       @room[:name]          = params[:room][:name]
@@ -87,7 +101,7 @@ class RoomsController < ApplicationController
       @room[:imgurl]        = params[:room][:imgurl]
       @room[:max_occupancy] = params[:room][:max_occupancy]
       if @room.save
-        redirect_to :back, notice: "#{@room.name} has been updated"
+        redirect_to @room, notice: "#{@room.name} has been updated"
       else
         redirect_to :back, alert: "Error occured, updates not saved"
       end
@@ -100,10 +114,8 @@ class RoomsController < ApplicationController
   # DELETE /rooms/1.json
   def destroy
     if user_is_admin?
-      user = current_employee
-      @company = user.company
-      @room = @company.rooms
-
+      @company = employee_company
+      @room = Room.find(params[:id])
       @room.destroy
       respond_to do |format|
         format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
@@ -112,6 +124,10 @@ class RoomsController < ApplicationController
     else
       redirect_to :back, alert: "Access Denied"
     end
+  end
+
+  def employee_company
+    current_employee.company
   end
 
   private

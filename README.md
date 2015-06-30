@@ -11,6 +11,10 @@
   2) `rake db:create db:migrate` (or setup)
   3) ...
 
+## How to run tests
+  - make sure you have migrated `rake db:migrate`
+  - make sure you have added your schema to test `rake db:test:prepare`
+  - Run `guard` to have guard re-run your tests each time you make changes
 
 ## Technologies used
   - React
