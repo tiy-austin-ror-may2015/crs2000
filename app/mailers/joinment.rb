@@ -3,7 +3,7 @@ class Joinment < ApplicationMailer
     @employee = employee
     @meeting = meeting
 
-    mail to: employee.email, subject: "You've been joined!"
+    mail to: employee.email, subject: "You've been joined the meeting!"
   end
 
 end

@@ -1,39 +1,47 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <p id="notice" class="alert"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @meeting.title %>
-</p>
+    <h2><%= @meeting.title.capitalize %></h2>
 
-<p>
-  <strong>Agenda:</strong>
-  <%= @meeting.agenda %>
-</p>
+    <h3>Agenda</h3>
+    <div>
+     class="well">
+      <p><%= @meeting.agenda %></p>
+    </div>
 
-<p>
-  <strong>Start time:</strong>
-  <%= @meeting.start_time %>
-</p>
+    <h3>Max Occupancy:</h3>
+    <div>
+      class="well">
+      <p><%= @max_occupancy %></p>
+    </div>
 
-<p>
-  <strong>End time:</strong>
-  <%= @meeting.end_time %>
-</p>
+    <h3>Current Occupancy:</h3>
+    <div>
+      class="well">
+      <p><%= @current_occupancy %></p>
+    </div>
 
-<p>
-  <strong>Max Occupancy:</strong>
-  <%= @max_occupancy %>
-</p>
-
-<p>
-  <strong>Current Occupancy:</strong>
-  <%= @current_occupancy %>
-</p>
-
-<div class='col-sm-6'>
-      <%= link_to 'JOIN', join_employee_path(@meeting.id, @employee.id), method: 'POST', class: 'btn btn-default' %>
+    <div class="col-md-6">
+      <h3>Attendees</h3>
+      <ul>
+        <li><%= link_to @meeting.employee.name, @meeting.employee %></li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3>Meeting details</h3>
+        <ul>
+          <li><strong>Location:</strong> <%= link_to @meeting.room.name, @meeting.room %></li>
+          <li><strong>Start time:</strong> <%= @meeting.start_time %></li>
+          <li><strong>End time:</strong> <%= @meeting.end_time %></li>
+          <li><strong>Total time:</strong> <%= @meeting.end_time - @meeting.start_time %> hour(s) </li>
+        </ul>
+    </div>
+  </div>
+  <div class="row">
+    <%= link_to 'JOIN', join_employee_path(@meeting.id, @employee.id), method: 'POST', class: 'btn btn-default' %>
+    <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-success" %>
+    <%= link_to 'Back', meetings_path, class: "btn btn-default" %>
+  </div>
 </div>
-
-<%= link_to 'Edit', edit_meeting_path(@meeting) %> |
-<%= link_to 'Back', meetings_path %>
 

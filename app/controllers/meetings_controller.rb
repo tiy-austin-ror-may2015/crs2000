@@ -3,7 +3,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /meetings/1
@@ -20,7 +20,7 @@ class MeetingsController < ApplicationController
       ec.save
       @meeting = Meeting.find(params[:id])
       @employee = Employee.find(params[:employee_id])
-      Joinment.joined_confirmation(employee, meeting).deliver_now
+      MeetingMailer.meeting_scheduled(employee, meeting).deliver_now
       message = {notice: 'Employee successfully joined!'}
     else
       message = {alert: 'Employee already joined!'}
@@ -44,6 +44,14 @@ class MeetingsController < ApplicationController
   def edit
   end
 
+  def search
+    @meeting_title  = Meeting.all.where("title LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+    @meeting_agenda = Meeting.all.where("agenda LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+    @meeting_rooms  = Room.all.where("name LIKE ?", "%" + params[:search] + "%")
+                                 .paginate(:page => params[:page], :per_page => 10)
+  end
   # POST /meetings
   # POST /meetings.json
   def create
@@ -51,6 +59,7 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.save
+        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_later
         format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
         format.json { render :show, status: :created, location: @meeting }
       else
@@ -65,6 +74,7 @@ class MeetingsController < ApplicationController
   def update
     respond_to do |format|
       if @meeting.update(meeting_params)
+        MeetingMailer.meeting_changed(current_employee, @meeting).deliver_later
         format.html { redirect_to @meeting, notice: 'Meeting was successfully updated.' }
         format.json { render :show, status: :ok, location: @meeting }
       else
@@ -77,6 +87,7 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1
   # DELETE /meetings/1.json
   def destroy
+    MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_later
     @meeting.destroy
     respond_to do |format|
       format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
