@@ -5,8 +5,7 @@ class AdminController < ApplicationController
       @company = user.company
       @total_employees = @company.employees.count
       @total_rooms = @company.rooms.count
-      time
-      @today_meetings = @company.
+      today = Time.now.strftime("%m/%d/%Y")
     else
       redirect_to :back, alert: "Access Denied"
     end

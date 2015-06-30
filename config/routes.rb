@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :employees
   resources :rooms
   resources :companies
+  get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
 
   root to:'rooms#index'
 
