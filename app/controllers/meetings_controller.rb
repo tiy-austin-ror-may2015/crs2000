@@ -16,10 +16,21 @@ class MeetingsController < ApplicationController
   # GET /meetings/new
   def new
     @meeting = Meeting.new
+    all_rooms = Room.where(company_id: current_employee.company_id)
+    @room_options = all_rooms.map { |room| [room.name, room.id] }
   end
 
   # GET /meetings/1/edit
   def edit
+    @meeting = Meeting.find(params[:id])
+    if employee_signed_in?
+      all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+      @room_options = all_rooms.map { |room| [room.name, room.id] }
+    end
+    current_meeting = Meeting.find(params[:id])
+    if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
+      redirect_to "/meetings", notice: 'You are not the owner of this meeting!'
+    end
   end
 
   # POST /meetings
@@ -71,8 +82,8 @@ class MeetingsController < ApplicationController
       @meeting = Meeting.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_params
-      params.require(:meeting).permit(:title, :agenda, :start_time, :end_time)
+      params.require(:meeting).permit(:title, :agenda, :room_id, :start_time, :end_time)
     end
 end
