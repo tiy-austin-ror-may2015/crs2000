@@ -16,8 +16,12 @@ class RoomsController < ApplicationController
   end
 
   def new
-    @room = Room.new
-    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    if user_is_admin?
+      @room = Room.new
+      @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    else
+      redirect_to :back, alert: "Access Denied"
+    end
   end
 
   def edit
@@ -26,53 +30,36 @@ class RoomsController < ApplicationController
   def search
     Room.all.each { |room| room.update_time_sensitive_values }
     @rooms = Room.search_with(params).sort_with(params).paginate(:page => params[:page], :per_page => 10)
-    # if params[:search].to_i > 0
-    #   @room_occupancy = Room.where("max_occupancy >" + params[:search])
-    #                         .paginate(:page => params[:page], :per_page => 10)
-    #   @room_name = []
-    #   @room_location = []
-    # else
-    #   @room_name      = Room.where("lower(name) LIKE ?", "%" + params[:search] + "%")
-    #                         .paginate(:page => params[:page], :per_page => 10)
 
-    #   @room_location  = Room.where("lower(location) LIKE ?", "%" + params[:search] + "%")
-    #                         .paginate(:page => params[:page], :per_page => 10)
-    #   @room_occupancy = []
-    # end
+    @room_results   = Room.search_for(params[:search])
+                          .paginate(:page => params[:page], :per_page => 10)
   end
 
  def create
   if user_is_admin?
 
-      @company = employee_company
-      @room    = @company.rooms.build
+      user               = current_employee
+      @company           = user.company
+      @room              = Room.new(room_params)
+      @room[:company_id] = @company.id
 
-      @room[:name]          = params[:room][:name]
-      @room[:location]      = params[:room][:location]
-      @room[:room_number]   = params[:room][:room_number]
-      @room[:imgurl]        = params[:room][:imgurl]
-      @room[:max_occupancy] = params[:room][:max_occupancy]
       if @room.save
-        redirect_to @room, notice: "#{@room.name} has been created"
-      else
-        redirect_to :back, alert: "Error occured, room not saved"
-      end
-    else
-     redirect_to :back, alert: "Access Denied"
+         redirect_to @room, notice: "#{@room.name} has been created"
+       else
+         redirect_to :back, alert: "Error occured, room not saved"
+       end
+     else
+      redirect_to :back, alert: "Access Denied"
     end
  end
 
   def update
       if user_is_admin?
 
-      @company = employee_company
-      @room    = @company.rooms.build
+      @room = Room.find(params[:id])
 
-      @room[:name]          = params[:room][:name]
-      @room[:location]      = params[:room][:location]
-      @room[:room_number]   = params[:room][:room_number]
-      @room[:imgurl]        = params[:room][:imgurl]
-      @room[:max_occupancy] = params[:room][:max_occupancy]
+      @room = Room.updated_room(@room, params)
+
       if @room.save
         redirect_to @room, notice: "#{@room.name} has been updated"
       else
@@ -85,7 +72,7 @@ class RoomsController < ApplicationController
 
   def destroy
     if user_is_admin?
-      @company = employee_company
+
       @room = Room.find(params[:id])
       @room.destroy
       redirect_to rooms_url, notice: 'Room was successfully destroyed.'

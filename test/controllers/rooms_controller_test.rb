@@ -1,15 +1,9 @@
 require 'test_helper'
 
-class ApplicationController < ActionController::Base
-  def user_is_admin?
-    true
-  end
-end
-
 class RoomsControllerTest < ActionController::TestCase
   setup do
-    @employee = Employee.create(email: 'user@example.com', password: 'foobar')
     company  = Company.create(name: 'foobar')
+    @employee = Employee.create(email: 'user@example.com', password: 'foobar', admin: true, company_id: company.id)
     @room    = Room.create(name: Faker::Name.last_name,
                   max_occupancy: Faker::Number.number(2),
                     room_number: Faker::PhoneNumber.area_code,
@@ -53,7 +47,6 @@ class RoomsControllerTest < ActionController::TestCase
   end
 
   test "should update room" do
-    skip
     patch :update, id: @room, room: { imgurl: @room.imgurl, location: @room.location, max_occupancy: @room.max_occupancy, name: @room.name, room_number: @room.room_number }
     assert_redirected_to room_path(@room)
   end

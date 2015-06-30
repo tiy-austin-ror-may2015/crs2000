@@ -1,8 +1,23 @@
 class EmployeesController < ApplicationController
 
+  def index
+    @employees = Employee.paginate(:page => params[:page], :per_page => 10)
+  end
+
   def show
     @employee = Employee.find(params[:id])
   end
+
+  # def invite
+  #   @employee = current_employee
+  #   em = Invitation.new(meeting_id: params[:id], employee_id: @employee.id)
+  #   if em.save
+  #   message = {notice: 'invitation successfully sent!'}
+  #   else
+  #     message = {alert: 'invitation sent failed!'}
+  #   end
+  #   redirect_to meeting_path(params[:id]), message
+  # end
 
   def edit
     @employee = Employee.find(params[:id])
@@ -16,7 +31,6 @@ class EmployeesController < ApplicationController
       render :edit
     end
   end
-end
 
 private
 
