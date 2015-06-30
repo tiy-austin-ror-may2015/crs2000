@@ -24,9 +24,9 @@ class MeetingsController < ApplicationController
   end
 
   def get_occupancy
-    @max_occupancy = Meeting.find(params[:id]).room.max_occupancy
-    attendees_num = EmployeeMeeting.where(meeting_id: params[:id]).count
-    @current_occupancy = @max_occupancy - attendees_num
+    capacity  = Meeting.capacity(params[:id])
+    attending = EmployeeMeeting.attending(params[:id])
+    @current_occupancy = capacity - attending
   end
 
   def new
