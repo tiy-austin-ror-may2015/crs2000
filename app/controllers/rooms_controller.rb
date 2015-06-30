@@ -6,9 +6,15 @@ class RoomsController < ApplicationController
   def index
     sort_by = room_params.fetch("sort_by", "created_at")
     sort_dir = room_params.fetch("sort_dir", "ASC")
-    search_query = room_params["search_query"]
+    search_query = room_params.fetch("search_query", {})
     name = search_query.fetch("name", "")
-    @rooms = Room.where().order("#{sort_by} #{sort_dir}")
+    max_occupancy = search_query.fetch("max_occupancy", "")
+    room_number = search_query.fetch("room_number", "")
+    meetings_count = search_query.fetch("meetings_count", "")
+    available = search_query.fetch("meetings_count", "")
+    @rooms = Room.where()
+                 .order("#{sort_by} #{sort_dir}")
+                 .paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html
       format.json { render json: @rooms }

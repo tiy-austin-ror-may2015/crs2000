@@ -70,8 +70,10 @@ ActiveRecord::Schema.define(version: 20150629210054) do
     t.string   "imgurl"
     t.string   "location"
     t.integer  "company_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "meetings_count", default: 0
+    t.boolean  "available",      default: true
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
 end
