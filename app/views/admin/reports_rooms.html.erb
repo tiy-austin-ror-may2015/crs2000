@@ -14,12 +14,12 @@
 
         <tbody>
           <tr>
-            <% @reports_rooms.each do |report_room| %>
-            <td><%= report_room.name %></td>
-            <td><%= report_room.max_occupancy %></td>
-            <td><%= report_room.room_number %></td>
-            <td><%= report_room.imgurl %></td>
-            <td><%= report_room.location %></td>
+            <% @reports_rooms.each do |reports_rooms| %>
+            <td><%= reports_rooms.name %></td>
+            <td><%= reports_rooms.max_occupancy %></td>
+            <td><%= reports_rooms.room_number %></td>
+            <td><%= reports_rooms.imgurl %></td>
+            <td><%= reports_rooms.location %></td>
           </tr>
         <% end %>
       </tbody>
