@@ -16,7 +16,8 @@ It should show the title, and the photo for each room. -->
         <li><%= link_to meeting.title, meeting %>
         </div>
         <div class="col-md-6">
-          <%= meeting.start_time.strftime('%m/%d %I:%M%p') %> to <%= meeting.end_time.strftime('%m/%d %I:%M%p')  %></li>
+          <%= meeting.start_time.strftime('%m/%d %I:%M%p') %> to <%= meeting.end_time.strftime('%m/%d %I:%M%p') %></li>
+          <!--  <%= meeting.start_time.strftime('%m/%d %I:%M%p') %> to <%= meeting.end_time.strftime('%m/%d %I:%M%p')  %></li> -->
         </div>
       </ul>
       <% end %>
@@ -26,6 +27,7 @@ It should show the title, and the photo for each room. -->
       <p><strong>Location: </strong> <%=@room.location%></p>
       <p><strong>Occupancy: </strong><%= @room.max_occupancy %></p>
       <p><strong>Room Number: </strong><%= @room.room_number%></p>
+      <p><strong>Amenities: </strong><%= @room.amenities %></p>
     </div>
   </div>
 
