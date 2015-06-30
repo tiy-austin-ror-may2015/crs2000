@@ -240,11 +240,11 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
-<<<<<<< HEAD
-=======
+
   will_paginate
   will_paginate-bootstrap
 
+
 BUNDLED WITH
    1.10.5
->>>>>>> f9e23e07e6b414ec9ac4e893cccf4816c41b3bcc
+
