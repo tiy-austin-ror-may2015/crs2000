@@ -33,9 +33,8 @@
       <h3>Meeting details</h3>
         <ul>
           <li><strong>Location:</strong> <%= link_to @meeting.room.name, @meeting.room %></li>
-          <li><strong>Start time:</strong> <%= @meeting.start_time %></li>
-          <li><strong>End time:</strong> <%= @meeting.end_time %></li>
-          <li><strong>Total time:</strong> <%= @meeting.end_time - @meeting.start_time %> hour(s) </li>
+          <li><strong>Start time:</strong><p class="timeDisplay"> <%= @meeting.start_time %></p></li>
+          <li><strong>End time:</strong><p class="timeDisplay"> <%= @meeting.end_time %></p></li>
         </ul>
     </div>
   </div>
