@@ -3,7 +3,7 @@
 <p>This email is to inform you that the following meeting has been cancelled:
   <ul>
     <li>Title: <%= @meeting.title %> </li>
-    <li>Location: <%= @meeting.location %> </li>
+    <li>Location: <%= @meeting.room.location %> </li>
     <li>Start Time: <%= @meeting.start_time %> </li>
     <li>End Time: <%= @meeting.end_time %> </li>
     <li>Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>) </li>
