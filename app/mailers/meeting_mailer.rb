@@ -1,12 +1,10 @@
 class MeetingMailer < ApplicationMailer
 
-  def meeting_scheduled(employee, admin)
+  def meeting_scheduled(employee, meeting)
     @employee = employee
-    @admin = admin
     @meeting = meeting
-    recipients = [employee.email, admin.email]
 
-    mail to: recipients, subject: "Meeting Scheduled"
+    mail to: employee.email, subject: "Meeting Scheduled"
   end
 
 end
