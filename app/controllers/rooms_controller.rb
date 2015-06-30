@@ -5,8 +5,6 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     update_rooms
-    sort_by = params.fetch("sort_by", "created_at")
-    sort_dir = params.fetch("sort_dir", "ASC")
     name = params.fetch("name", "")
     max_occupancy = params.fetch("max_occupancy", "0")
     room_number = params.fetch("room_number", "%%")
@@ -18,7 +16,16 @@ class RoomsController < ApplicationController
                           CAST(room_number AS TEXT) LIKE '#{room_number}' AND
                           CAST(meetings_count AS TEXT) LIKE '#{meetings_count}' AND
                           CAST(available AS TEXT) LIKE '#{available}' AND
-                          lower(location) LIKE lower('%#{location}%')").order("#{sort_by} #{sort_dir}").paginate(:page => params[:page], :per_page => 10)
+                          lower(location) LIKE lower('%#{location}%')")
+
+    sort_by = params.fetch("sort_by", "created_at||").split("||")
+    sort_dir = params.fetch("sort_dir", "ASC||").split("||")
+    sort_hash = Hash[sort_by.zip(sort_dir)]
+    order_query = []
+    sort_hash.each { |sort_by, sort_dir| order_query << "#{sort_by} #{sort_dir}" }
+    order_query.join(", ")
+
+    @rooms = @rooms.order(order_query).paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html
       format.json { render json: @rooms }
