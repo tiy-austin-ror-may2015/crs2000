@@ -21,7 +21,10 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1/edit
   def edit
-    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    render json: params
+    current_meeting = Meeting.find(params[:id])
+    if (current_employee == current_meeting.employee.id)
+    # @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
   end
 
   # POST /meetings
