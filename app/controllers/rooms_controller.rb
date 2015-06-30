@@ -116,7 +116,7 @@ class RoomsController < ApplicationController
     def update_rooms
       Room.all.each do |room|
         hours_until_next_meeting = room.meetings.where("start_time > '#{Time.now}'").minimum(:start_time) || Time.new(2038,1,19,3,14,07)
-        hours_until_next_meeting = ((hours_until_next_meeting - Time.now) / 60).round
+        hours_until_next_meeting = ((hours_until_next_meeting - Time.now) / 3600).round
         available = room.meetings.where("start_time < '#{Time.now}' AND end_time > '#{Time.now}'").none?
         room.update(hours_until_next_meeting: hours_until_next_meeting, available: available)
       end
