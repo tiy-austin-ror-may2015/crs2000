@@ -59,3 +59,5 @@ gem 'bullet', group: :development
 gem 'bootstrap-sass'
 gem 'react-rails'
 gem 'bcrypt'
+gem 'bootstrap_form'
+gem "codeclimate-test-reporter", group: :test, require: nil
