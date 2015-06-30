@@ -34,10 +34,10 @@ class RoomsController < ApplicationController
       @room_name = []
       @room_location = []
     else
-      @room_name      = Room.where("lower(name) LIKE ?", "%" + params[:search] + "%")
+      @room_name      = Room.search_for("name", params[:search])
                             .paginate(:page => params[:page], :per_page => 10)
 
-      @room_location  = Room.where("lower(location) LIKE ?", "%" + params[:search] + "%")
+      @room_location  = Room.search_for("location", params[:search])
                             .paginate(:page => params[:page], :per_page => 10)
       @room_occupancy = []
     end

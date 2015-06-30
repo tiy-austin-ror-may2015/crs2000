@@ -20,3 +20,18 @@
 //= require components
 //= require moment
 //= require_tree .
+
+var ready = function(){
+  var time = $('.timeDisplay').html();
+  $('.timeDisplay').html(moment(time).format('MMMM/DD/YYYY hh:mm a'));
+}
+
+$(document).ready(ready);
+$(document).on("page:load", ready);
+
+
+
+
+
+
+
