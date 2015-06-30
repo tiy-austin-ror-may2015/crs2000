@@ -1,7 +1,7 @@
-<h2 class="center">Search Results for <i><%= params[:search] %></i></h2>
+<h2 class='center'>Search Results</i></h2>
 <!-- Shows all rooms where name like search params -->
-<% if @room_name.count > 0 %>
-<h3 class="center"><%= @room_name.count %> Room(s) found.</h3>
+<% if @rooms.count > 0 %>
+<h3 class='center'><%= @rooms.count %> Room(s) found.</h3>
   <section class='panel panel-default'>
   <table class='table'>
     <thead>
@@ -11,94 +11,84 @@
         <th>Room Number</th>
         <th>Image</th>
         <th>Location</th>
-        <th colspan="3"></th>
+        <th colspan='3'></th>
       </tr>
     </thead>
     <tbody>
-      <% @room_name.each do |room| %>
+      <% @rooms.each do |room| %>
         <tr>
-          <td class="well"><%= room.name %></td>
+          <td class='well'><%= room.name %></td>
           <td><%= room.max_occupancy %></td>
-          <td class="well"><%= room.room_number %></td>
+          <td class='well'><%= room.room_number %></td>
           <td><%= room.imgurl %></td>
-          <td class="well"><%= room.location %></td>
+          <td class='well'><%= room.location %></td>
           <td><%= link_to 'Show', room  %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
   </section>
-  <div class="center"><%= will_paginate @room_name,
-                        renderer: BootstrapPagination::Rails %></div>
-<% end %>
-<!-- Shows all rooms where occupancy like search results -->
-<% if @room_occupancy.count > 0 %>
-<h3 class="center"><%= @room_occupancy.count %> Room(s) found.</h3>
-  <section class='panel panel-default'>
-  <table class='table'>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Max Occupancy</th>
-        <th>Room Number</th>
-        <th>Image</th>
-        <th>Location</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @room_occupancy.each do |room| %>
-        <tr>
-          <td class="well"><%= room.name %></td>
-          <td><%= room.max_occupancy %></td>
-          <td class="well"><%= room.room_number %></td>
-          <td><%= image_tag(room.imgurl, size: '200x150') %></td>
-          <td class="well"><%= room.location %></td>
-          <td><%= link_to 'Show', room  %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </section>
-  <div class="center"><%= will_paginate @room_occupancy,
-                        renderer: BootstrapPagination::Rails %></div>
-<% end %>
-<!-- Shows all rooms where location like search results -->
-<% if @room_location.count > 0 %>
-  <h3 class="center"><%= @room_location.count %> Room(s) found.</h3>
-  <section class='panel panel-default'>
-  <table class='table'>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Max Occupancy</th>
-        <th>Room Number</th>
-        <th>Picture</th>
-        <th>Location</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @room_location.each do |room| %>
-        <tr>
-          <td class="well"><%= room.name %></td>
-          <td><%= room.max_occupancy %></td>
-          <td class="well"><%= room.room_number %></td>
-          <td><%= image_tag(room.imgurl, size: '200x150') %></td>
-          <td><%= room.location %></td>
-          <td class="well"><%= link_to 'Show', room %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </section>
-  <div class="center"><%= will_paginate @room_location,
+  <div class='center'><%= will_paginate @rooms,
                         renderer: BootstrapPagination::Rails %></div>
 <% end %>
 
-  <div class="well center">
+<div class="container room-search">
+  <div class="col-md-9"></div>
+  <div class='col-md-3 well center'>
     <form action='/search/rooms' method='GET'>
-      <input type='text' name='search'/>
-      <input type='submit' value='Search' class="btn btn-primary" />
+      <div class='row'>
+        <div class='col-md-6 align-right'>
+          name
+        </div>
+        <div class='col-md-6 align-left'>
+          <input type='text' size= '8' name='name'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 align-right'>
+          company
+        </div>
+        <div class='col-md-6 align-left'>
+          <input type='text' size= '8' name='company_name'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 align-right'>
+          location
+        </div>
+        <div class='col-md-6 align-left'>
+          <input type='text' size= '8' name='location'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 align-right'>
+          number
+        </div>
+        <div class='col-md-6 align-left'>
+          <input type='text' size= '3' name='room_number'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 align-right'>
+          max occ >
+        </div>
+        <div class='col-md-6 align-left'>
+          <input type='text' size= '3' name='max_occupancy'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 align-right'>
+          <input type='checkbox' checked = 'checked' name='available' value='true' />
+        </div>
+        <div class='col-md-6 align-left'>
+          available?
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6'></div>
+        <div class='col-md-6 align-left'>
+          <input type='submit' value='Search' class='btn btn-primary' />
+      </div>
     </form>
   </div>
+</div>

@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
 
   def index
     Room.all.each { |room| room.update_time_sensitive_values }
-    @rooms = Room.search_with(params).sort_with(params).paginate(:page => params[:page], :per_page => 10)
+    @rooms = Room.all.paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html
@@ -24,19 +24,21 @@ class RoomsController < ApplicationController
   end
 
   def search
-    if params[:search].to_i > 0
-      @room_occupancy = Room.where("max_occupancy >" + params[:search])
-                            .paginate(:page => params[:page], :per_page => 10)
-      @room_name = []
-      @room_location = []
-    else
-      @room_name      = Room.where("lower(name) LIKE ?", "%" + params[:search] + "%")
-                            .paginate(:page => params[:page], :per_page => 10)
+    Room.all.each { |room| room.update_time_sensitive_values }
+    @rooms = Room.search_with(params).sort_with(params).paginate(:page => params[:page], :per_page => 10)
+    # if params[:search].to_i > 0
+    #   @room_occupancy = Room.where("max_occupancy >" + params[:search])
+    #                         .paginate(:page => params[:page], :per_page => 10)
+    #   @room_name = []
+    #   @room_location = []
+    # else
+    #   @room_name      = Room.where("lower(name) LIKE ?", "%" + params[:search] + "%")
+    #                         .paginate(:page => params[:page], :per_page => 10)
 
-      @room_location  = Room.where("lower(location) LIKE ?", "%" + params[:search] + "%")
-                            .paginate(:page => params[:page], :per_page => 10)
-      @room_occupancy = []
-    end
+    #   @room_location  = Room.where("lower(location) LIKE ?", "%" + params[:search] + "%")
+    #                         .paginate(:page => params[:page], :per_page => 10)
+    #   @room_occupancy = []
+    # end
   end
 
  def create
