@@ -16,6 +16,7 @@ class MeetingsController < ApplicationController
   # GET /meetings/new
   def new
     @meeting = Meeting.new
+    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
   end
 
   # GET /meetings/1/edit
