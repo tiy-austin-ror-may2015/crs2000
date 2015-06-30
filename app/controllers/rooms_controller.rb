@@ -7,17 +7,18 @@ class RoomsController < ApplicationController
     update_rooms
     sort_by = params.fetch("sort_by", "created_at")
     sort_dir = params.fetch("sort_dir", "ASC")
-    search_query = params.fetch("search_query", {})
-    name = search_query.fetch("name", "")
-    max_occupancy = search_query.fetch("max_occupancy", "0")
-    room_number = search_query.fetch("room_number", "%%")
-    meetings_count = search_query.fetch("meetings_count", "%%")
-    available = search_query.fetch("available", "%%")
+    name = params.fetch("name", "")
+    max_occupancy = params.fetch("max_occupancy", "0")
+    room_number = params.fetch("room_number", "%%")
+    meetings_count = params.fetch("meetings_count", "%%")
+    available = params.fetch("available", "%%")
+    location = params.fetch("location", "%%")
     @rooms = Room.where("lower(name) LIKE lower('%#{name}%') AND
                           max_occupancy >= #{max_occupancy} AND
                           CAST(room_number AS TEXT) LIKE '#{room_number}' AND
                           CAST(meetings_count AS TEXT) LIKE '#{meetings_count}' AND
-                          CAST(available AS TEXT) LIKE '#{available}'").order("#{sort_by} #{sort_dir}").paginate(:page => params[:page], :per_page => 10)
+                          CAST(available AS TEXT) LIKE '#{available}' AND
+                          lower(location) LIKE lower('%#{location}%')").order("#{sort_by} #{sort_dir}").paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html
       format.json { render json: @rooms }
@@ -114,9 +115,10 @@ class RoomsController < ApplicationController
 
     def update_rooms
       Room.all.each do |room|
-        next_meeting_start_time = room.meetings.where("start_time > '#{Time.now}'").minimum(:start_time) || Time.new(2038,1,19,3,14,07)
+        hours_until_next_meeting = room.meetings.where("start_time > '#{Time.now}'").minimum(:start_time) || Time.new(2038,1,19,3,14,07)
+        hours_until_next_meeting = ((hours_until_next_meeting - Time.now) / 60).round
         available = room.meetings.where("start_time < '#{Time.now}' AND end_time > '#{Time.now}'").none?
-        room.update(next_meeting_start_time: next_meeting_start_time, available: available);
+        room.update(hours_until_next_meeting: hours_until_next_meeting, available: available)
       end
     end
 

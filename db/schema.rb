@@ -70,11 +70,11 @@ ActiveRecord::Schema.define(version: 20150629210054) do
     t.string   "imgurl"
     t.string   "location"
     t.integer  "company_id"
-    t.integer  "meetings_count",          default: 0
-    t.boolean  "available",               default: true
-    t.datetime "next_meeting_start_time", default: '2038-01-19 09:14:07'
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+    t.integer  "meetings_count",           default: 0
+    t.boolean  "available",                default: true
+    t.integer  "hours_until_next_meeting", default: 11864214
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
 end

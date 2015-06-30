@@ -9,7 +9,7 @@ class CreateRooms < ActiveRecord::Migration
       t.references :company
       t.integer :meetings_count, default: 0
       t.boolean :available, default: true
-      t.datetime :next_meeting_start_time, default: Time.new(2038,1,19,3,14,07)
+      t.integer :hours_until_next_meeting, default: ((Time.new(2038,1,19,3,14,07) - Time.now) / 60).round
 
       t.timestamps null: false
     end
