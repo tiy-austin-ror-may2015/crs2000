@@ -1,4 +1,13 @@
 require 'test_helper'
+class TestDel
+  def deliver_now
+  end
+end
+class MeetingMailer
+  def self.method_missing(*args, &block)
+    TestDel.new
+  end
+end
 
 class MeetingsControllerTest < ActionController::TestCase
   setup do
@@ -10,7 +19,7 @@ class MeetingsControllerTest < ActionController::TestCase
                        location: Faker::App.name,
                      company_id: company.id)
     password = Faker::Internet.password
-    employee = Employee.create(name: Faker::Name.name,
+    @employee = Employee.create(name: Faker::Name.name,
                               email: Faker::Internet.safe_email,
                            password: password,
               password_confirmation: password,
@@ -19,7 +28,11 @@ class MeetingsControllerTest < ActionController::TestCase
                              agenda: Faker::Lorem.paragraph,
                          start_time: (Time.now + 10.hours),
                            end_time: (Time.now + 15.hours),
-                            room_id: room.id, employee_id: employee.id)
+                            room_id: room.id, employee_id: @employee.id)
+
+    @request.env["devise.mapping"] = Devise.mappings[:employee]
+    @controller.stubs(:current_employee).returns(@employee)
+    sign_in @employee
   end
 
   test "should get index" do
