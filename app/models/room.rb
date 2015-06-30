@@ -46,8 +46,8 @@ end
   end
 
   def self.sort_with(params)
-    sort_by = params.fetch("sort_by", "created_at||").split("||")
-    sort_dir = params.fetch("sort_dir", "ASC||").split("||")
+    sort_by   = params.fetch("sort_by", "created_at||").split("||")
+    sort_dir  = params.fetch("sort_dir", "ASC||").split("||")
     sort_hash = Hash[sort_by.zip(sort_dir)]
     order_query = []
     sort_hash.each { |sort_by, sort_dir| order_query << "#{sort_by} #{sort_dir}" }
