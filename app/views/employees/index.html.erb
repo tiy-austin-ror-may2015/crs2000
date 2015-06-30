@@ -19,7 +19,6 @@
           <th class='well'>Name</th>
           <th>Company</th>
           <th class='well'>Email</th>
-          <th>Admin</th>
           <th class='well' colspan="3"></th>
         </tr>
       </thead>
@@ -30,9 +29,8 @@
             <td class='well'><%= link_to employee.name, employee %></td>
             <td><%= employee.company.name %></td>
             <td class='well'><%= employee.email %></td>
-            <td><%= employee.admin %></td>
-            <td class='well'><%= link_to 'Show', employee %></td>
-            <td  class='well'><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Show', employee %></td>
+            <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
