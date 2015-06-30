@@ -17,11 +17,11 @@
     <tbody>
       <% @room_name.each do |room| %>
         <tr>
-          <td class="well"><%= room.name %></td>
-          <td><%= room.max_occupancy %></td>
-          <td class="well"><%= room.room_number %></td>
-          <td><%= image_tag(room.imgurl, size: '200x150') %></td>
-          <td class="well"><%= room.location %></td>
+          <td class="well"><%= room[:name] %></td>
+          <td><%= room[:max_occupancy] %></td>
+          <td class="well"><%= room[:room_number] %></td>
+          <td><%= image_tag(room[:imgurl], size: '200x150') %></td>
+          <td class="well"><%= room[:location] %></td>
           <td><%= link_to 'Show', room  %></td>
         </tr>
       <% end %>
@@ -49,11 +49,11 @@
     <tbody>
       <% @room_occupancy.each do |room| %>
         <tr>
-          <td class="well"><%= room.name %></td>
-          <td><%= room.max_occupancy %></td>
-          <td class="well"><%= room.room_number %></td>
-          <td><%= image_tag(room.imgurl, size: '200x150') %></td>
-          <td class="well"><%= room.location %></td>
+          <td class="well"><%= room[:name] %></td>
+          <td><%= room[:max_occupancy] %></td>
+          <td class="well"><%= room[:room_number] %></td>
+          <td><%= image_tag(room[:imgurl], size: '200x150') %></td>
+          <td class="well"><%= room[:location] %></td>
           <td><%= link_to 'Show', room  %></td>
         </tr>
       <% end %>
@@ -81,11 +81,11 @@
     <tbody>
       <% @room_location.each do |room| %>
         <tr>
-          <td class="well"><%= room.name %></td>
-          <td><%= room.max_occupancy %></td>
-          <td class="well"><%= room.room_number %></td>
-          <td><%= image_tag(room.imgurl, size: '200x150') %></td>
-          <td><%= room.location %></td>
+          <td class="well"><%= room[:name] %></td>
+          <td><%= room[:max_occupancy] %></td>
+          <td class="well"><%= room[:room_number] %></td>
+          <td><%= image_tag(room[:imgurl], size: '200x150') %></td>
+          <td class="well"><%= room[:location] %></td>
           <td class="well"><%= link_to 'Show', room %></td>
         </tr>
       <% end %>
