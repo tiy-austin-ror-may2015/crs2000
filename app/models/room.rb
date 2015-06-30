@@ -7,7 +7,7 @@ def self.updated_room(room, params)
     room[:name]          = params[:room][:name]           if params[:room][:name]
     room[:location]      = params[:room][:location]       if params[:room][:location]
     room[:room_number]   = params[:room][:room_number]    if params[:room][:room_number]
-    room[:image]         = params[:room][:image]          if params[:room][:image]
+    room[:imgurl]         = params[:room][:imgurl]          if params[:room][:imgurl]
     room[:max_occupancy] = params[:room][:max_occupancy]  if params[:room][:max_occupancy]
     room
   end

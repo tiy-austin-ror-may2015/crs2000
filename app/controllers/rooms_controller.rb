@@ -63,12 +63,12 @@ class RoomsController < ApplicationController
       @room[:company_id] = @company.id
 
       if @room.save
-        redirect_to @room, notice: "#{@room.name} has been created"
-      else
-        redirect_to :back, alert: "Error occured, room not saved"
-      end
-    else
-     redirect_to :back, alert: "Access Denied"
+         redirect_to @room, notice: "#{@room.name} has been created"
+       else
+         redirect_to :back, alert: "Error occured, room not saved"
+       end
+     else
+      redirect_to :back, alert: "Access Denied"
     end
  end
 
@@ -128,6 +128,6 @@ class RoomsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def room_params
-      params.require(:room).permit(:name, :max_occupancy, :room_number, :image, :location)
+      params.require(:room).permit(:name, :max_occupancy, :room_number, :imgurl, :location)
     end
 end
