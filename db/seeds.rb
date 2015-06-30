@@ -13,7 +13,7 @@
   room = Room.create(name: Faker::Name.last_name, max_occupancy: Faker::Number.number(2),
               room_number: rand(200..400),
               # feel free to delete the amenities thing if you want
-                amenities: ["overhead projector", "teleconferencing capable", "hologram conferencing capable", "coffee maker", "videoconferencing capable", "soundproof", "whiteboard"].sample(rand(1..3)).join(", "),
+                # amenities: ["overhead projector", "teleconferencing capable", "hologram conferencing capable", "coffee maker", "videoconferencing capable", "soundproof", "whiteboard"].sample(rand(1..3)).join(", "),
                    imgurl: "http://cdn.home-designing.com/wp-content/uploads/2009/06/large-meeting-room.jpg",
                  location: Faker::App.name, company_id: company.id)
 
