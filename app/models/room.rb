@@ -2,7 +2,6 @@ class Room < ActiveRecord::Base
 belongs_to :company
 has_many :meetings
 validates_presence_of :name, :max_occupancy, :location
-validates :next_meeting_start_time, :numericality => { :greater_than_or_equal_to Time.now }
  # def self.any_seats_available_at?(room_id, start_time, end_time)
  #    @room         = Room.find(room_id])
  #    room_capacity = @room.max_occupancy

@@ -4,6 +4,8 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
+    update_rooms
+
     sort_by = room_params.fetch("sort_by", "created_at")
     sort_dir = room_params.fetch("sort_dir", "ASC")
     search_query = room_params.fetch("search_query", {})
@@ -107,6 +109,16 @@ class RoomsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_room
       @room = Room.find(params[:id])
+    end
+
+    def update_rooms
+      Room.all.each do |room|
+        next_meeting_start_time = room.meetings.where("start_time > '#{Time.now}'").minimum(:start_time)
+                                || Time.new(2038,1,19,3,14,07)
+        available = Meeting.where("end_time < '#{Time.now}'").any?
+        room.update(next_meeting_start_time: next_meeting_start_time
+                                  available: available);
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
