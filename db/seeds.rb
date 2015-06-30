@@ -21,8 +21,8 @@
                          password: 'password', password_confirmation: 'password',
                        company_id: company.id)
   meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
-                      start_time: (Time.now + 10.hours).strftime('%m/%d %I:%M%p'),
-                        end_time: (Time.now + 15.hours).strftime('%m/%d %I:%M%p'),
+                      start_time: (Time.now + 10.hours),
+                        end_time: (Time.now + 15.hours),
                          room_id: room.id, employee_id: employee.id)
   employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
                                          employee_id: employee.id,
