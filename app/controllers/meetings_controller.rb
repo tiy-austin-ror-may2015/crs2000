@@ -37,7 +37,7 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.save
-        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_later
+        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
         format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
         format.json { render :show, status: :created, location: @meeting }
       else
@@ -52,7 +52,7 @@ class MeetingsController < ApplicationController
   def update
     respond_to do |format|
       if @meeting.update(meeting_params)
-        MeetingMailer.meeting_changed(current_employee, @meeting).deliver_later
+        MeetingMailer.meeting_changed(current_employee, @meeting).deliver_now
         format.html { redirect_to @meeting, notice: 'Meeting was successfully updated.' }
         format.json { render :show, status: :ok, location: @meeting }
       else
@@ -65,7 +65,7 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1
   # DELETE /meetings/1.json
   def destroy
-    MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_later
+    MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
     @meeting.destroy
     respond_to do |format|
       format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }

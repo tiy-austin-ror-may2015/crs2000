@@ -75,7 +75,7 @@ class RoomsController < ApplicationController
   def destroy
     if user_is_admin?
       user = current_employee
-      company = user.company
+      @company = user.company
       @room = @company.rooms
 
       @room.destroy
