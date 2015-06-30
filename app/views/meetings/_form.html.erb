@@ -1,3 +1,14 @@
+ <%= form_for(@meeting) do |f| %>
+  <% if @meeting.errors.any? %>
+    <div id="error_explanation">
+     <h2><%= pluralize(@meeting.errors.count, "error") %> prohibited this meeting from being saved:</h2>
+      <ul>
+      <% @meeting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="field">
     <%= f.label :title %><br>
     <%= f.text_field :title %>
@@ -21,9 +32,6 @@
   <div class="field">
     <%= f.label :private %><br>
     <%= f.check_box :private %>
-  </div>
-  <div>
-    <%= f.hidden_field :employee_id, value: current_employee.id %>
   </div>
   <div class="actions">
     <%= f.submit %>
