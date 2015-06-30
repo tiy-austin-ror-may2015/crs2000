@@ -23,7 +23,7 @@ class RoomsController < ApplicationController
     sort_hash = Hash[sort_by.zip(sort_dir)]
     order_query = []
     sort_hash.each { |sort_by, sort_dir| order_query << "#{sort_by} #{sort_dir}" }
-    order_query.join(", ")
+    order_query = order_query.join(", ")
 
     @rooms = @rooms.order(order_query).paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
