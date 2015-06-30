@@ -1,5 +1,7 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+@import 'scaffolds.scss'
+
 //You need to now manually import every other scss file.
 .center{
   text-align: center;

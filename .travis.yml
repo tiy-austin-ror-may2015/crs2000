@@ -1,0 +1,11 @@
+language: ruby
+script: 
+  - rake db:create db:migrate db:test:prepare
+  - rake test:db
+rvm:
+  - 2.2.2
+  - 2.2.1
+  - 2.2.0
+addons:
+  code_climate:
+    repo_token: a09947141e45a340d2cfa70f43a3849bd280f500243000c3ca896bea1763de59
