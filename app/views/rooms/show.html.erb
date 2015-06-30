@@ -34,6 +34,8 @@ It should show the title, and the photo for each room. -->
       <p><strong>Location: </strong> <%=@room.location%></p>
       <p><strong>Occupancy: </strong><%= @room.max_occupancy %></p>
       <p><strong>Room Number: </strong><%= @room.room_number%></p>
+      <p><strong>Amenity </strong><% @room.amenities.each do |amenity|%> <%= amenity.perk %><% end %></p>
+
 </div>
   </div>
 </div>
