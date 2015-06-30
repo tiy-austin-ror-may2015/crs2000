@@ -14,4 +14,11 @@ class MeetingMailer < ApplicationMailer
     mail to: employee.email, subject: "Meeting Cancelled"
   end
 
+  def meeting_changed(employee, meeting)
+    @employee = employee
+    @meeting = meeting
+
+    mail to: employee.email, subject: "Meeting Changed"
+  end
+
 end

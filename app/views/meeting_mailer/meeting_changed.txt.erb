@@ -1,6 +1,6 @@
-Hello <%=@user%>,
+Hello <%=@employee.name%>,
 
-  This email is to confirm that you scheduled the following meeting:
+This email is to inform you that the <strong><%= @meeting.title %></strong> meeting has changed. The meeting details are now as follows:
 
     Title: <%= @meeting.title %>
     Location: <%= @meeting.location %>
@@ -11,8 +11,6 @@ Hello <%=@user%>,
       <% @meeting.employees.each do |employee| %>
         <%= employee.name %>
       <% end %>
-
-
 
 
 Please be sure to arrive on time. Thank you.
