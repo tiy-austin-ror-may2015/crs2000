@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :meetings
   devise_for :employees
-  get 'employee/:id', to: 'employees#show', as: 'employee'
+  get 'employees/:id', to: 'employees#show', as: 'employee'
+  get 'employees', to: 'employees#index', as: 'employees'
+  get 'employees/:id/edit', to: 'employees#edit', as: 'edit_employee'
+  patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
   resources :rooms
   resources :companies
 
