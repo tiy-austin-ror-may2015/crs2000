@@ -2,6 +2,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require "codeclimate-test-reporter"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'mocha'
+require 'mocha/test_unit'
+
 
 CodeClimate::TestReporter.start
 
