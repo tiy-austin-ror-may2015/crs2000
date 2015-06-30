@@ -1,5 +1,4 @@
 class MeetingsController < ApplicationController
-  before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
   # GET /meetings
   # GET /meetings.json
@@ -11,9 +10,35 @@ class MeetingsController < ApplicationController
   # GET /meetings/1.json
   def show
     @meeting = Meeting.find(params[:id])
+    @employee = current_employee
+    @attendees = EmployeeMeeting.where(meeting_id: @meeting.id)
+    get_occupancy
   end
 
-  # GET /meetings/new
+  def join
+    @employee = current_employee
+    if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @employee.id).count == 0
+      em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @employee.id)
+      em.save
+      # @meeting = Meeting.find(params[:id])
+      # # @employee = Employee.find(params[:employee_id])
+      # mm = MeetingMailer.new(@employee, @meeting)
+      # mm.meeting_scheduled.deliver_now
+      message = {notice: 'Employee successfully joined!'}
+    else
+      message = {alert: 'Employee already joined!'}
+    end
+    redirect_to meeting_path(params[:id]), message
+
+  end
+
+  def get_occupancy
+    @max_occupancy = Meeting.find(params[:id]).room.max_occupancy
+    attendees_num = EmployeeMeeting.where(meeting_id: params[:id]).count
+    @current_occupancy = @max_occupancy - attendees_num
+  end
+
+
   def new
     @meeting = Meeting.new
   end
@@ -37,7 +62,7 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.save
-        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_later
+        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
         format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
         format.json { render :show, status: :created, location: @meeting }
       else
@@ -52,7 +77,7 @@ class MeetingsController < ApplicationController
   def update
     respond_to do |format|
       if @meeting.update(meeting_params)
-        MeetingMailer.meeting_changed(current_employee, @meeting).deliver_later
+        MeetingMailer.meeting_changed(current_employee, @meeting).deliver_now
         format.html { redirect_to @meeting, notice: 'Meeting was successfully updated.' }
         format.json { render :show, status: :ok, location: @meeting }
       else
@@ -65,7 +90,7 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1
   # DELETE /meetings/1.json
   def destroy
-    MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_later
+    MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
     @meeting.destroy
     respond_to do |format|
       format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
@@ -74,13 +99,13 @@ class MeetingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_meeting
-      @meeting = Meeting.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_meeting
+    @meeting = Meeting.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def meeting_params
-      params.require(:meeting).permit(:title, :agenda, :start_time, :end_time)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def meeting_params
+    params.require(:meeting).permit(:title, :agenda, :start_time, :end_time)
+  end
 end
