@@ -4,8 +4,7 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
-    update_rooms
-
+    Room.all.each { |room| room.update_time_sensitive_values }
     @rooms = Room.search_with(params).sort_with(params).paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
@@ -100,15 +99,6 @@ class RoomsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_room
       @room = Room.find(params[:id])
-    end
-
-    def update_rooms
-      Room.all.each do |room|
-        hours_until_next_meeting = room.meetings.where("start_time > '#{Time.now}'").minimum(:start_time) || Time.new(2038,1,19,3,14,07)
-        hours_until_next_meeting = ((hours_until_next_meeting - Time.now) / 3600).round
-        available = room.meetings.where("start_time < '#{Time.now}' AND end_time > '#{Time.now}'").none?
-        room.update(hours_until_next_meeting: hours_until_next_meeting, available: available)
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
