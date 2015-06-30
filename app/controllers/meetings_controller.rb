@@ -1,13 +1,9 @@
 class MeetingsController < ApplicationController
 
-  # GET /meetings
-  # GET /meetings.json
   def index
     @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
   end
 
-  # GET /meetings/1
-  # GET /meetings/1.json
   def show
     @meeting = Meeting.find(params[:id])
     @employee = current_employee
@@ -25,7 +21,6 @@ class MeetingsController < ApplicationController
       message = {alert: 'Employee already joined!'}
     end
     redirect_to meeting_path(params[:id]), message
-
   end
 
   def get_occupancy
@@ -34,12 +29,10 @@ class MeetingsController < ApplicationController
     @current_occupancy = @max_occupancy - attendees_num
   end
 
-
   def new
     @meeting = Meeting.new
   end
 
-  # GET /meetings/1/edit
   def edit
     @meeting = Meeting.find(params[:id])
   end
@@ -50,8 +43,7 @@ class MeetingsController < ApplicationController
     @meeting_agenda = Meeting.search_for('agenda', params[:search])
                              .paginate(:page => params[:page], :per_page => 10)
   end
-  # POST /meetings
-  # POST /meetings.json
+
   def create
     @meeting = Meeting.new(meeting_params)
     @meeting.employee = current_employee
@@ -63,8 +55,6 @@ class MeetingsController < ApplicationController
       end
   end
 
-  # PATCH/PUT /meetings/1
-  # PATCH/PUT /meetings/1.json
   def update
     @meeting = Meeting.find(params[:id])
       if @meeting.update(meeting_params)
@@ -75,23 +65,18 @@ class MeetingsController < ApplicationController
       end
   end
 
-  # DELETE /meetings/1
-  # DELETE /meetings/1.json
   def destroy
     @meeting = Meeting.find(params[:id])
     MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
     @meeting.destroy
     redirect_to meetings_url, notice: 'Meeting was successfully destroyed.'
-    end
   end
 
-  private
-  # Use callbacks to share common setup or constraints between actions.
+private
   def set_meeting
     @meeting = Meeting.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def meeting_params
     params.require(:meeting).permit(:title, :agenda, :start_time, :end_time)
   end
