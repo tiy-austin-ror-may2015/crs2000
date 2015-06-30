@@ -2,3 +2,15 @@
 @import 'bootstrap';
 @import 'rooms.scss';
 @import 'scaffolds.scss';
+
+
+//You need to now manually import every other scss file.
+.center{
+  text-align: center;
+};
+.pull-right{
+  margin-right: 20px;
+};
+.margin-top{
+  margin-top: 15px;
+};
