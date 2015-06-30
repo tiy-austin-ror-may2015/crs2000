@@ -45,7 +45,7 @@ class MeetingsController < ApplicationController
   def edit
     @meeting = Meeting.find(params[:id])
     if employee_signed_in?
-      all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+      all_rooms = Room.where(company_id: current_employee.company_id)
       @room_options = all_rooms.map { |room| [room.name, room.id] }
     end
     current_meeting = Meeting.find(params[:id])
