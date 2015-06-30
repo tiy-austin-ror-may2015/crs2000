@@ -26,7 +26,7 @@
         <% @attendees.each do |attendee| %>
             <li><%= link_to attendee.employee.name, attendee.employee %></li>
         <% end %>
-        <td><%= link_to 'Invite', employee_path(current_user.company.id) %></td>
+        <td><%= link_to 'Invite', employee_path %></td>
       </ul>
     </div>
     <div class="col-md-6">
