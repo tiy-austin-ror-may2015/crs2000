@@ -23,9 +23,8 @@ class MeetingsController < ApplicationController
   def edit
     @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
     current_meeting = Meeting.find(params[:id])
-    # render json: current_meeting
-    if (current_employee.id != current_meeting.employee.id)
-      redirect_to meeting, notice: 'You are not the owner of this meeting!'
+    if current_employee.id != current_meeting.employee.id
+      redirect_to "/meetings", notice: 'You are not the owner of this meeting!'
     end
   end
 
