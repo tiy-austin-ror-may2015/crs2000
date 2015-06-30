@@ -57,6 +57,7 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1
   # DELETE /meetings/1.json
   def destroy
+    MeetingMailer.meeting_cancelled(employee, @meeting).deliver_later
     @meeting.destroy
     respond_to do |format|
       format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
