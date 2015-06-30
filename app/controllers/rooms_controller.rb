@@ -42,8 +42,6 @@ class RoomsController < ApplicationController
   def edit
   end
 
-<<<<<<< HEAD
-=======
   def search
     if params[:search].to_i > 0
       @room_occupancy = Room.where("max_occupancy >" + params[:search])
@@ -60,9 +58,6 @@ class RoomsController < ApplicationController
     end
   end
 
-  # POST /rooms
-  # POST /rooms.json
->>>>>>> 4622d37afdf750746fe73b19112a520d583dcf4b
  def create
   if user_is_admin?
 
