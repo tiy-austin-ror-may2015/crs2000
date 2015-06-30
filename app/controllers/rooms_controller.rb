@@ -40,8 +40,12 @@ class RoomsController < ApplicationController
 
   # GET /rooms/new
   def new
-    @room = Room.new
-    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    if user_is_admin?
+      @room = Room.new
+      @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    else
+      redirect_to :back, alert: "Access Denied"
+    end
   end
 
   # GET /rooms/1/edit
@@ -124,6 +128,6 @@ class RoomsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def room_params
-      params.require(:room).permit(:name, :max_occupancy, :room_number, :imgurl, :location)
+      params.require(:room).permit(:name, :max_occupancy, :room_number, :image, :location)
     end
 end
