@@ -20,9 +20,6 @@ class MeetingsController < ApplicationController
     if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @employee.id).count == 0
       em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @employee.id)
       em.save
-      @meeting = Meeting.find(params[:id])
-      @employee = current_employee
-      mm = MeetingMailer.meeting_scheduled(@employee, @meeting).deliver_later
       message = {notice: 'Employee successfully joined!'}
     else
       message = {alert: 'Employee already joined!'}
