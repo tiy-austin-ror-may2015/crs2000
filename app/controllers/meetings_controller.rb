@@ -11,16 +11,19 @@ class MeetingsController < ApplicationController
   def show
     @meeting = Meeting.find(params[:id])
     @employee = current_employee
+    @attendees = EmployeeMeeting.where(meeting_id: @meeting.id)
     get_occupancy
   end
 
   def join
-    ec = EmployeeMeeting.new(meeting_id: params[:id], employee_id: params[:employee_id])
-    if EmployeeMeeting.where(meeting_id: params[:id] ).count == 0
-      ec.save
-      @meeting = Meeting.find(params[:id])
-      @employee = Employee.find(params[:employee_id])
-      MeetingMailer.meeting_scheduled(employee, meeting).deliver_now
+    @employee = current_employee
+    if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @employee.id).count == 0
+      em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @employee.id)
+      em.save
+      # @meeting = Meeting.find(params[:id])
+      # # @employee = Employee.find(params[:employee_id])
+      # mm = MeetingMailer.new(@employee, @meeting)
+      # mm.meeting_scheduled.deliver_now
       message = {notice: 'Employee successfully joined!'}
     else
       message = {alert: 'Employee already joined!'}

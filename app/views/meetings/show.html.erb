@@ -1,31 +1,31 @@
 <div class="container">
   <div class="row">
     <p id="notice" class="alert"><%= notice %></p>
+    <p style='color:red;'><%= flash[:alert] %></p>
 
     <h2><%= @meeting.title.capitalize %></h2>
 
     <h3>Agenda</h3>
-    <div>
-     class="well">
+    <div class="well">
       <p><%= @meeting.agenda %></p>
     </div>
 
     <h3>Max Occupancy:</h3>
-    <div>
-      class="well">
+    <div class="well">
       <p><%= @max_occupancy %></p>
     </div>
 
     <h3>Current Occupancy:</h3>
-    <div>
-      class="well">
+    <div class="well">
       <p><%= @current_occupancy %></p>
     </div>
 
     <div class="col-md-6">
       <h3>Attendees</h3>
       <ul>
-        <li><%= link_to @meeting.employee.name, @meeting.employee %></li>
+        <% @attendees.each do |attendee| %>
+            <li><%= link_to attendee.employee.name, attendee.employee %></li>
+        <% end %>
       </ul>
     </div>
     <div class="col-md-6">
@@ -39,7 +39,7 @@
     </div>
   </div>
   <div class="row">
-    <%= link_to 'JOIN', join_employee_path(@meeting.id, @employee.id), method: 'POST', class: 'btn btn-default' %>
+    <%= link_to 'JOIN', join_employee_path(@meeting.id), method: 'POST', class: 'btn btn-default' %>
     <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-success" %>
     <%= link_to 'Back', meetings_path, class: "btn btn-default" %>
   </div>
