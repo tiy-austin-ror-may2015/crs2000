@@ -5,18 +5,19 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     update_rooms
-
     sort_by = room_params.fetch("sort_by", "created_at")
     sort_dir = room_params.fetch("sort_dir", "ASC")
     search_query = room_params.fetch("search_query", {})
     name = search_query.fetch("name", "")
-    max_occupancy = search_query.fetch("max_occupancy", "")
-    room_number = search_query.fetch("room_number", "")
-    meetings_count = search_query.fetch("meetings_count", "")
-    available = search_query.fetch("meetings_count", "")
-    @rooms = Room.where()
-                 .order("#{sort_by} #{sort_dir}")
-                 .paginate(:page => params[:page], :per_page => 10)
+    max_occupancy = search_query.fetch("max_occupancy", "0")
+    room_number = search_query.fetch("room_number", "%%")
+    meetings_count = search_query.fetch("meetings_count", "%%")
+    available = search_query.fetch("available", "%%")
+    @rooms = Room.where("lower(name) LIKE lower('%#{name}%') AND
+                          max_occupancy >= #{max_occupancy} AND
+                          CAST(room_number AS TEXT) LIKE '#{room_number}' AND
+                          CAST(meetings_count AS TEXT) LIKE '#{meetings_count}' AND
+                          CAST(available AS TEXT) LIKE '#{available}'").order("#{sort_by} #{sort_dir}").paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html
       format.json { render json: @rooms }
