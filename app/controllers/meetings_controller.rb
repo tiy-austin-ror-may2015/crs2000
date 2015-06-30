@@ -57,6 +57,7 @@ class MeetingsController < ApplicationController
 
   def create
     @meeting = Meeting.new(meeting_params)
+    check_employee_overlap!
     @meeting.employee = current_employee
       if @meeting.save
         MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
@@ -88,17 +89,16 @@ class MeetingsController < ApplicationController
     end
   end
 
-  # def check_employee_overlap!
-  #   @meeting = Meeting.new(meeting_params)
-  #   @attendees = EmployeeMeeting.where(meeting_id: params[:id])
-  #   @attendees.each do |attendee|
-  #     @begin_time = attendee.meeting.start_time
-  #     @finish_time = attendee.meeting.end_time
-  #   end
-  #   if  < @finish_time
-  #     redirect_to @meeting, alert: 'You are already in another meeting.'
-  #   end
-  # end
+  def check_employee_overlap!
+    @attendees = EmployeeMeeting.where(meeting_id: params[:id])
+    @attendees.each do |attendee|
+      @begin_time = attendee.meeting.start_time
+      @finish_time = attendee.meeting.end_time
+    end
+    if @meeting.start_time< Time.now
+      redirect_to @meeting, alert: 'You are already in another meeting.'
+    end
+  end
 
 
 
