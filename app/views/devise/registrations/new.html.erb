@@ -31,6 +31,11 @@
     </div>
 
     <div class="form-group">
+      <%= f.label :company %><br>
+      <%= f.select :company_id, company_dropdown %>
+    </div>
+
+    <div class="form-group">
       <%= f.button "Sign Up", class: 'btn btn-lg btn-primary btn-md' %>
     </div>
 <% end %>
