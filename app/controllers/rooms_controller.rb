@@ -49,12 +49,19 @@ class RoomsController < ApplicationController
   end
 
   def search
-    @room_name      = Room.where("name LIKE ?", "%" + params[:search] + "%")
-                          .paginate(:page => params[:page], :per_page => 10)
-    sql ="SELECT * FROM rooms WHERE max_occupancy > #{params[:search].to_i}"
-    @room_occupancy = ActiveRecord::Base.connection.execute(sql).as_json
-    @room_location  = Room.where("location LIKE ?", "%" + params[:search] + "%")
-                          .paginate(:page => params[:page], :per_page => 10)
+    if params[:search].to_i > 0
+      @room_occupancy = Room.where("max_occupancy >" + params[:search])
+                            .paginate(:page => params[:page], :per_page => 10)
+      @room_name = []
+      @room_location = []
+    else
+      @room_name      = Room.where("lower(name) LIKE ?", "%" + params[:search] + "%")
+                            .paginate(:page => params[:page], :per_page => 10)
+
+      @room_location  = Room.where("lower(location) LIKE ?", "%" + params[:search] + "%")
+                            .paginate(:page => params[:page], :per_page => 10)
+      @room_occupancy = []
+    end
   end
 
   # POST /rooms
