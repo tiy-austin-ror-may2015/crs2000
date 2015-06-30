@@ -5,9 +5,9 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     update_rooms
-    sort_by = room_params.fetch("sort_by", "created_at")
-    sort_dir = room_params.fetch("sort_dir", "ASC")
-    search_query = room_params.fetch("search_query", {})
+    sort_by = params.fetch("sort_by", "created_at")
+    sort_dir = params.fetch("sort_dir", "ASC")
+    search_query = params.fetch("search_query", {})
     name = search_query.fetch("name", "")
     max_occupancy = search_query.fetch("max_occupancy", "0")
     room_number = search_query.fetch("room_number", "%%")
@@ -114,11 +114,9 @@ class RoomsController < ApplicationController
 
     def update_rooms
       Room.all.each do |room|
-        next_meeting_start_time = room.meetings.where("start_time > '#{Time.now}'").minimum(:start_time)
-                                || Time.new(2038,1,19,3,14,07)
-        available = Meeting.where("end_time < '#{Time.now}'").any?
-        room.update(next_meeting_start_time: next_meeting_start_time
-                                  available: available);
+        next_meeting_start_time = room.meetings.where("start_time > '#{Time.now}'").minimum(:start_time) || Time.new(2038,1,19,3,14,07)
+        available = room.meetings.where("start_time < '#{Time.now}' AND end_time > '#{Time.now}'").none?
+        room.update(next_meeting_start_time: next_meeting_start_time, available: available);
       end
     end
 
