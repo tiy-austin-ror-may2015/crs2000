@@ -11,7 +11,11 @@ Rails.application.routes.draw do
 
   resources :rooms
   resources :companies
-  resources :admin
+
+# ADMIN
+  get 'admin/reports_meetings', to: 'admin#reports_meetings'
+  get 'admin/reports_rooms', to: 'admin#reports_rooms'
+  get 'admin/reports_rooms/top_rooms', to: 'admin#top_rooms'
 
   root to:'rooms#index'
 

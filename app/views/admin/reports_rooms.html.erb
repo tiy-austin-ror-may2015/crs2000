@@ -1,7 +1,36 @@
+
+
+<div class="report-inner">
+  <h1>TOP ROOMS</h1>
+    <table class="report-container">
+      <table id="top_rooms">
+
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>MAX OCC</th>
+            <th>IMAGE</th>
+            <th>LOCATION</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+<%= @top_rooms %>
+          </tr>
+        </tbody>
+
+    </table>
+  </table>
+</div>
+
+
+
 <div class="report-inner">
   <h1>ROOMS</h1>
     <table class="report-container">
       <table id="rooms">
+
         <thead>
           <tr>
             <th>NAME</th>
@@ -21,9 +50,8 @@
             <td><%= reports_rooms.imgurl %></td>
             <td><%= reports_rooms.location %></td>
           </tr>
+        </tbody>
         <% end %>
-      </tbody>
     </table>
   </table>
 </div>
-

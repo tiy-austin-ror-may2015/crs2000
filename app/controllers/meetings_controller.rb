@@ -110,6 +110,11 @@ class MeetingsController < ApplicationController
     end
   end
 
+# QUESTIONS? TALK TO WILL
+  def reports_meetings
+    @reports_meetings = Meeting.all
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_meeting
