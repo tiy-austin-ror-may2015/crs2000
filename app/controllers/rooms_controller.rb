@@ -59,7 +59,7 @@ class RoomsController < ApplicationController
       @room[:company_id] = @company.id
 
       if @room.save
-        redirect_to :back, notice: "#{@room.name} has been created"
+        redirect_to @room, notice: "#{@room.name} has been created"
       else
         redirect_to :back, alert: "Error occured, room not saved"
       end
@@ -78,7 +78,7 @@ class RoomsController < ApplicationController
       @room = Room.updated_room(@room, params)
 
       if @room.save
-        redirect_to :back, notice: "#{@room.name} has been updated"
+        redirect_to @room, notice: "#{@room.name} has been updated"
       else
         redirect_to :back, alert: "Error occured, updates not saved"
       end
@@ -93,7 +93,6 @@ class RoomsController < ApplicationController
     if user_is_admin?
 
       @room = Room.find(params[:id])
-
       @room.destroy
       respond_to do |format|
         format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
@@ -102,6 +101,10 @@ class RoomsController < ApplicationController
     else
       redirect_to :back, alert: "Access Denied"
     end
+  end
+
+  def employee_company
+    current_employee.company
   end
 
   private

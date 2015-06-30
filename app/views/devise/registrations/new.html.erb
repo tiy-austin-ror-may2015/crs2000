@@ -1,4 +1,11 @@
-<h2>Sign up</h2>
+<div class="container" style="margin-top:3%">
+  <div class="col-md-5 col-md-offset-4">
+    <div class="panel panel-default">
+      <div class="panel panel-header text-center">
+        <h1> Sign Up</h1>
+        <h4> We're so glad you came!</h4>
+      </div>
+      <div class="panel-body text-center">
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
@@ -24,8 +31,14 @@
     </div>
 
     <div class="form-group">
-      <%= f.submit "Sign up", class: "btn btn-lg btn-primary" %>
+      <%= f.button "Sign Up", class: 'btn btn-lg btn-primary btn-md' %>
     </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
+    </div>
+  </div>
+</div>
+</div>
+

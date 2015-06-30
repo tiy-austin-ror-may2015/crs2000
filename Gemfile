@@ -58,6 +58,7 @@ group :development, :test do
   gem 'faker'
 end
 
+gem 'mocha'
 gem 'bullet', group: :development
 gem 'bootstrap-sass'
 gem 'react-rails'

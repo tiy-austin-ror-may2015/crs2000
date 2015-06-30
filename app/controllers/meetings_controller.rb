@@ -45,21 +45,22 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1/edit
   def edit
+    @meeting = Meeting.find(params[:id])
   end
 
   def search
-    @meeting_title  = Meeting.all.where("title LIKE ?", "%" + params[:search] + "%")
-                                 .paginate(:page => params[:page], :per_page => 10)
-    @meeting_agenda = Meeting.all.where("agenda LIKE ?", "%" + params[:search] + "%")
-                                 .paginate(:page => params[:page], :per_page => 10)
-    @meeting_rooms  = Room.all.where("name LIKE ?", "%" + params[:search] + "%")
-                                 .paginate(:page => params[:page], :per_page => 10)
+    @meeting_title  = Meeting.where("title LIKE ?", "%" + params[:search] + "%")
+                             .paginate(:page => params[:page], :per_page => 10)
+    @meeting_agenda = Meeting.where("agenda LIKE ?", "%" + params[:search] + "%")
+                             .paginate(:page => params[:page], :per_page => 10)
+    @meeting_rooms  = Room.where("name LIKE ?", "%" + params[:search] + "%")
+                             .paginate(:page => params[:page], :per_page => 10)
   end
   # POST /meetings
   # POST /meetings.json
   def create
     @meeting = Meeting.new(meeting_params)
-
+    @meeting.employee = current_employee
     respond_to do |format|
       if @meeting.save
         MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
@@ -75,6 +76,7 @@ class MeetingsController < ApplicationController
   # PATCH/PUT /meetings/1
   # PATCH/PUT /meetings/1.json
   def update
+    @meeting = Meeting.find(params[:id])
     respond_to do |format|
       if @meeting.update(meeting_params)
         MeetingMailer.meeting_changed(current_employee, @meeting).deliver_now
@@ -90,6 +92,7 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1
   # DELETE /meetings/1.json
   def destroy
+    @meeting = Meeting.find(params[:id])
     MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
     @meeting.destroy
     respond_to do |format|
