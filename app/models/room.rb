@@ -31,7 +31,7 @@ class Room < ActiveRecord::Base
   end
 
   def update_time_sensitive_values
-    hours_until_next_meeting = self.meetings.where("start_time > '#{Time.now}'").minimum(:start_time) || Time.now - 1.hour.ago
+    hours_until_next_meeting = self.meetings.where("start_time > '#{Time.now}'").minimum(:start_time) || 1.hour.ago
     hours_until_next_meeting = ((hours_until_next_meeting - Time.now) / 3600).round
     available = self.meetings.where("start_time < '#{Time.now}' AND end_time > '#{Time.now}'").none?
 
