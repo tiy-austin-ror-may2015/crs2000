@@ -1,5 +1,6 @@
 
-image = ["http://www.coolbusinessideas.com/wp-content/uploads/2014/05/modern-meeting-room.jpg",
+image =
+["http://www.coolbusinessideas.com/wp-content/uploads/2014/05/modern-meeting-room.jpg",
  "http://montvilleoffice.com/wp-content/uploads/2014/07/169979447_conference-room.jpg",
  "http://www.download3dhouse.com/wp-content/uploads/2013/10/Interior-design-meeting-room-3D-view.jpg",
  "http://cdn.home-designing.com/wp-content/uploads/2009/06/creative-light-meeting-room.jpg",

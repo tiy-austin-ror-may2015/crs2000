@@ -24,9 +24,9 @@
       <h3>Attendees</h3>
       <ul>
         <% @attendees.each do |attendee| %>
-            <li><%= link_to attendee.employee.name, attendee.employee %></li>
+            <li><%= link_to attendee.name, attendee %></li>
         <% end %>
-        <td><%= link_to 'Invite', employee_path %></td>
+
       </ul>
     </div>
     <div class="col-md-6">
@@ -43,5 +43,43 @@
     <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-success" %>
     <%= link_to 'Back', meetings_path, class: "btn btn-default" %>
   </div>
+
+  <% if @meeting_owner == true %>
+  <div class="row">
+    <br>
+    <br>
+    <h2>Invite Employees</h2>
+    <% if @invitees.count > 0 %>
+        <table class="table" style="width:50%">
+          <thead>
+          <tr>
+            <th>Invite?</th>
+            <th>Employee</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @invitees.each do |invitee|%>
+            <tr>
+              <td>
+                <% if invitee.invitations.where(meeting_id: @meeting.id).exists? %>
+                    <br><p style="font-style: italic">Already invited!</p>
+                <% else %>
+                    <%= link_to 'Invite', invitation_path(@meeting.id, invitee.id), method: 'POST', class: 'btn btn-default' %>
+                <% end %>
+              </td>
+              <td>
+                <h5><strong><%= invitee.name %></strong></h5>
+                <p><strong>Company: </strong><%= link_to invitee.company.name, invitee.company %> </p>
+                <p><strong>Email: </strong><%= invitee.email %></p>
+              </td>
+            </tr>
+            <%end %>
+          </tbody>
+        </table>
+    <% else %>
+        <p>There is no-one to invite.</p>
+    <% end %>
+  </div>
+  <% end %>
 </div>
 

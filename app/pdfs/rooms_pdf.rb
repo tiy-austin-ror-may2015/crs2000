@@ -6,20 +6,24 @@ class RoomsPdf < Prawn::Document
      rooms_rows
   end
 
+   def table_data
+    @table_data ||= @events.map { |e| [e.id, e.name, e.created_at.strftime("%m/%d/%y"), e.created_by.try(:full_name)] }
+  end
+
   def rooms
     move_down 10
     table rooms_rows do
       row(0).font_style = :bold
       columns(1..3).align = :right
+      self.header = true
       self.row_colors = ["DDDDDD","FFFFFF"]
-      self.headers = true
     end
   end
 
   def rooms_rows
-    [["Name", "Number", "Location", "Max Occupancy"]]
-    @rooms.map do |item|
-      [item.name, item.number, item.location, item.max_occupation]
+      [["Meeting Name", "Location", "Max Occupancy", "Available"]] +
+    @room.map do |item|
+      [item.name, item.location, item.max_occupancy, item.available.inspect ]
     end
   end
 end

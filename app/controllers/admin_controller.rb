@@ -17,14 +17,18 @@ class AdminController < ApplicationController
   def index
     @meetings = Meeting.all
     @rooms = Room.all
+  end
+
+  def room_table
+    @rooms = Room.all
      respond_to do |format|
       format.html
       format.pdf do
-        pdf = RoomsPdf.new(room.all)
+        pdf = RoomsPdf.new(Room.all)
         send_data pdf.render, filename: "room.pdf",
                               type: 'appliciation/pdf',
                               disposition: "inline"
+      end
     end
   end
 end
-
