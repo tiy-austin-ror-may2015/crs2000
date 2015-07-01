@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     all_room_meetings = requested_meeting.room.meetings
     room_other_meetings = all_room_meetings - [requested_meeting]
     room_other_meetings.each do |meeting|
-      if requested_meeting.start_time < meeting.end_time && requsted_meeting.start_time >= meeting.start_time ||
+      if requested_meeting.start_time < meeting.end_time && requested_meeting.start_time >= meeting.start_time ||
          (meeting.start_time..meeting.end_time).cover?(requested_meeting.end_time)
         return false
       else
