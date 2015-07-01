@@ -1,5 +1,5 @@
 Given(/^I need to register$/) do
-  :authenticate_employee!
+  Company.create(name: 'joe steel inc')
 end
 
 When(/^I sign up$/) do

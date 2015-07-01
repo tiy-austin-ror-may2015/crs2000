@@ -10,7 +10,7 @@ Feature:
     Given I have an account
     When I login
     And I click "Log Out"
-    Then I should be on the "/"
+    Then I should be on the "/employees/sign_in"
 
   Scenario: Going to Meetings index
     Given I have an account
