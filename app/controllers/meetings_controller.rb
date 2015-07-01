@@ -1,14 +1,15 @@
 class MeetingsController < ApplicationController
 
   def index
+    @company = current_employee.company
     if current_employee
         company   = Company.find(current_employee.company.id)
       if user_is_admin?
-        @meetings = company.meetings.today_forward
-        @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+        @meetings = current_employee.company.meetings.today_forward
+        @meetings = current_employee.company.meetings.paginate(:page => params[:page], :per_page => 10)
       else
-        @meetings = company.meetings.today_forward.where("private = false")
-        @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+        @meetings = current_employee.company.meetings.today_forward.where("private = false")
+        @meetings = current_employee.company.meetings.paginate(:page => params[:page], :per_page => 10)
       end
     else
       redirect_to root_path, alert: "Please Log In"
