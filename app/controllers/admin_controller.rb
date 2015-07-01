@@ -14,9 +14,8 @@ class AdminController < ApplicationController
     end
   end
 
-  def index
-    @meetings = Meeting.all
-    @rooms = Room.all
+  def reports_meetings
+    @reports_meetings = Meeting.all
   end
 
   def room_table
@@ -31,4 +30,22 @@ class AdminController < ApplicationController
       end
     end
   end
-end
+
+  def reports_rooms
+    @reports_rooms = Room.all
+    @top_rooms = Meeting.joins(:room).group(:room).order('count_all DESC').limit(3).count
+  end
+
+  def busiest_employees
+    @busiest_employees = Meeting.joins(:employee).group(:employee).order('count_all DESC').limit(3).count
+  end
+
+  def add_branding
+    if user_is_admin?
+      @company = current_employee.company
+      render 'companies/_form'
+    else
+      redirect_to root_path, alert: "Access Denied"
+    end
+  end
+
