@@ -29,5 +29,5 @@ class Employee < ActiveRecord::Base
   belongs_to :company
   has_many :meetings
   has_many :employee_meetings
-
+  has_many :invitations
 end
