@@ -68,6 +68,15 @@ end
     Room.where(where_query)
   end
 
+  def self.sort_with(params)
+    sort_by   = params.fetch("sort_by", "name||").split("||")
+    sort_dir  = params.fetch("sort_dir", "ASC||").split("||")
+    sort_hash = Hash[sort_by.zip(sort_dir)]
+
+    order_query = sort_hash.map { |sort_by, sort_dir| "#{sort_by} #{sort_dir}" }.join(", ")
+    self.order(order_query)
+  end
+
   def self.company_rooms(company)
     self.where(company_id: company).map { |room| [room.name, room.id] }
   end
@@ -84,22 +93,5 @@ end
     search_query = "lower(name) LIKE '%#{search}%' OR lower(location) LIKE '%#{search}%'
                     OR max_occupancy > #{max_occupancy}" + amenity_query
     self.where(search_query)
-  end
-
-  def get_next_meeting_start_time_and_availability(admin)
-    time = "N/A"
-    available = "yes"
-    now = Time.now
-    unless meetings.none?
-      next_start_time = meetings.first.start_time
-      meetings = admin ? self.meetings : self.meetings.where(private: false)
-      next_start_time = meetings.first.start_time
-      meetings.each do |meeting|
-        start_time = meeting.start_time
-        available = "no" if start_time <= now && meeting.end_time >= now
-        time = start_time if start_time > now && start_time <= next_start_time
-      end
-    end
-    [time, available]
   end
 end
