@@ -1,14 +1,12 @@
 <p id='notice'><%= notice %></p>
 
-  <div class='row pull-right margin-top'>
-    <form action='/search/rooms' method='GET'>
-      <input type='text' name='search'/>
-      <input type='submit' value='Search' class='btn btn-primary' />
-    </form>
-  </div>
-<div class='container'>
-  <div class='row'>
-    <p id='notice'><%= notice %></p>
+<div class='row pull-right margin-top'>
+  <form action='/search/rooms' method='GET'>
+    <input type='text' name='search'/>
+    <input type='submit' value='Search' class='btn btn-primary' />
+  </form>
+</div>
+
 
 <h1>All Rooms</h1>
 <%= react_component("RoomsTable", { rooms_array: @rooms_array, page: 1, limit: 10 }) %>
@@ -69,7 +67,9 @@
         <div class='col-md-4'></div>
         <div class='col-md-8 align-left'>
           <input type='submit' value='Search' class='btn btn-primary' />
+        </div>
       </div>
     </form>
   </div>
 </div>
+
