@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
+  get '/search_advance/rooms', to: 'rooms#search_advance'
 
   resources :rooms
   resources :companies
