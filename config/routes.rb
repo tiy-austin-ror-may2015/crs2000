@@ -6,24 +6,11 @@ Rails.application.routes.draw do
 
 
   authenticate :employee do
-    post 'meetings/invite/:meeting_id/:employee_id', to: 'invitations#invite', as: :invitation
-    get 'employees/:id', to: 'employees#show', as: 'employee'
-    get 'employees', to: 'employees#index', as: 'employees'
-    get 'employees/:id/edit', to: 'employees#edit', as: 'edit_employee'
-    patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
-    get '/search/meetings', to: 'meetings#search'
-    get '/search/rooms', to: 'rooms#search'
-    get '/search_advance/rooms', to: 'rooms#search_advance'
-    get '/search/employees', to: 'employees#employee_search'
-    get 'admin/reports_meetings', to: 'admin#reports_meetings'
-    get 'admin/reports_rooms', to: 'admin#reports_rooms'
-    get 'admin/reports_rooms/top_rooms', to: 'admin#top_rooms'
-    post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
-    get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
 
     resources :rooms
     resources :companies
-    get 'meetings/view_invites', to: "meetings#view_invites"
+    get 'invitations/show', to: "invitations#show"
+    delete 'invitations/:id', to: "invitations#destroy", as: 'invitation'
     resources :meetings
     resources :admin
 
@@ -43,7 +30,7 @@ Rails.application.routes.draw do
   get '/search/employees', to: 'employees#employee_search'
 
 
-  post 'meetings/invite/:meeting_id/:employee_id', to: 'meetings#invite', as: :invitation
+  post 'invitations/new', to: 'invitations#create', as: :invitations
   post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
 
   get '/search/meetings', to: 'meetings#search'

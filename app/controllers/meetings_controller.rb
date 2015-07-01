@@ -123,10 +123,6 @@ class MeetingsController < ApplicationController
     return false
   end
 
-  def view_invites
-    @invitations = Invitation.all
-  end
-
 # QUESTIONS? TALK TO WILL
   def reports_meetings
     @reports_meetings = Meeting.all
