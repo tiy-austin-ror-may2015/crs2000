@@ -36,7 +36,6 @@ Rails.application.routes.draw do
   resources :meetings
 
   root to:'rooms#index'
-  end
 
 
 
