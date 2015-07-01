@@ -16,7 +16,6 @@ class AdminController < ApplicationController
   def reports_meetings
     @reports_meetings = Meeting.all
   end
-<<<<<<< HEAD
 
   def reports_rooms
     @reports_rooms = Room.all
@@ -25,10 +24,15 @@ class AdminController < ApplicationController
 
   def busiest_employees
     @busiest_employees = Meeting.sort_by
-
   end
 
+  def add_branding
+    if user_is_admin?
+      @company = current_employee.company
+      render 'companies/_form'
+    else
+      redirect_to root_path, alert: "Access Denied"
+    end
+  end
 
-=======
->>>>>>> b4777f063825031ac491d0bd158455de3f175b09
 end

@@ -6,6 +6,7 @@
 @import 'dataTables/jquery.dataTables';
 @import 'scaffolds.scss';
 @import 'rooms';
+@import 'employee';
 //You need to now manually import every other scss file.
 .center{
   text-align: center;
@@ -38,6 +39,10 @@
     text-align: left;
     padding-left: 5px;
   }
+}
+
+.next-prev{
+  margin: 1em;
 }
 
 .report-container {
