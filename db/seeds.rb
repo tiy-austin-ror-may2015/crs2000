@@ -19,7 +19,7 @@ image =
  "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg",
  "http://i.ytimg.com/vi/bDUkzYWxR7E/hqdefault.jpg"]
 
-amenities = ['Coffeemaker', 'Courtyard View' 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
+amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
 
 random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12.hours),(Time.now + 13.hours)]
 3.times do
