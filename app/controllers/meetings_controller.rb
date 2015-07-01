@@ -2,12 +2,7 @@ class MeetingsController < ApplicationController
 
   def index
     @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
-    # company   = Company.find(current_employee.company.id)
-    # @meetings = company.meetings
-    # binding.pry
-    # @meetings = Meeting.send_meetings(@meetings)
 
-    # @meetings.paginate(:page => params[:page], :per_page =>10)
   end
 
   def show
@@ -70,7 +65,8 @@ class MeetingsController < ApplicationController
   def edit
     @meeting = Meeting.find(params[:id])
     if employee_signed_in?
-      @room_options = Room.company_rooms(current_employee.company_id)
+      all_rooms = Room.where(company_id: current_employee.company_id)
+      @room_options = all_rooms.map { |room| [room.name, room.id] }
     end
     current_meeting = Meeting.find(params[:id])
     if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
@@ -85,29 +81,33 @@ class MeetingsController < ApplicationController
 
   def create
     @meeting = Meeting.new(meeting_params)
-    if meeting_overlap? (@meeting)
-      redirect_to new_meeting_path, alert: 'You own or are already in another meeting at this time.'
-    else
+    if room_is_available?(@meeting)
       @meeting.employee = current_employee
-      if @meeting.save
-        em = EmployeeMeeting.new(meeting_id: @meeting.id, employee_id: current_employee.id)
-        em.save
-        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
-        redirect_to @meeting, notice: 'Meeting was successfully created.'
-      else
-        render :new
-      end
+        if @meeting.save
+          MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
+          redirect_to @meeting, notice: 'Meeting was successfully created.'
+        else
+          render :new
+        end
+    else
+      flash[:alert] = "That room is already occupied during that time."
+      redirect_to :back
     end
   end
 
   def update
     @meeting = Meeting.find(params[:id])
+    if room_is_available?(@meeting)
       if @meeting.update(meeting_params)
         MeetingMailer.meeting_changed(current_employee, @meeting).deliver_now
         redirect_to @meeting, notice: 'Meeting was successfully updated.'
       else
         render :edit
       end
+    else
+      flash[:alert] = "That room is already occupied during that time."
+      redirect_to :back
+    end
   end
 
   def destroy
