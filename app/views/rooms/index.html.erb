@@ -26,8 +26,10 @@
         <td class="well"><%= room.available %></td>
         <td><%= room.hours_until_next_meeting %></td>
         <td class="well"><%= link_to 'Show', room %></td>
-        <td><%= link_to 'Edit', edit_room_path(room) %></td>
-        <td class="well"><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if user_is_admin? %>
+          <td><%= link_to 'Edit', edit_room_path(room) %></td>
+          <td class="well"><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
