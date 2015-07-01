@@ -57,13 +57,11 @@ end
     name = params.fetch("name", "")
     max_occupancy = params.fetch("max_occupancy", "").empty? ? "-1" : params["max_occupancy"]
     room_number = params.fetch("room_number", "").empty? ? "%%" : params["room_number"]
-    available = params.fetch("available", "false")
     location = params.fetch("location", "").empty? ? "%%" : params["location"]
 
     where_query = "lower(name) LIKE lower('%#{name}%') AND
                    max_occupancy >= #{max_occupancy} AND
                    CAST(room_number AS TEXT) LIKE '#{room_number}' AND
-                   available = #{available} AND
                    lower(location) LIKE lower('#{location}')" +
                    company_id_query
 
@@ -77,14 +75,6 @@ end
 
     order_query = sort_hash.map { |sort_by, sort_dir| "#{sort_by} #{sort_dir}" }.join(", ")
     self.order(order_query)
-  end
-
-  def update_time_sensitive_values
-    hours_until_next_meeting = self.meetings.where("start_time > '#{Time.now}'").minimum(:start_time) || 1.hour.ago
-    hours_until_next_meeting = ((hours_until_next_meeting - Time.now) / 3600).round
-    available = self.meetings.where("start_time < '#{Time.now}' AND end_time > '#{Time.now}'").none?
-
-    self.update(hours_until_next_meeting: hours_until_next_meeting, available: available)
   end
 
   def self.company_rooms(company)
