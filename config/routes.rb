@@ -60,8 +60,6 @@
 #
 
 Rails.application.routes.draw do
-  resources :meetings
-  post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
   devise_for :employees
 
   post 'meetings/invite/:meeting_id/:employee_id', to: 'meetings#invite', as: :invitation
@@ -74,12 +72,16 @@ Rails.application.routes.draw do
   get '/search_advance/rooms', to: 'rooms#search_advance'
   get '/search/employees', to: 'employees#employee_search'
 
-  resources :rooms
-  resources :companies
-  get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
-  resources :admin
-  root to:'rooms#index'
+  authenticate :employee do
+    resources :meetings
+    post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
 
+    resources :rooms
+    resources :companies
+    get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
+    resources :admin
+  end
+  root to:'rooms#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
