@@ -3,11 +3,11 @@ class RoomsController < ApplicationController
 
   def index
     Room.all.each { |room| room.update_time_sensitive_values }
-    @rooms = Room.all.paginate(:page => params[:page], :per_page => 10)
+    @rooms = Room.where(company_id: current_employee.company_id).paginate(:page => params[:page], :per_page => 10)
   end
 
-
   def show
+    @meeting = Meeting.find(params[:id])
     room = Room.find(params[:id])
   end
 

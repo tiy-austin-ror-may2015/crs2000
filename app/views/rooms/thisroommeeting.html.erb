@@ -16,19 +16,20 @@
   </div>
   <div class="field">
     <%= f.label :agenda %><br>
-    <%= f.text_field :agenda %>
+    <%= f.text_area :agenda %>
   </div>
   <div class="field">
     <%= f.label :room_id %><br>
-    <%= f.select :room_id, @room_options %>
+    <%= f.text :room_id, placeholder="#{room_id(params[:id])}" %>
   </div>
   <div class="field">
     <%= f.label :start_time %><br>
-    <%= f.datetime_select :start_time %>
+    <%= f.text_field :start_time, class: 'datetimepicker' %>
   </div>
   <div class="field">
     <br>
-    <%= f.datetime_select :end_time %>
+    <%= f.label :end_time %><br>
+    <%= f.text_field :end_time, class: 'datetimepicker' %>
   </div>
   <div class="field">
     <%= f.label :private %><br>
