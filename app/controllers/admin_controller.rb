@@ -27,4 +27,13 @@ class AdminController < ApplicationController
     @busiest_employees = Meeting.joins(:employee).group(:employee).order('count_all DESC').limit(3).count
   end
 
+  def add_branding
+    if user_is_admin?
+      @company = current_employee.company
+      render 'companies/_form'
+    else
+      redirect_to root_path, alert: "Access Denied"
+    end
+  end
+
 end

@@ -1,12 +1,28 @@
 <div class="container">
-  <div class="row">
-    <h2><%= @employee.name %></h2>
-    <p><strong>Company: </strong><%= link_to @employee.company.name, @employee.company %> </p>
-    <p><strong>Email: </strong><%= @employee.email %></p>
-  </div>
-  <div class="row">
-    <%= link_to 'Edit', edit_employee_path(@employee), class: "btn btn-success" %>
-    <%= link_to 'Back', employees_path, class: "btn btn-default" %>
-  </div>
 
+  <div class="row">
+    <div class="employee-details">
+      <h2><%= @employee.name %></h2>
+      <h3><%= link_to @employee.company.name, @employee.company %></h3>
+        <h4>Employee details</h4>
+        <p><strong>Email: </strong><%= @employee.email %></p>
+    </div>
+    <div class="employee-details">
+      <h4>Meeting participation</h4>
+      <ul>
+        <% @employee.meetings.each do |meeting| %>
+
+          <li><%= link_to meeting.title, meeting %></li>
+
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <% if current_employee.id == @employee.id %>
+      <%= link_to 'Edit', edit_employee_path(@employee), class: "btn btn-success" %>
+    <% else %>
+      <p><%= link_to 'Back', employees_path, class: 'btn btn-default' %></p>
+    <% end %>
+  </div>
 </div>

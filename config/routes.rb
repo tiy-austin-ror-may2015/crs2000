@@ -1,40 +1,45 @@
 # RAKE ROUTES IS AT THE BOTTOM OF THE PAGE
 
 Rails.application.routes.draw do
+
   devise_for :employees
 
-  post 'meetings/invite/:meeting_id/:employee_id', to: 'meetings#invite', as: :invitation
-  get 'employees/:id', to: 'employees#show', as: 'employee'
-  get 'employees', to: 'employees#index', as: 'employees'
-  get 'employees/:id/edit', to: 'employees#edit', as: 'edit_employee'
-  patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
-  get '/search/meetings', to: 'meetings#search'
-  get '/search/rooms', to: 'rooms#search'
-  get '/search_advance/rooms', to: 'rooms#search_advance'
-  get '/search/employees', to: 'employees#employee_search'
 
-  resources :rooms
-  resources :companies
+  authenticate :employee do
 
-# ADMIN (Will / Alex)
+  #ADMIN (Will / Alex)
   get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
   get 'admin/reports_meetings', to: 'admin#reports_meetings'
   get 'admin/reports_rooms', to: 'admin#reports_rooms'
   get 'admin/reports_rooms/top_rooms', to: 'admin#top_rooms'
   get 'admin/busiest_employees', to: 'admin#busiest_employees'
+  get 'admin/add_branding', to: 'admin#add_branding'
 
-  authenticate :employee do
+  #EMPLOYEES
+  get 'employees/:id', to: 'employees#show', as: 'employee'
+  get 'employees', to: 'employees#index', as: 'employees'
+  get 'employees/:id/edit', to: 'employees#edit', as: 'edit_employee'
+  patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
+  get '/search/employees', to: 'employees#employee_search'
+
+
+  post 'meetings/invite/:meeting_id/:employee_id', to: 'meetings#invite', as: :invitation
+  post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
+
+  get '/search/meetings', to: 'meetings#search'
+  get '/search/rooms', to: 'rooms#search'
+  get '/search_advance/rooms', to: 'rooms#search_advance'
+
+
+  resources :rooms
+  resources :companies
   resources :meetings
-  post 'meetings/join/:id', to: 'meetings#join', as: :join_employees
+
   end
 
   root to:'rooms#index'
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
 end
-
-
 
 #                        Prefix Verb   URI Pattern                                         Controller#Action
 #          new_employee_session GET    /employees/sign_in(.:format)                        devise/sessions#new

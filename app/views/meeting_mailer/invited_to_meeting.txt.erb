@@ -1,0 +1,21 @@
+Hello <%= @employee.name %>,
+
+You have been invited to the following meeting:
+
+    Name: <%= @meeting.title %>
+    Agenda: <%= @meeting.agenda %>
+    Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>)
+    Location: <%= @meeting.room.location %>
+    Start Time: <%= @meeting.start_time %>
+    End Time: <%= @meeting.end_time %>
+    Attendees:
+        <% @meeting.employees.each do |employee| %>
+          <%= employee.name %>
+        <% end %>
+
+To join this meeting, follow this link and click 'Join': <%= url_for(controller: 'meetings',
+                                                                        action: 'show',
+                                                                        id: @meeting.id) %>
+
+Sincerely
+<%= @meeting.employee.company.name %> Managemen
