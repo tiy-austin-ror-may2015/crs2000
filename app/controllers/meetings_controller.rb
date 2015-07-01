@@ -19,7 +19,7 @@ class MeetingsController < ApplicationController
   def show
     begin
       @meeting = Meeting.find(params[:id])
-      # render json: {meeting: @meeting, e_com: current_employee.company.id, met_comp: @meeting.employee.company.id}
+
       if current_employee.company.id == @meeting.employee.company.id
       # # if user_is_admin? && @meeting.room.company.id == current_employee.company.id ||
          # @meeting.invitations.exists?(employee_id: current_employee.id) ||
