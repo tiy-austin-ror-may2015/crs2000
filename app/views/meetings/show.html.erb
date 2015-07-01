@@ -19,6 +19,7 @@
           <strong>Start time:</strong><p class="timeDisplay"> <%= @meeting.start_time %></p>
           <strong>End time:</strong><p class="timeDisplay"> <%= @meeting.end_time %></p>
           <strong>Max Occupancy:</strong><p> <%= @max_occupancy %></p>
+          <strong>Current Occupancy:</strong><p> <%= @current_occupancy %></p>
     </div>
 
     <div class="col-md-6 col-md-offset-1">
@@ -42,6 +43,7 @@
 
   </div>
   </div>
+
 
   <% if @meeting_owner == true %>
   <div class="row">
