@@ -4,11 +4,6 @@ class RoomsController < ApplicationController
   def index
     Room.all.each { |room| room.update_time_sensitive_values }
     @rooms = Room.all.paginate(:page => params[:page], :per_page => 10)
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @rooms }
-    end
   end
 
   def show
@@ -29,10 +24,16 @@ class RoomsController < ApplicationController
 
   def search
     Room.all.each { |room| room.update_time_sensitive_values }
-    @rooms = Room.search_with(params).sort_with(params).paginate(:page => params[:page], :per_page => 10)
-
     @room_results   = Room.search_for(params[:search])
                           .paginate(:page => params[:page], :per_page => 10)
+  end
+
+  def search_advance
+    Room.all.each { |room| room.update_time_sensitive_values }
+    @room_results = Room.search_with(params)
+                 .sort_with(params)
+                 .paginate(:page => params[:page], :per_page => 10)
+    render :search
   end
 
  def create

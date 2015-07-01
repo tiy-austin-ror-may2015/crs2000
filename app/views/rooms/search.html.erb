@@ -12,8 +12,8 @@
 
 <h1>Search Results</h1>
 <!-- Shows all rooms where name like search params -->
-<% if @rooms.count > 0 %>
-<h3><%= @rooms.count %> Room(s) found.</h3>
+<% if @room_results.count > 0 %>
+<h3><%= @room_results.count %> Room(s) found.</h3>
   <section class='panel panel-default'>
   <table class='table'>
     <thead>
@@ -29,7 +29,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @rooms.each do |room| %>
+      <% @room_results.each do |room| %>
         <tr>
           <td class='well'><%= room.name %></td>
           <td><%= room.room_number %></td>
@@ -45,13 +45,13 @@
   </table>
   </section>
   <div class='center'>
-    <%= will_paginate @rooms, renderer: BootstrapPagination::Rails %>
+    <%= will_paginate @room_results, renderer: BootstrapPagination::Rails %>
   </div>
 <% end %>
 <div class="container">
   <div class="col-md-9"></div>
   <div class='col-md-3 well center room-search'>
-    <form action='/search/rooms' method='GET'>
+    <form action='/search_advance/rooms' method='GET'>
       <div class='row'>
         <div class='col-md-4 align-right'>
           name
