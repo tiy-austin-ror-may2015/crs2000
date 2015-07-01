@@ -4,14 +4,12 @@ class MeetingsController < ApplicationController
     if current_employee
       if user_is_admin?
         company   = Company.find(current_employee.company.id)
-        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight)
+        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight).order(:start_time)
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       else
-        # binding.pry
-        company   = Company.find(current_employee.id)
-        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight) #.where("private = false OR employee_id = ${current_employee} OR
-                                                               # private = true AND employee_id = #{current_employee.id}")
-
+        company   = Company.find(current_employee.company.id)
+        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight).
+                                     where("private = false").order(:start_time)
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       end
     else
