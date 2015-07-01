@@ -1,0 +1,20 @@
+<div class="report-inner">
+  <h1>BUSIEST EMPLOYEES</h1>
+    <table class="report-container">
+      <table id="busiest_employees">
+        <thead>
+          <tr>
+            <th>NAME</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @busiest_employees.each do |busiest_employees| %>
+            <tr>
+            <td><%= busiest_employees.first.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </table>
+</div>

@@ -1,18 +1,6 @@
 source "https://rubygems.org"
 
-group :development do
-  gem "byebug", "~> 5.0"
-  gem "web-console", "~> 2.1"
-  gem "spring", "~> 1.3"
-  gem "pry", "~> 0.10"
-  gem "meta_request", "~> 0.3"
-  gem "faker", "~> 1.4"
-  gem 'guard' # NOTE: this is necessary in newer versions
-  gem 'guard-minitest'
-  gem 'guard-cucumber'
-end
-
-group :test do
+group :test, :development do
   gem "byebug", "~> 5.0"
   gem "web-console", "~> 2.1"
   gem "spring", "~> 1.3"
@@ -21,9 +9,12 @@ group :test do
   gem "faker", "~> 1.4"
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
+  gem 'guard' # NOTE: this is necessary in newer versions
+  gem 'guard-minitest'
+  gem 'guard-cucumber'
 end
 
-gem "rails_12factor", "~> 0.0"
+gem "rails_12factor", "~> 0.0", {:group=>:production}
 gem "rails", "~> 4.2"
 gem "pg", "~> 0.18"
 gem "sass-rails", "~> 5.0"

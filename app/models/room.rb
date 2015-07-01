@@ -89,7 +89,7 @@ end
     end
     amenity_results = Amenity.where("lower(perk) LIKE ?", "%#{search}%")
     amenity_query = amenity_results.map { |amenity| "id = #{amenity.room_id}" }.join(" OR ")
-    amenity_query.prepend(" OR ")
+    amenity_query.present? ? amenity_query.prepend(" OR ") : amenity_query = " OR id = 0"
     search_query = "lower(name) LIKE '%#{search}%' OR lower(location) LIKE '%#{search}%'
                     OR max_occupancy > #{max_occupancy}" + amenity_query
     self.where(search_query)
