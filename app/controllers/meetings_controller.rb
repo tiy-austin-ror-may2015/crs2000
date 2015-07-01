@@ -16,6 +16,7 @@ class MeetingsController < ApplicationController
     @employee = current_employee
     @attendees = EmployeeMeeting.where(meeting_id: @meeting.id)
     get_occupancy
+
   end
 
   def join
