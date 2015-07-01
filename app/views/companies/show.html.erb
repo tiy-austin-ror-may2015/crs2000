@@ -1,9 +1,21 @@
 <p id="notice"><%= notice %></p>
+<p id="alert"><%= alert %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+<div class="container">
+  <div class="row">
+    <h2><%= @company.name %></h2>
+    <p><strong>Logo:</strong> <%= @company.logo %> </p>
+    <p><strong>Primary color:</strong> <%= @company.primary_color %> </p>
+    <p><strong>Secondary color:</strong> <%= @company.secondary_color %> </p>
 
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+    <p><strong>Employees: </strong>
+      <ul> <% @company.employees.each do |employee| %>
+        <li> <%= link_to employee.name, employee %> </li>
+      <% end %> </ul>
+    </p>
+  </div>
+  <div class="row">
+    <%= link_to 'Edit', edit_company_path(@company, class: "btn btn-default") %>
+    <%= link_to 'Back', company_path, class: "btn btn-default" %>
+  </div>
+</div>

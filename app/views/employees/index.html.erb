@@ -28,7 +28,7 @@
       <tbody>
         <% @employees.each do |employee| %>
           <tr>
-            <td class='well'><%= employee.name %></td>
+            <td class='well'><%= link_to employee.name, employee %></td>
             <td><%= employee.company.name %></td>
             <td class='well'><%= employee.email %></td>
             <% if user_is_admin? %>
