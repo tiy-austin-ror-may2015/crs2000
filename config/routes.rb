@@ -35,9 +35,10 @@ Rails.application.routes.draw do
   resources :companies
   resources :meetings
 
+  root to:'rooms#index'
   end
 
-  root to:'rooms#index'
+  end
 
 end
 
