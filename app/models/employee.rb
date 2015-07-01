@@ -35,4 +35,5 @@ class Employee < ActiveRecord::Base
                "%#{search}%", "%#{search}%")
   end
 
+  has_many :invitations
 end
