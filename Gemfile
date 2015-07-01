@@ -50,4 +50,5 @@ gem 'annotate', '~> 2.6.6'
 
 source "https://rails-assets.org" do
   gem 'rails-assets-moment'
+  gem 'rails-assets-datetimepicker'
 end

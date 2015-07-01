@@ -34,7 +34,6 @@ class MeetingsController < ApplicationController
           message = {alert: 'invitation has been already sent!'}
         end
       redirect_to meeting_path(params[:meeting_id]), message
-    else
   end
 
   def join
