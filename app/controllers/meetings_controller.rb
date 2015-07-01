@@ -1,5 +1,4 @@
 class MeetingsController < ApplicationController
-  # before_action :check_employee_overlap!, only: [:join, :create]
 
   def index
     if current_employee
@@ -23,17 +22,42 @@ class MeetingsController < ApplicationController
 
   def show
     @meeting = Meeting.find(params[:id])
-    @employee = current_employee
-    @attendees = EmployeeMeeting.where(meeting_id: @meeting.id)
+    @current_employee = current_employee
+    @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
+    @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
+    @meeting_owner = (@meeting.employee_id == @current_employee.id)
     get_occupancy
   end
 
+  def get_occupancy
+    @max_occupancy = Meeting.find(params[:id]).room.max_occupancy
+    attendees_num = EmployeeMeeting.where(meeting_id: params[:id]).count
+    @current_occupancy = @max_occupancy - attendees_num
+  end
+
+  def invite
+      if Invitation.where(meeting_id: params[:meeting_id], employee_id: params[:employee_id]).count == 0
+        invitation = Invitation.new(meeting_id: params[:meeting_id], employee_id: params[:employee_id])
+        invitation.save
+          message = {notice: 'invitation successfully sent!'}
+        else
+          message = {alert: 'invitation has been already sent!'}
+        end
+      redirect_to meeting_path(params[:meeting_id]), message
+    else
+  end
+
   def join
-    @employee = current_employee
-    if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @employee.id).count == 0
-      em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @employee.id)
-      em.save
-      message = {notice: 'Employee successfully joined!'}
+    @current_employee = current_employee
+    if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @current_employee.id).count == 0
+      meeting = Meeting.find(params[:id])
+      if meeting_overlap? (meeting)
+        message = {alert: 'You own or are already in another meeting at this time.'}
+      else
+        em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @current_employee.id)
+        em.save
+        message = {notice: 'Employee successfully joined!'}
+      end
     else
       message = {alert: 'Employee already joined!'}
     end
@@ -69,14 +93,19 @@ class MeetingsController < ApplicationController
 
   def create
     @meeting = Meeting.new(meeting_params)
-    # check_employee_overlap!
-    @meeting.employee = current_employee
+    if meeting_overlap? (@meeting)
+      redirect_to new_meeting_path, alert: 'You own or are already in another meeting at this time.'
+    else
+      @meeting.employee = current_employee
       if @meeting.save
+        em = EmployeeMeeting.new(meeting_id: @meeting.id, employee_id: current_employee.id)
+        em.save
         MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
         redirect_to @meeting, notice: 'Meeting was successfully created.'
       else
         render :new
       end
+    end
   end
 
   def update
@@ -101,18 +130,18 @@ class MeetingsController < ApplicationController
     end
   end
 
-  # def check_employee_overlap!
-  #   @attendees = EmployeeMeeting.where(meeting_id: params[:id])
-  #   @attendees.each do |attendee|
-  #     @begin_time = attendee.meeting.start_time
-  #     @finish_time = attendee.meeting.end_time
-  #   end
-  #   if @meeting.start_time< Time.now
-  #     redirect_to @meeting, alert: 'You are already in another meeting.'
-  #   end
-  # end
-
-
+  # An employee cannot create or join a meeting that takes place during another meeting they own or are part of.
+  def meeting_overlap? (check_meeting)
+    all_meetings = Meeting.where(employee_id: current_employee.id) # owned meetings
+    all_meetings += EmployeeMeeting.where(employee_id: current_employee.id).map{|em| em.meeting} # attending meetings
+    all_meetings.each do |meeting|
+      if (meeting.start_time <= check_meeting.start_time && check_meeting.start_time <= meeting.end_time) ||
+          (meeting.start_time <= check_meeting.end_time && check_meeting.end_time <= meeting.end_time)
+        return true
+      end
+    end
+    return false
+  end
 
   private
   def set_meeting
@@ -120,7 +149,7 @@ class MeetingsController < ApplicationController
   end
 
   def meeting_params
-    params.require(:meeting).permit(:title, :agenda, :room_id, :start_time, :end_time)
+    params.require(:meeting).permit(:title, :agenda, :room_id, :start_time, :end_time, :private)
   end
 
 end

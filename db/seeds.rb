@@ -1,5 +1,6 @@
 
-image = ["http://www.coolbusinessideas.com/wp-content/uploads/2014/05/modern-meeting-room.jpg",
+image =
+["http://www.coolbusinessideas.com/wp-content/uploads/2014/05/modern-meeting-room.jpg",
  "http://montvilleoffice.com/wp-content/uploads/2014/07/169979447_conference-room.jpg",
  "http://www.download3dhouse.com/wp-content/uploads/2013/10/Interior-design-meeting-room-3D-view.jpg",
  "http://cdn.home-designing.com/wp-content/uploads/2009/06/creative-light-meeting-room.jpg",
@@ -18,7 +19,7 @@ image = ["http://www.coolbusinessideas.com/wp-content/uploads/2014/05/modern-mee
  "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg",
  "http://i.ytimg.com/vi/bDUkzYWxR7E/hqdefault.jpg"]
 
-amenities = ['Coffeemaker', 'Courtyard View' 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
+amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
 
 random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12.hours),(Time.now + 13.hours)]
 3.times do
