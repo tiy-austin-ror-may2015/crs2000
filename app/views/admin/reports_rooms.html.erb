@@ -12,7 +12,8 @@
         </thead>
 
         <tbody>
-          <tr><% @top_rooms.each do |top_rooms| %>
+          <% @top_rooms.each do |top_rooms| %>
+            <tr>
             <td><%= top_rooms.first.name %></td>
             <td><%= top_rooms.first.max_occupancy %></td>
             <td><%= top_rooms.first.imgurl %></td>
