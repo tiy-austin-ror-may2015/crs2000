@@ -32,6 +32,15 @@ var ready = function() {
     var formatted_time = moment(time_text);
     $(this).html(formatted_time);
   });
+
+  setInterval(function() {
+    var times = $('.countDown');
+      times.each(function () {
+      var time_text = $(this).attr("data-id");
+      var formatted_time = moment(time_text).fromNow();
+      $(this).html(formatted_time);
+    });
+  }, 5000);
 };
 
 $(document).ready(ready);

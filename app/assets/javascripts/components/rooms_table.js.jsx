@@ -164,7 +164,7 @@ var DataRow = React.createClass({
         };
         if (start_time > now && start_time <= next_start_time) {
           next_start_time = start_time;
-          time = moment(next_start_time);
+          time = next_start_time.toString();
         };
       });
     };
@@ -179,7 +179,7 @@ var DataRow = React.createClass({
         <td className='well'>{ amenity_names }</td>
         <td>{ company.name }</td>
         <td className='well'>{ room.max_occupancy }</td>
-        <td id='countdown-holder'>{ time.format('MMMM/DD/YYYY hh:mm a') }</td>
+        <td className='countDown' data-id={ time }></td>
         <td className='well'>{ available }</td>
       </tr>
     );
