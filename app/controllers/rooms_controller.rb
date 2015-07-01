@@ -24,7 +24,7 @@ class RoomsController < ApplicationController
 
   def search
     Room.all.each { |room| room.update_time_sensitive_values }
-    @room_results   = Room.search_for(params[:search])
+    @room_results   = Room.search_for(params[:search].downcase)
                           .paginate(:page => params[:page], :per_page => 10)
   end
 

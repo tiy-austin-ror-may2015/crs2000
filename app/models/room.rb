@@ -76,9 +76,16 @@ end
   end
 
   def self.search_for(search)
-    search ||= ""
-    self.where("lower(name) LIKE ? OR lower(location) LIKE ? OR max_occupancy > ?",
-               "%#{search.downcase}%", "%#{search.downcase}%", search.to_i)
+    if search.to_i == 0
+      max_occupancy = 1000
+    else
+      max_occupancy = search.to_i
+    end
+    amenity_results = Amenity.where("lower(perk) LIKE ?", "%#{search}%")
+    amenity_query = amenity_results.map { |amenity| "id = #{amenity.room_id}" }.join(" OR ")
+    amenity_query.prepend(" OR ")
+    search_query = "lower(name) LIKE '%#{search}%' OR lower(location) LIKE '%#{search}%'
+                    OR max_occupancy > #{max_occupancy}" + amenity_query
+    self.where(search_query)
   end
-
 end
