@@ -5,6 +5,9 @@ class Meeting < ActiveRecord::Base
   has_many :invitations
   has_many :room_amenities
 
+  scope :no_private_except_for_owner, -> { where("private = false OR private = true &&
+                                                  employee_id = #{current_employee.id} ")}
+
   def self.search_for(search)
     self.where("lower(title) LIKE ? OR lower(agenda) LIKE ?",
                "%#{search.downcase}%", "%#{search.downcase}%")

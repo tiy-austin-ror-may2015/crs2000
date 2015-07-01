@@ -12,6 +12,8 @@ class MeetingsController < ApplicationController
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       else
         @meetings = current_employee.viewable_meetings.where("start_time >= ?", Time.now.midnight)
+
+
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       end
     else
