@@ -24,7 +24,7 @@ class AdminController < ApplicationController
   end
 
   def busiest_employees
-    @busiest_employees = Meeting.sort_by
+    @busiest_employees = Meeting.joins(:employee).group(:employee).order('count_all DESC').limit(3).count
   end
 
   def add_branding
