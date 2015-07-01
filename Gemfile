@@ -1,5 +1,4 @@
 source "https://rubygems.org"
-source "https://rails-assets.org"
 
 group :development do
   gem "guard", "~> 2.12"
@@ -39,3 +38,8 @@ gem "will_paginate-bootstrap", "~> 1.0"
 gem "bootstrap_form", "~> 2.3"
 gem "codeclimate-test-reporter", "~> 0.4", {:group=>:test, :require=>nil}
 gem "annotate", "~> 2.6"
+
+ source "https://rails-assets.org" do
+   gem 'rails-assets-moment'
+   gem 'rails-assets-datetimepicker'
+ end
