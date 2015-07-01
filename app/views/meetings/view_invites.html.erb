@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <h2>Meeting invitations </h2>
+    <%= link_to 'New invite' %>
+    <% if @invitations.count == 0 %>
+      <p>There are no pending invites.</p>
+    <% else %>
+    <div class="panel panel-default">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Meeting title</th>
+            <th>Start time</th>
+            <th>Employee invited</th>
+            <th>Private</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @invitations.each do |invitation| %>
+          <tr>
+            <td><%= link_to invitation.meeting.title.capitalize, invitation.meeting %></td>
+            <td class="timeDisplay"><%= invitation.meeting.start_time %></td>
+            <td><%= link_to invitation.employee.name, invitation.employee %></td>
+            <td><%= invitation.meeting.private  %></td>
+            <td>Delete</td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      </div>
+    <% end %>
+  </div>
+</div>
+

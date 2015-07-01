@@ -65,7 +65,7 @@ Rails.application.routes.draw do
 
 
   authenticate :employee do
-    post 'meetings/invite/:meeting_id/:employee_id', to: 'meetings#invite', as: :invitation
+    post 'meetings/invite/:meeting_id/:employee_id', to: 'invitations#invite', as: :invitation
     get 'employees/:id', to: 'employees#show', as: 'employee'
     get 'employees', to: 'employees#index', as: 'employees'
     get 'employees/:id/edit', to: 'employees#edit', as: 'edit_employee'
@@ -82,6 +82,7 @@ Rails.application.routes.draw do
 
     resources :rooms
     resources :companies
+    get 'meetings/view_invites', to: "meetings#view_invites"
     resources :meetings
     resources :admin
   # ADMIN
