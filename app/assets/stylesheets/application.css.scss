@@ -7,6 +7,7 @@
 @import 'scaffolds.scss';
 @import 'rooms';
 @import 'meetings';
+@import 'employee';
 //You need to now manually import every other scss file.
 .center{
   text-align: center;
@@ -17,12 +18,14 @@
 }
 
 .margin-top{
-  margin-top: 15px;
+  margin-top: 10px;
 }
 .margin-bottom{
   margin-bottom: 15px;
 }
-
+.margin-right{
+  margin-right: 52px;
+}
 .panel-body{
   font-size: 16px;
 }
@@ -41,6 +44,10 @@
   }
 }
 
+.next-prev{
+  margin: 1em;
+}
+
 .report-container {
   width: 95%;
   padding: 20px;
@@ -55,4 +62,7 @@
   margin: 40px;
   border: 1px solid orange;
   background-color: #eeeeee;
+}
+.results{
+  font-weight: bold;
 }

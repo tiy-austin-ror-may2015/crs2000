@@ -1,55 +1,17 @@
 <p id='notice'><%= notice %></p>
-
-  <div class='row pull-right margin-top'>
+  <div class='row pull-right margin-top well margin-right'>
     <form action='/search/rooms' method='GET'>
-      <input type='text' name='search'/>
+      <input type='text' name='search'
+             placeholder="Room name, location, or amenity" size="30"/>
       <input type='submit' value='Search' class='btn btn-primary' />
     </form>
   </div>
 <div class='container'>
   <div class='row'>
-    <p id='notice'><%= notice %></p>
-
-<h1>Search Results</h1>
-<!-- Shows all rooms where name like search params -->
-<% if @room_results.count > 0 %>
-<h3><%= @room_results.count %> Room(s) found.</h3>
-  <section class='panel panel-default'>
-  <table class='table'>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Room Number</th>
-        <th>Location</th>
-        <th>Amenities</th>
-        <th>Company</th>
-        <th>Max Occupancy</th>
-        <th>Hours Until Next Meeting</th>
-        <th>Available</th>
-        <th colspan='3'></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @room_results.each do |room| %>
-        <tr>
-          <td><%= room.name %></td>
-          <td class='well'><%= room.room_number %></td>
-          <td><%= room.location %></td>
-          <td class="well"><%= room.amenities[0].perk %></td>>
-          <td><%= room.company.name %></td>
-          <td class='well'><%= room.max_occupancy %></td>
-          <td><%= room.hours_until_next_meeting >= 0 ? room.hours_until_next_meeting : "N/A" %></td>
-          <td class='well'><%= room.available ? "yes" : "no" %></td>
-          <td><%= link_to 'Show', room  %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </section>
-  <div class='center'>
-    <%= will_paginate @room_results, renderer: BootstrapPagination::Rails %>
-  </div>
-<% end %>
+<h1 class="col-md-6">Search Results for
+  <i class="results"><%= params[:search].titleize %></i>
+</h1>
+<%= react_component("RoomsTable", { rooms_array: @rooms_array, page: 1, limit: 10 }) %>
 <div class="container">
   <div class="col-md-9"></div>
   <div class='col-md-3 well center room-search'>
@@ -88,7 +50,7 @@
       </div>
       <div class='row'>
         <div class='col-md-4 align-right'>
-          max occ >
+          max occ >=
         </div>
         <div class='col-md-8 align-left'>
           <input type='text' size= '3' name='max_occupancy'/>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630205137) do
+ActiveRecord::Schema.define(version: 20150701183308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,11 @@ ActiveRecord::Schema.define(version: 20150630205137) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "logo"
+    t.string   "primary_color"
+    t.string   "secondary_color"
   end
 
   create_table "employee_meetings", force: :cascade do |t|
@@ -98,9 +101,9 @@ ActiveRecord::Schema.define(version: 20150630205137) do
     t.integer  "company_id"
     t.integer  "meetings_count",           default: 0
     t.boolean  "available",                default: true
-    t.integer  "hours_until_next_meeting", default: -1
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.integer  "hours_until_next_meeting", default: 197731
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   add_foreign_key "amenities", "rooms"

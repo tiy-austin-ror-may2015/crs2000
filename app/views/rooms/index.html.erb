@@ -1,43 +1,76 @@
 <p id='notice'><%= notice %></p>
+<p id='alert'><%= alert %> </p>
+
+<div class='row pull-right margin-top'>
+  <form action='/search/rooms' method='GET'>
+    <input type='text' name='search' placeholder="Room name, location or amenity" size="30"/>
+    <input type='submit' value='Search' class='btn btn-primary' />
+  </form>
+</div>
+
+
+<h1>All Rooms</h1>
+<%= react_component("RoomsTable", { rooms_array: @rooms_array, page: 1, limit: 10 }) %>
+
 <div class="container">
-  <div class='row pull-right margin-top'>
-    <form action='/search/rooms' method='GET'>
-      <input type='text' name='search'/>
-      <input type='submit' value='Search' class='btn btn-primary' />
+  <div class="col-md-9"></div>
+  <div class='col-md-3 well center room-search'>
+    <form action='/search_advance/rooms' method='GET'>
+      <div class='row'>
+        <div class='col-md-4 align-right'>
+          name
+        </div>
+        <div class='col-md-8 align-left'>
+          <input type='text' size= '12' name='name'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4 align-right'>
+          company
+        </div>
+        <div class='col-md-8 align-left'>
+          <input type='text' size= '12' name='company_name'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4 align-right'>
+          location
+        </div>
+        <div class='col-md-8 align-left'>
+          <input type='text' size= '12' name='location'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4 align-right'>
+          number
+        </div>
+        <div class='col-md-8 align-left'>
+          <input type='text' size= '3' name='room_number'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4 align-right'>
+          max occ >=
+        </div>
+        <div class='col-md-8 align-left'>
+          <input type='text' size= '3' name='max_occupancy'/>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4 align-right'>
+          available?
+        </div>
+        <div class='col-md-8 align-left'>
+          <input type='checkbox' checked = 'checked' name='available' value='true' />
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4'></div>
+        <div class='col-md-8 align-left'>
+          <input type='submit' value='Search' class='btn btn-primary' />
+        </div>
+      </div>
     </form>
   </div>
-  <h2>All rooms</h2>
-<section class='panel panel-default'>
-<table class='table'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Available</th>
-      <th>Hours Until Next Meeting</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-      <tbody>
-        <% @rooms.each do |room| %>
-          <tr>
-            <td class='well'><%= link_to room.name, room %></td>
-            <td><%= room.location %></td>
-            <td class='well'><%= room.company.name %></td>
-            <td><%= room.hours_until_next_meeting %></td>
-            <td class='well'><%= room.available ? 'yes' : 'no' %></td>
-            <td><%= link_to 'Show', room %></td>
-            <td class='well'><%= link_to 'Edit', edit_room_path(room) %></td>
-            <td><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-        <% end %>
-      </tr>
-  </tbody>
-</table>
-</div>
-</section>
-
-<div class="center">
-  <%= will_paginate @rooms, renderer: BootstrapPagination::Rails %>
 </div>
 
