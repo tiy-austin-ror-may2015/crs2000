@@ -57,9 +57,9 @@ class MeetingsController < ApplicationController
   end
 
   def get_occupancy
-    capacity  = Meeting.capacity(params[:id])
+    @max_occupancy = Meeting.capacity(params[:id])
     attending = EmployeeMeeting.attending(params[:id])
-    @current_occupancy = capacity - attending
+    @current_occupancy = @max_occupancy  - attending
   end
 
   def new
@@ -133,6 +133,11 @@ class MeetingsController < ApplicationController
       end
     end
     return false
+  end
+
+# QUESTIONS? TALK TO WILL
+  def reports_meetings
+    @reports_meetings = Meeting.all
   end
 
   private

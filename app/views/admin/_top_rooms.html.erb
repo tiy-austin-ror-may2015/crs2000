@@ -1,0 +1,27 @@
+<div class="report-inner">
+  <h1>TOP ROOMS</h1>
+    <table class="report-container">
+      <table id="top_rooms">
+
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>MAX OCC</th>
+            <th>IMAGE</th>
+            <th>LOCATION</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <% @top_rooms.each do |top_rooms| %>
+            <td><%= top_rooms.name %></td>
+            <td><%= top_rooms.max_occupancy %></td>
+            <td><%= top_rooms.imgurl %></td>
+            <td><%= top_rooms.location %></td>
+          </tr>
+        </tbody>
+        <% end %>
+    </table>
+  </table>
+</div>
