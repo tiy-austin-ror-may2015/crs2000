@@ -1,7 +1,8 @@
-<h2 class="center">Search Results for <i><%= params[:search] %></i></h2>
+<h1 class="col-md-6">Search Results for
+  <i class="results"><%= params[:search].titleize %></i>
+</h1>
 <% if @meeting_results.count > 0 %>
-  </div>
-<h3 class="center"><%= @meeting_results.count %> Topic(s) found.</h3>
+<h3 class="center"><%= @meeting_results.count %> results found</h3>
   <section class='panel panel-default'>
   <table class='table'>
     <thead>
@@ -33,7 +34,7 @@
 <% end %>
   <div class="well center">
     <form action='/search/meetings' method='GET'>
-      <input type='text' name='search'/>
+      <input type='text' name='search' placeholder="Meeting title or agenda"/>
       <input type='submit' value='Search' class="btn btn-primary" />
     </form>
   </div>
