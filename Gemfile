@@ -45,4 +45,4 @@ gem "annotate", "~> 2.6"
    gem 'rails-assets-moment'
    gem 'rails-assets-datetimepicker'
  end
->>>>>>> e35b4ddfbc7b7585f7fa3bd01bb5a5c95a6fb3f8
+

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get 'admin/reports_rooms/top_rooms', to: 'admin#top_rooms'
   get 'admin/busiest_employees', to: 'admin#busiest_employees'
   get 'admin/add_branding', to: 'admin#add_branding'
-  get 'admin', to: 'admin#room_table'
+  get 'admin', to: 'admin#dashboard'
 
   #EMPLOYEES
   get 'employees/:id', to: 'employees#show', as: 'employee'
@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   resources :rooms
   resources :companies
+  resources :meetings
 
 
   end
