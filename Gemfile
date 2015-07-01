@@ -29,7 +29,7 @@ gem "pg", "~> 0.18"
 gem "sass-rails", "~> 5.0"
 gem "uglifier", "~> 2.7"
 gem "coffee-rails", "~> 4.1"
-gem "jquery-datatables-rails", "~> 3.3"
+gem "jquery-datatables-rails", github: 'rweng/jquery-datatables-rails'
 gem "jquery-rails", "~> 4.0"
 gem "turbolinks", "~> 2.5"
 gem "jbuilder", "~> 2.3"

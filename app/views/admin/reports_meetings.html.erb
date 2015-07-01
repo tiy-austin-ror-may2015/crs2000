@@ -19,8 +19,13 @@
             <% @reports_meetings.each do |reports_meeting| %>
             <td><%= reports_meeting.title %></td>
             <td><%= reports_meeting.agenda %></td>
-            <td><%= reports_meeting.start_time %></td>
+            <td>
+            <div class='timeDisplay'>
+              <%= reports_meeting.start_time %>
+            </div>
+            </td>
             <td><%= reports_meeting.end_time %></td>
+
             <td><%= reports_meeting.private %></td>
             <td><%= reports_meeting.room_id %></td>
             <td><%= reports_meeting.employee_id %></td>
