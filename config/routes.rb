@@ -62,19 +62,19 @@
 Rails.application.routes.draw do
   devise_for :employees
 
+  post 'meetings/invite/:meeting_id/:employee_id', to: 'meetings#invite', as: :invitation
+  get 'employees/:id', to: 'employees#show', as: 'employee'
+  get 'employees', to: 'employees#index', as: 'employees'
+  get 'employees/:id/edit', to: 'employees#edit', as: 'edit_employee'
+  patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
+  get '/search/meetings', to: 'meetings#search'
+  get '/search/rooms', to: 'rooms#search'
+  get '/search_advance/rooms', to: 'rooms#search_advance'
+  get '/search/employees', to: 'employees#employee_search'
+
   authenticate :employee do
     resources :meetings
     post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
-
-
-    post 'meetings/invite/:meeting_id/:employee_id', to: 'meetings#invite', as: :invitation
-    get 'employees/:id', to: 'employees#show', as: 'employee'
-    get 'employees', to: 'employees#index', as: 'employees'
-    get 'employees/:id/edit', to: 'employees#edit', as: 'edit_employee'
-    patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
-    get '/search/meetings', to: 'meetings#search'
-    get '/search/rooms', to: 'rooms#search'
-    get '/search_advance/rooms', to: 'rooms#search_advance'
 
     resources :rooms
     resources :companies
