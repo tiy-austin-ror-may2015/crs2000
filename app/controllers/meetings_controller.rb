@@ -104,7 +104,7 @@ class MeetingsController < ApplicationController
 
   def create
     @meeting = Meeting.new(meeting_params)
-    if room_is_available?(@meeting)
+    if room_is_available?(@meeting) && no_meeting_overlap?(@meeting)
       @meeting.employee = current_employee
         if @meeting.save
           MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
@@ -113,14 +113,14 @@ class MeetingsController < ApplicationController
           render :new
         end
     else
-      flash[:alert] = "That room is already occupied during that time."
+      flash[:alert] = "The room is occupied or you have a meeting during that time."
       redirect_to :back
     end
   end
 
   def update
     @meeting = Meeting.find(params[:id])
-    if room_is_available?(@meeting)
+    if room_is_available?(@meeting) && no_meeting_overlap?(@meeting)
       if @meeting.update(meeting_params)
         MeetingMailer.meeting_changed(current_employee, @meeting).deliver_now
         redirect_to @meeting, notice: 'Meeting was successfully updated.'
@@ -128,7 +128,7 @@ class MeetingsController < ApplicationController
         render :edit
       end
     else
-      flash[:alert] = "That room is already occupied during that time."
+      flash[:alert] = "The room is occupied or you have a meeting during that time."
       redirect_to :back
     end
   end
@@ -143,19 +143,6 @@ class MeetingsController < ApplicationController
       @meeting.destroy
       redirect_to meetings_url, notice: 'Meeting was successfully destroyed.'
     end
-  end
-
-  # An employee cannot create or join a meeting that takes place during another meeting they own or are part of.
-  def meeting_overlap? (check_meeting)
-    all_meetings = Meeting.where(employee_id: current_employee.id) # owned meetings
-    all_meetings += EmployeeMeeting.where(employee_id: current_employee.id).map{|em| em.meeting} # attending meetings
-    all_meetings.each do |meeting|
-      if (meeting.start_time <= check_meeting.start_time && check_meeting.start_time <= meeting.end_time) ||
-          (meeting.start_time <= check_meeting.end_time && check_meeting.end_time <= meeting.end_time)
-        return true
-      end
-    end
-    return false
   end
 
 # QUESTIONS? TALK TO WILL
