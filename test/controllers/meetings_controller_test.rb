@@ -11,20 +11,20 @@ end
 
 class MeetingsControllerTest < ActionController::TestCase
   setup do
-    company = Company.create(name: 'foobar')
-    room    = Room.create(name: Faker::Name.last_name,
+    company = Company.create!(name: 'foobar')
+    room    = Room.create!(name: Faker::Name.last_name,
                   max_occupancy: Faker::Number.number(2),
                     room_number: Faker::PhoneNumber.area_code,
                          imgurl: "",
                        location: Faker::App.name,
                      company_id: company.id)
     password = Faker::Internet.password
-    @employee = Employee.create(name: Faker::Name.name,
+    @employee = Employee.create!(name: Faker::Name.name,
                               email: Faker::Internet.safe_email,
                            password: password,
               password_confirmation: password,
                          company_id: company.id)
-    @meeting = Meeting.create(title: Faker::Company.bs,
+    @meeting = Meeting.create!(title: Faker::Company.bs,
                              agenda: Faker::Lorem.paragraph,
                          start_time: (Time.now + 10.hours),
                            end_time: (Time.now + 15.hours),
@@ -48,7 +48,7 @@ class MeetingsControllerTest < ActionController::TestCase
 
   test "should create meeting" do
     assert_difference('Meeting.count') do
-      post :create, meeting: { agenda: @meeting.agenda, end_time: (@meeting.end_time + 100.hours), start_time: (@meeting.start_time + 100.hours), title: @meeting.title }
+      post :create, meeting: { agenda: @meeting.agenda, end_time: (@meeting.end_time + 100.hours), start_time: (@meeting.start_time + 100.hours), title: @meeting.title, room_id: @meeting.room.id}
     end
 
     assert_redirected_to meeting_path(assigns(:meeting))

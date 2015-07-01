@@ -36,4 +36,5 @@ class Employee < ActiveRecord::Base
   end
 
   has_many :invitations
+  has_many :viewable_meetings, through: :invitations, source: :meeting
 end

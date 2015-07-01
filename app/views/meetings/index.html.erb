@@ -2,7 +2,7 @@
 
   <div class="row pull-right margin-top">
     <form action='/search/meetings' method='GET'>
-      <input type='text' name='search'/>
+      <input type='text' name='search' placeholder="Meeting title or agenda"/>
       <input type='submit' value='Search' class="btn btn-primary" />
     </form>
   </div>
@@ -10,17 +10,17 @@
   <div class="row">
     <p id="notice"><%= notice %></p>
 
-    <h1>All Meetings</h1>
+    <h1><%= @company.name%> Meetings</h1>
     <div class='panel panel-default'>
 
     <table class="table table-hover">
       <thead>
         <tr>
           <th class='well'>Title</th>
-          <th>Agenda</th>
-          <th class='well'>Start time</th>
-          <th>End time</th>
-          <th class='well' colspan="3"></th>
+          <th>Room</th>
+          <th class='well'>Agena</th>
+          <th>Start Time</th>
+          <th class = 'well'>End Time</th>
         </tr>
       </thead>
 
@@ -28,12 +28,10 @@
         <% @meetings.each do |meeting| %>
           <tr>
             <td class='well'><%= link_to meeting.title, meeting %></td>
-            <td><%= meeting.agenda %></td>
-            <td class='well' ><p class="timeDisplay"><%= meeting.start_time %></p></td>
+            <td><%= meeting.room.name %> </td>
+             <td class='well' ><%= meeting.agenda %></td>
+            <td><p class="timeDisplay"><%= meeting.start_time %></p></td>
             <td><p class="timeDisplay"><%= meeting.end_time %></p></td>
-            <td class='well'><%= link_to 'Show', meeting %></td>
-            <td><%= link_to 'Edit', edit_meeting_path(meeting) %></td>
-            <td  class='well'><%= link_to 'Destroy', meeting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
