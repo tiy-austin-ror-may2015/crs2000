@@ -21,6 +21,7 @@
         <th>Name</th>
         <th>Room Number</th>
         <th>Location</th>
+        <th>Amenities</th>
         <th>Company</th>
         <th>Max Occupancy</th>
         <th>Hours Until Next Meeting</th>
@@ -31,13 +32,14 @@
     <tbody>
       <% @room_results.each do |room| %>
         <tr>
-          <td class='well'><%= room.name %></td>
-          <td><%= room.room_number %></td>
-          <td class='well'><%= room.location %></td>
+          <td><%= room.name %></td>
+          <td class='well'><%= room.room_number %></td>
+          <td><%= room.location %></td>
+          <td class="well"><%= room.amenities[0].perk %></td>>
           <td><%= room.company.name %></td>
           <td class='well'><%= room.max_occupancy %></td>
-          <td class='well'><%= room.hours_until_next_meeting >= 0 ? room.hours_until_next_meeting : "N/A" %></td>
-          <td><%= room.available ? "yes" : "no" %></td>
+          <td><%= room.hours_until_next_meeting >= 0 ? room.hours_until_next_meeting : "N/A" %></td>
+          <td class='well'><%= room.available ? "yes" : "no" %></td>
           <td><%= link_to 'Show', room  %></td>
         </tr>
       <% end %>
