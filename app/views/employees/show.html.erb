@@ -1,9 +1,9 @@
 <div class="container">
+  <h2><%=@employee.company.name%> Employee</h2>
 
   <div class="row">
     <div class="employee-details">
-      <h2><%= @employee.name %></h2>
-      <h3><%= link_to @employee.company.name, @employee.company %></h3>
+      <h3><%= @employee.name %></h3>
         <h4>Employee details</h4>
         <p><strong>Email: </strong><%= @employee.email %></p>
     </div>
