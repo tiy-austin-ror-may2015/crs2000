@@ -46,7 +46,9 @@ gem "will_paginate", "~> 3.0"
 gem "will_paginate-bootstrap", "~> 1.0"
 gem "bootstrap_form", "~> 2.3"
 gem "codeclimate-test-reporter", "~> 0.4", {:group=>:test, :require=>nil}
+gem 'prawn', '~> 2.0.1'
 
 source "https://rails-assets.org" do
   gem 'rails-assets-moment'
+
 end
