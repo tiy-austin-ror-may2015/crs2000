@@ -29,6 +29,12 @@ class Employee < ActiveRecord::Base
   belongs_to :company
   has_many :meetings
   has_many :employee_meetings
+
+  def self.search(search)
+    self.where("lower(name) LIKE ? OR lower(email) LIKE ?",
+               "%#{search}%", "%#{search}%")
+  end
+
   has_many :invitations
   has_many :viewable_meetings, through: :invitations, source: :meeting
 end

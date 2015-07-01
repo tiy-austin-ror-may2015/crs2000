@@ -13,8 +13,22 @@ class AdminController < ApplicationController
     end
   end
 
-  def index
-    @meetings = Meeting.all
-    @rooms = Room.all
+  def reports_meetings
+    @reports_meetings = Meeting.all
   end
+<<<<<<< HEAD
+
+  def reports_rooms
+    @reports_rooms = Room.all
+    @top_rooms = Meeting.joins(:room).group(:room).order('count_all DESC').limit(3).count
+  end
+
+  def busiest_employees
+    @busiest_employees = Meeting.sort_by
+
+  end
+
+
+=======
+>>>>>>> b4777f063825031ac491d0bd158455de3f175b09
 end
