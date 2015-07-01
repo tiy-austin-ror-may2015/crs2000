@@ -25,6 +25,20 @@
   font-size: 16px;
 };
 
+.room-search{
+  padding: 5px;
+  .align-right{
+    margin: 5px 0;
+    text-align: right;
+    padding-right: 5px;
+  }
+  .align-left{
+    margin: 5px 0;
+    text-align: left;
+    padding-left: 5px;
+  }
+}
+
 .report-container {
   width: 95%;
   padding: 20px;
@@ -40,4 +54,3 @@
   border: 1px solid orange;
   background-color: #eeeeee;
 }
-

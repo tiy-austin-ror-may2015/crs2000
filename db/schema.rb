@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630202115) do
+ActiveRecord::Schema.define(version: 20150630205137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "amenities", force: :cascade do |t|
+    t.string   "perk"
+    t.integer  "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "amenities", ["room_id"], name: "index_amenities_on_room_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
@@ -70,6 +79,16 @@ ActiveRecord::Schema.define(version: 20150630202115) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "room_amenities", force: :cascade do |t|
+    t.integer  "room_id"
+    t.integer  "amenity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "room_amenities", ["amenity_id"], name: "index_room_amenities_on_amenity_id", using: :btree
+  add_index "room_amenities", ["room_id"], name: "index_room_amenities_on_room_id", using: :btree
+
   create_table "rooms", force: :cascade do |t|
     t.string   "name"
     t.integer  "max_occupancy"
@@ -79,9 +98,12 @@ ActiveRecord::Schema.define(version: 20150630202115) do
     t.integer  "company_id"
     t.integer  "meetings_count",           default: 0
     t.boolean  "available",                default: true
-    t.integer  "hours_until_next_meeting", default: 197729
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.integer  "hours_until_next_meeting", default: -1
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
+  add_foreign_key "amenities", "rooms"
+  add_foreign_key "room_amenities", "amenities"
+  add_foreign_key "room_amenities", "rooms"
 end

@@ -1,85 +1,51 @@
-<p id="notice"><%= notice %></p>
-<div class="row">
-  <div class="col-md-12">
-    <h2 class="center">All Rooms</h2>
-  <div class="center">
-  <div class="well pull-right">
+<p id='notice'><%= notice %></p>
+
+  <div class='row pull-right margin-top'>
     <form action='/search/rooms' method='GET'>
       <input type='text' name='search'/>
-      <input type='submit' value='Search' class="btn btn-primary" />
+      <input type='submit' value='Search' class='btn btn-primary' />
     </form>
   </div>
-    <%= link_to 'New Room', new_room_path, class: 'col-md-1 btn btn-info pull-left margin-top' %>
-  </div>
-
-  </div>
-  </div>
-</div>
-<section class='panel panel-default'>
-<table class='table'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Available</th>
-      <th>Hours Until Next Meeting</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @rooms.each do |room| %>
-      <tr>
-        <td class="well"><%= room.name %></td>
-        <td><%= room.location %></td>
-        <td class="well"><%= room.available %></td>
-        <td><%= room.hours_until_next_meeting %></td>
-        <td class="well"><%= link_to 'Show', room %></td>
-        <td><%= link_to 'Edit', edit_room_path(room) %></td>
-        <td class="well"><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</section>
-<div class="center">
-  <%= will_paginate @rooms, renderer: BootstrapPagination::Rails %>
-</div>
-<br>
-<div class="container">
-  <div class="row">
-    <p id="notice"><%= notice %></p>
-
-    <h1>Listing Rooms</h1>
-
-    <table class="table table-hover">
+<div class='container'>
+  <div class='row'>
+    <p id='notice'><%= notice %></p>
+    <h1>All Rooms</h1>
+    <div class='panel panel-default'>
+    <table class='table table-hover'>
       <thead>
         <tr>
-          <th>Name</th>
+          <th class='well'>Name</th>
           <th>Location</th>
-          <th>Available</th>
+          <th class='well'>Company</th>
           <th>Hours Until Next Meeting</th>
-          <th colspan="3"></th>
+          <th class='well'>Available</th>
+          <th colspan='3'></th>
         </tr>
       </thead>
 
       <tbody>
         <% @rooms.each do |room| %>
           <tr>
-            <td><%= link_to room.name, room %></td>
+            <td class='well'><%= link_to room.name, room %></td>`
             <td><%= room.location %></td>
-            <td><%= room.available %></td>
+            <td class='well'><%= room.company.name %></td>
             <td><%= room.hours_until_next_meeting %></td>
+            <td class='well'><%= room.available ? 'yes' : 'no' %></td>
             <td><%= link_to 'Show', room %></td>
-            <td><%= link_to 'Edit', edit_room_path(room) %></td>
+            <td class='well'><%= link_to 'Edit', edit_room_path(room) %></td>
             <td><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
-
+    </div>
     <br>
-
-    <%= link_to 'New Room', new_room_path, class: "btn btn-default" %>
+    <div class='center'>
+      <%= will_paginate @rooms, renderer: BootstrapPagination::Rails %>
+    </div>
+    <div class='center margin-bottom'>
+      <%= link_to 'New Room', new_room_path, class: 'btn btn-info' %>
+    </div>
   </div>
 </div>
+

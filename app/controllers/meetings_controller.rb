@@ -54,6 +54,12 @@ class MeetingsController < ApplicationController
     redirect_to meeting_path(params[:id]), message
   end
 
+  def get_occupancy
+    capacity  = Meeting.capacity(params[:id])
+    attending = EmployeeMeeting.attending(params[:id])
+    @current_occupancy = capacity - attending
+  end
+
   def new
     @meeting = Meeting.new
     @room_options = Room.company_rooms(current_employee.company_id)
@@ -71,10 +77,8 @@ class MeetingsController < ApplicationController
   end
 
   def search
-    @meeting_title  = Meeting.search_for('title', params[:search])
-                             .paginate(:page => params[:page], :per_page => 10)
-    @meeting_agenda = Meeting.search_for('agenda', params[:search])
-                             .paginate(:page => params[:page], :per_page => 10)
+    @meeting_results = Meeting.search_for(params[:search])
+                              .paginate(:page => params[:page], :per_page => 10)
   end
 
   def create
