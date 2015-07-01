@@ -17,20 +17,24 @@ class MeetingsController < ApplicationController
   end
 
   def show
-    @meeting = Meeting.find(params[:id])
-    # render json: {meeting: @meeting, e_com: current_employee.company.id, met_comp: @meeting.employee.company.id}
-    # if current_employee.company.id == @meeting.employee.company.id # is user part of the company
-    # # if user_is_admin? && @meeting.room.company.id == current_employee.company.id ||
-       # @meeting.invitations.exists?(employee_id: current_employee.id) ||
-       # @meeting.employee_id == current_employee.id
-      @current_employee = current_employee
-      @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
-      @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
-      @meeting_owner = (@meeting.employee_id == @current_employee.id)
-      get_occupancy
-    # else
-    #   redirect_to :back, alert: "Access Denied"
-    # end
+    begin
+      @meeting = Meeting.find(params[:id])
+      # render json: {meeting: @meeting, e_com: current_employee.company.id, met_comp: @meeting.employee.company.id}
+      if current_employee.company.id == @meeting.employee.company.id
+      # # if user_is_admin? && @meeting.room.company.id == current_employee.company.id ||
+         # @meeting.invitations.exists?(employee_id: current_employee.id) ||
+         # @meeting.employee_id == current_employee.id
+        @current_employee = current_employee
+        @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
+        @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
+        @meeting_owner = (@meeting.employee_id == @current_employee.id)
+        get_occupancy
+      else
+        redirect_to root_path, alert: "Access Denied"
+      end
+    rescue ActiveRecord::RecordNotFound => error
+      redirect_to root_path, alert: "Record not found"
+    end
   end
 
   def get_occupancy
