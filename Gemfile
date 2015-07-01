@@ -2,25 +2,27 @@ source "https://rubygems.org"
 
 group :development do
   gem "byebug", "~> 5.0"
-  gem "web-console", "~> 2.1"
-  gem "spring", "~> 1.3"
-  gem "pry", "~> 0.10"
-  gem "meta_request", "~> 0.3"
   gem "faker", "~> 1.4"
   gem 'guard' # NOTE: this is necessary in newer versions
   gem 'guard-minitest'
   gem 'guard-cucumber'
+  gem "meta_request", "~> 0.3"
+  gem "pry", "~> 0.10"
+  gem "spring", "~> 1.3"
+  gem "web-console", "~> 2.1"
 end
 
 group :test do
   gem "byebug", "~> 5.0"
-  gem "web-console", "~> 2.1"
-  gem "spring", "~> 1.3"
-  gem "pry", "~> 0.10"
-  gem "meta_request", "~> 0.3"
-  gem "faker", "~> 1.4"
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
+  gem "faker", "~> 1.4"
+  gem "meta_request", "~> 0.3"
+  gem "pry", "~> 0.10"
+  gem "spring", "~> 1.3"
+  gem "web-console", "~> 2.1"
+
+
 end
 
 gem "annotate", "~> 2.6"
@@ -34,6 +36,7 @@ gem "devise", "~> 3.5"
 gem "figaro", "~> 1.1"
 gem "jquery-datatables-rails", github: 'rweng/jquery-datatables-rails'
 gem "jquery-rails", "~> 4.0"
+gem "jquery-ui-rails"
 gem "turbolinks", "~> 2.5"
 gem "jbuilder", "~> 2.3"
 gem "mocha", "~> 1.1"

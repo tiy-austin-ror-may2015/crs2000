@@ -1,12 +1,14 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
-//You need to now manually import every other scss file.
 @import 'datetimepicker';
 @import 'admin';
 @import 'dataTables/jquery.dataTables';
+@import 'jquery.ui.core';
+@import 'jquery'
 @import 'scaffolds.scss';
 @import 'rooms';
 @import 'employee';
+
 //You need to now manually import every other scss file.
 .center{
   text-align: center;
