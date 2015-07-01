@@ -3,24 +3,30 @@
     <p id="notice" class="alert"><%= notice %></p>
     <p style='color:red;'><%= flash[:alert] %></p>
 
-    <h2><%= @meeting.title.capitalize %></h2>
+<div>
+  <row>
+    <div class="col-md-12">
+      <h2><%= @meeting.title.capitalize %></h2>
+    </div>
+  </row>
 
-    <h3>Agenda</h3>
-    <div class="well">
-      <p><%= @meeting.agenda %></p>
+    <div class="col-md-5">
+      <h3>Meeting details</h3>
+          <strong>Location:</strong> <p><%= link_to @meeting.room.name, @meeting.room %></p>
+          <strong>Start time:</strong><p class="timeDisplay"> <%= @meeting.start_time %></p>
+          <strong>End time:</strong><p class="timeDisplay"> <%= @meeting.end_time %></p>
+          <strong>Max Occupancy:</strong><p> <%= @max_occupancy %></p>
     </div>
 
-    <h3>Max Occupancy:</h3>
-    <div class="well">
-      <p><%= @max_occupancy %></p>
+    <div class="col-md-6 col-md-offset-1">
+      <h3>Agenda</h3>
+      <div>
+        <p><%= @meeting.agenda %></p>
+      </div>
     </div>
 
-    <h3>Current Occupancy:</h3>
-    <div class="well">
-      <p><%= @current_occupancy %></p>
-    </div>
-
-    <div class="col-md-6">
+  <row>
+    <div class="col-md-6 col-md-offset-1">
       <h3>Attendees (<%=@attendees.count%>) </h3>
       <ul>
         <% @attendees.each do |attendee| %>
@@ -29,19 +35,17 @@
 
       </ul>
     </div>
-    <div class="col-md-6">
-      <h3>Meeting details</h3>
-        <ul>
-          <li><strong>Location:</strong> <%= link_to @meeting.room.name, @meeting.room %></li>
-          <li><strong>Start time:</strong><p class="timeDisplay"> <%= @meeting.start_time %></p></li>
-          <li><strong>End time:</strong><p class="timeDisplay"> <%= @meeting.end_time %></p></li>
-        </ul>
-    </div>
+  </row>
+
   </div>
+  </div>
+
   <div class="row">
-    <%= link_to 'JOIN', join_employee_path(@meeting.id), method: 'POST', class: 'btn btn-default' %>
-    <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-success" %>
-    <%= link_to 'Back', meetings_path, class: "btn btn-default" %>
+    <div class="col-md-6 meeting-buttons">
+      <%= link_to 'Join', join_employee_path(@meeting.id), method: 'POST', class: 'btn btn-default' %>
+      <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-default" %>
+      <%= link_to 'Back', meetings_path, class: "btn btn-default" %>
+    </div>
   </div>
 
   <% if @meeting_owner == true %>
