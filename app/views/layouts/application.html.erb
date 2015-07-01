@@ -41,6 +41,12 @@
       .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
         color: <%= current_employee.company.primary_color %>;
       }
+      .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        color: <%= current_employee.company.primary_color %>;
+      }
+      .nav-tabs > li > a:hover {
+        color: <%= current_employee.company.primary_color %>;
+      }
       footer {
         border-top: 5px solid black;
         border-top-color: <%= current_employee.company.primary_color %>;
