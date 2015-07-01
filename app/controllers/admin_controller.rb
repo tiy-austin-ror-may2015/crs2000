@@ -10,6 +10,7 @@ class AdminController < ApplicationController
   end
 
   def busiest_employees
+    @busiest_employees = Meeting.sort_by
 
   end
 
