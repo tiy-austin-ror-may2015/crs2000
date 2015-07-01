@@ -9,9 +9,12 @@ group :development do
   gem "faker", "~> 1.4"
   gem 'guard' # NOTE: this is necessary in newer versions
   gem 'guard-minitest'
+  gem 'guard-cucumber'
 end
 
 group :test do
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
   gem "byebug", "~> 5.0"
   gem "web-console", "~> 2.1"
   gem "spring", "~> 1.3"
