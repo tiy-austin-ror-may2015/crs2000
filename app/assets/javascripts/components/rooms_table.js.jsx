@@ -162,7 +162,7 @@ var DataRow = React.createClass({
         };
         if (meeting.start_time > now && meeting.start_time <= next_start_time) {
           next_start_time = meeting.start_time;
-          time = next_start_time.format("dd/M/yy h:mm tt");
+          time = next_start_time;
         };
       });
     };
@@ -179,7 +179,7 @@ var DataRow = React.createClass({
         <td className='well'>{ amenity_names }</td>
         <td>{ company.name }</td>
         <td className='well'>{ room.max_occupancy }</td>
-        <td>{ time }</td>
+        <td className='timeDisplay'>{ time }</td>
         <td className='well'>{ available }</td>
       </tr>
     );

@@ -2,7 +2,8 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
-    @rooms = Room.all.paginate(:page => params[:page], :per_page => 10)
+    @rooms = Room.all
+    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
   end
 
   def show
@@ -24,14 +25,12 @@ class RoomsController < ApplicationController
   def search
     @rooms   = Room.search_for(params[:search].downcase)
     @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
-    @room_results = @rooms.paginate(:page => params[:page], :per_page => 10)
   end
 
   def search_advance
     @rooms = Room.search_with(params)
                  .sort_with(params)
-    @rooms_array = @rooms.map { |room| [room, room.companies, room.amenities] }
-    @room_results = @rooms.paginate(:page => params[:page], :per_page => 10)
+    @rooms_array = @rooms.map { |room| [room, room.companies, room.amenities, room.meetings] }
     render :search
   end
 
