@@ -18,9 +18,11 @@ class MeetingsController < ApplicationController
 
   def show
     @meeting = Meeting.find(params[:id])
-    # if user_is_admin? && @meeting.room.company.id == current_employee.company.id ||
-    #    @meeting.invitations.exists?(employee_id: current_employee.id) ||
-    #    @meeting.employee_id == current_employee.id
+    # render json: {meeting: @meeting, e_com: current_employee.company.id, met_comp: @meeting.employee.company.id}
+    # if current_employee.company.id == @meeting.employee.company.id # is user part of the company
+    # # if user_is_admin? && @meeting.room.company.id == current_employee.company.id ||
+       # @meeting.invitations.exists?(employee_id: current_employee.id) ||
+       # @meeting.employee_id == current_employee.id
       @current_employee = current_employee
       @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
       @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
