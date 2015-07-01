@@ -1,5 +1,4 @@
 <p id='notice'><%= notice %></p>
-
   <div class='row pull-right margin-top well margin-right'>
     <form action='/search/rooms' method='GET'>
       <input type='text' name='search'
@@ -9,11 +8,10 @@
   </div>
 <div class='container'>
   <div class='row'>
-    <p id='notice'><%= notice %></p>
-
-<h1 class="col-md-6">Search Results for <i class="results"><%= params[:search].titleize %></i></h1>
+<h1 class="col-md-6">Search Results for
+  <i class="results"><%= params[:search].titleize %></i>
+</h1>
 <%= react_component("RoomsTable", { rooms_array: @rooms_array, page: 1, limit: 10 }) %>
-
 <div class="container">
   <div class="col-md-9"></div>
   <div class='col-md-3 well center room-search'>
