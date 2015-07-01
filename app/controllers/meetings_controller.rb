@@ -17,6 +17,7 @@ class MeetingsController < ApplicationController
 
   def show
     @meeting = Meeting.find(params[:id])
+    # if current_employee.company.id == @meeting. # is user part of the company
     # if user_is_admin? && @meeting.room.company.id == current_employee.company.id ||
     #    @meeting.invitations.exists?(employee_id: current_employee.id) ||
     #    @meeting.employee_id == current_employee.id
