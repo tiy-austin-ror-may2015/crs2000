@@ -1,8 +1,13 @@
 class EmployeesController < ApplicationController
 
+  def index
+    @employees = Employee.paginate(:page => params[:page], :per_page => 10)
+  end
+
   def show
     @employee = Employee.find(params[:id])
   end
+
 
   def edit
     @employee = Employee.find(params[:id])
@@ -10,16 +15,17 @@ class EmployeesController < ApplicationController
 
   def update
   @employee = Employee.find(params[:id])
-  respond_to do |format|
     if @employee.update(employee_params)
-      format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-      format.json { render :show, status: :ok, location: @employee }
+      redirect_to @employee, notice: 'Employee was successfully updated.'
     else
-      format.html { render :edit }
-      format.json { render json: @employee.errors, status: :unprocessable_entity }
+      render :edit
     end
   end
-end
+
+  def employee_search
+    @employee_results = Employee.search(params[:search])
+                                .paginate(:page => params[:page], :per_page => 10)
+  end
 
 private
 

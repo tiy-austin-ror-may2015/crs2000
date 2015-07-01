@@ -4,29 +4,38 @@ It should show the title, and the photo for each room. -->
 
 <div class="container">
   <div class="row">
-    <h2>The <%= @room.name %> Room</h2>
-    <img src="http://cdn.home-designing.com/wp-content/uploads/2009/06/large-meeting-room.jpg">
+    <h2><%= @room.name %></h2>
+    <div class="room-image">
+      <%=image_tag(@room.imgurl) %>
+    </div>
     <div class="col-md-6">
-      <h3>Meetings</h3>
+    <h3>Meetings</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Meetings</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+    <tbody>
       <% @room.meetings.each do |meeting|%>
-      <ul>
-        <li><%= meeting.title %></li>
-
-      </ul>
+        <td class="well"><div class="col-md-6">
+        <%= link_to meeting.title, meeting %>
+        </div></td>
+        <td><div class="col-md-6">
+          <%= meeting.start_time.strftime('%m/%d %I:%M%p') %> to <%= meeting.end_time.strftime('%m/%d %I:%M%p') %></li>
+        </div></td>
+      </tbody>
       <% end %>
+    </table>
     </div>
     <div class="col-md-6">
       <h3>Details</h3>
-      <p><strong>Location: </strong> <%= @room.location %></p>
+      <p><strong>Location: </strong> <%=@room.location%></p>
       <p><strong>Occupancy: </strong><%= @room.max_occupancy %></p>
       <p><strong>Room Number: </strong><%= @room.room_number%></p>
-    </div>
-  </div>
+      <p><strong>Amenity: </strong><% @room.amenities.each do |amenity|%> <%= amenity.perk %><% end %></p>
 
-  <!-- <div class="row admin">
-    <button class="btn btn-primary">Edit meeting</button>
-    <button class="btn btn-danger">Delete meeting</button>
+</div>
   </div>
-  <%= link_to 'Edit', edit_room_path(@room) %> |
-<%= link_to 'Back', rooms_path %> -->
 </div>

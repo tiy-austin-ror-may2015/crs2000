@@ -1,31 +1,22 @@
 class MeetingsController < ApplicationController
 
-  # GET /meetings
-  # GET /meetings.json
   def index
     @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
+    # company   = Company.find(current_employee.company.id)
+    # @meetings = company.meetings
+    # binding.pry
+    # @meetings = Meeting.send_meetings(@meetings)
+
+    # @meetings.paginate(:page => params[:page], :per_page =>10)
   end
 
-  # GET /meetings/1
-  # GET /meetings/1.json
   def show
     @meeting = Meeting.find(params[:id])
-    @employee = current_employee
-    @attendees = EmployeeMeeting.where(meeting_id: @meeting.id)
+    @current_employee = current_employee
+    @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
+    @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
+    @meeting_owner = (@meeting.employee_id == @current_employee.id)
     get_occupancy
-  end
-
-  def join
-    @employee = current_employee
-    if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @employee.id).count == 0
-      em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @employee.id)
-      em.save
-      message = {notice: 'Employee successfully joined!'}
-    else
-      message = {alert: 'Employee already joined!'}
-    end
-    redirect_to meeting_path(params[:id]), message
-
   end
 
   def get_occupancy
@@ -34,17 +25,49 @@ class MeetingsController < ApplicationController
     @current_occupancy = @max_occupancy - attendees_num
   end
 
+  def invite
+      if Invitation.where(meeting_id: params[:meeting_id], employee_id: params[:employee_id]).count == 0
+        invitation = Invitation.new(meeting_id: params[:meeting_id], employee_id: params[:employee_id])
+        invitation.save
+          message = {notice: 'invitation successfully sent!'}
+        else
+          message = {alert: 'invitation has been already sent!'}
+        end
+      redirect_to meeting_path(params[:meeting_id]), message
+  end
+
+  def join
+    @current_employee = current_employee
+    if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @current_employee.id).count == 0
+      meeting = Meeting.find(params[:id])
+      if meeting_overlap? (meeting)
+        message = {alert: 'You own or are already in another meeting at this time.'}
+      else
+        em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @current_employee.id)
+        em.save
+        message = {notice: 'Employee successfully joined!'}
+      end
+    else
+      message = {alert: 'Employee already joined!'}
+    end
+    redirect_to meeting_path(params[:id]), message
+  end
+
+  def get_occupancy
+    capacity  = Meeting.capacity(params[:id])
+    attending = EmployeeMeeting.attending(params[:id])
+    @current_occupancy = capacity - attending
+  end
 
   def new
     @meeting = Meeting.new
-    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+    @room_options = Room.company_rooms(current_employee.company_id)
   end
 
-  # GET /meetings/1/edit
   def edit
     @meeting = Meeting.find(params[:id])
     if employee_signed_in?
-    @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+      @room_options = Room.company_rooms(current_employee.company_id)
     end
     current_meeting = Meeting.find(params[:id])
     if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
@@ -53,61 +76,60 @@ class MeetingsController < ApplicationController
   end
 
   def search
-    @meeting_title  = Meeting.where("title LIKE ?", "%" + params[:search] + "%")
-                             .paginate(:page => params[:page], :per_page => 10)
-    @meeting_agenda = Meeting.where("agenda LIKE ?", "%" + params[:search] + "%")
-                             .paginate(:page => params[:page], :per_page => 10)
-    @meeting_rooms  = Room.where("name LIKE ?", "%" + params[:search] + "%")
-                             .paginate(:page => params[:page], :per_page => 10)
+    @meeting_results = Meeting.search_for(params[:search])
+                              .paginate(:page => params[:page], :per_page => 10)
   end
-  # POST /meetings
-  # POST /meetings.json
+
   def create
     @meeting = Meeting.new(meeting_params)
-    @meeting.employee = current_employee
-    respond_to do |format|
+    if meeting_overlap? (@meeting)
+      redirect_to new_meeting_path, alert: 'You own or are already in another meeting at this time.'
+    else
+      @meeting.employee = current_employee
       if @meeting.save
+        em = EmployeeMeeting.new(meeting_id: @meeting.id, employee_id: current_employee.id)
+        em.save
         MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
-        format.json { render :show, status: :created, location: @meeting }
+        redirect_to @meeting, notice: 'Meeting was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        render :new
       end
     end
   end
 
-  # PATCH/PUT /meetings/1
-  # PATCH/PUT /meetings/1.json
   def update
     @meeting = Meeting.find(params[:id])
-    respond_to do |format|
       if @meeting.update(meeting_params)
         MeetingMailer.meeting_changed(current_employee, @meeting).deliver_now
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully updated.' }
-        format.json { render :show, status: :ok, location: @meeting }
+        redirect_to @meeting, notice: 'Meeting was successfully updated.'
       else
-        format.html { render :edit }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        render :edit
       end
-    end
   end
 
-  # DELETE /meetings/1
-  # DELETE /meetings/1.json
   def destroy
     @meeting = Meeting.find(params[:id])
     current_meeting = Meeting.find(params[:id])
     if (!employee_signed_in? || current_employee.id != current_meeting.employee.id)
       redirect_to "/meetings", notice: 'You are not the owner of this meeting!'
     else
-    MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
-    @meeting.destroy
-    respond_to do |format|
-      format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
-      format.json { head :no_content }
+      MeetingMailer.meeting_cancelled(current_employee, @meeting).deliver_now
+      @meeting.destroy
+      redirect_to meetings_url, notice: 'Meeting was successfully destroyed.'
     end
+  end
+
+  # An employee cannot create or join a meeting that takes place during another meeting they own or are part of.
+  def meeting_overlap? (check_meeting)
+    all_meetings = Meeting.where(employee_id: current_employee.id) # owned meetings
+    all_meetings += EmployeeMeeting.where(employee_id: current_employee.id).map{|em| em.meeting} # attending meetings
+    all_meetings.each do |meeting|
+      if (meeting.start_time <= check_meeting.start_time && check_meeting.start_time <= meeting.end_time) ||
+          (meeting.start_time <= check_meeting.end_time && check_meeting.end_time <= meeting.end_time)
+        return true
+      end
     end
+    return false
   end
 
 # QUESTIONS? TALK TO WILL
@@ -116,13 +138,12 @@ class MeetingsController < ApplicationController
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
   def set_meeting
     @meeting = Meeting.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def meeting_params
-    params.require(:meeting).permit(:title, :agenda, :start_time, :end_time)
+    params.require(:meeting).permit(:title, :agenda, :room_id, :start_time, :end_time, :private)
   end
+
 end

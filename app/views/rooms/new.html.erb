@@ -1,5 +1,9 @@
-<h1>New Room</h1>
+<div class='container new-room'>
+  <h1>New Room</h1>
+  <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Back', rooms_path %>
+  <%= link_to 'Back', dashboard_path %>
+</div>

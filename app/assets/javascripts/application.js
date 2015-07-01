@@ -1,3 +1,4 @@
+/* globals $, moment */
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -19,4 +20,26 @@
 //= require react_ujs
 //= require components
 //= require moment
+//= require datetimepicker
 //= require_tree .
+
+var ready = function() {
+  $('.datetimepicker').datetimepicker();
+
+  var times = $('.timeDisplay');
+  times.each(function () {
+    var time_text = $(this).html();
+    var formatted_time = moment(time_text).format('MMMM/DD/YYYY hh:mm a');
+    $(this).html(formatted_time);
+  });
+};
+
+$(document).ready(ready);
+$(document).on("page:load", ready);
+
+
+
+
+
+
+

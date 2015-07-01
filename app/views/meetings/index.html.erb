@@ -29,8 +29,8 @@
           <tr>
             <td class='well'><%= link_to meeting.title, meeting %></td>
             <td><%= meeting.agenda %></td>
-            <td class='well'><%= meeting.start_time %></td>
-            <td><%= meeting.end_time %></td>
+            <td class='well' ><p class="timeDisplay"><%= meeting.start_time %></p></td>
+            <td><p class="timeDisplay"><%= meeting.end_time %></p></td>
             <td class='well'><%= link_to 'Show', meeting %></td>
             <td><%= link_to 'Edit', edit_meeting_path(meeting) %></td>
             <td  class='well'><%= link_to 'Destroy', meeting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
