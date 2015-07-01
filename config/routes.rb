@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     get 'admin/reports_rooms/top_rooms', to: 'admin#top_rooms'
     post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
     get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
+    get 'admin/add_branding', to: 'admin#add_branding'
 
     resources :rooms
     resources :companies

@@ -1,0 +1,23 @@
+<h1>Add Company Branding</h1>
+<%= form_for @company do |f| %>
+
+  <div class="field">
+    <%= f.label :logo %>
+    <%= f.text_field :logo %>
+  </div>
+
+  <div class="field">
+    <%= f.label :primary_color %>
+    <%= f.text_field :primary_color %>
+  </div>
+
+  <div class="field">
+    <%=f.label :secondary_color %>
+    <%= f.text_field :secondary_color %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>
