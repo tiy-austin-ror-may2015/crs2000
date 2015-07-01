@@ -34,6 +34,7 @@ class EmployeesController < ApplicationController
 
   def employee_search
     @employee_results = Employee.search(params[:search])
+                                .paginate(:page => params[:page], :per_page => 10)
   end
 
 private
