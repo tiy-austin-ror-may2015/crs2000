@@ -13,6 +13,12 @@ group :development do
 end
 
 group :test do
+  gem "byebug", "~> 5.0"
+  gem "web-console", "~> 2.1"
+  gem "spring", "~> 1.3"
+  gem "pry", "~> 0.10"
+  gem "meta_request", "~> 0.3"
+  gem "faker", "~> 1.4"
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
 end
