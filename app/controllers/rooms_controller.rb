@@ -28,7 +28,7 @@ class RoomsController < ApplicationController
   end
 
   def search
-      @room_results   = Room.search_for(params[:search])
+      @room_results   = Room.search_for(params[:search].downcase)
                             .paginate(:page => params[:page], :per_page => 10)
   end
 

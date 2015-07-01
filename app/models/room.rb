@@ -70,8 +70,13 @@ end
   end
 
   def self.search_for(search)
+    if search.to_i == 0
+      max_occupancy = nil
+    else
+      max_occupancy = search.to_i
+    end
     self.where("lower(name) LIKE ? OR lower(location) LIKE ? OR max_occupancy > ?",
-               "%#{search.downcase}%", "%#{search.downcase}%", search.to_i)
+               "%#{search}%", "%#{search}%", max_occupancy)
   end
 
 end

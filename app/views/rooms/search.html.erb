@@ -10,6 +10,7 @@
         <th>Room Number</th>
         <th>Image</th>
         <th>Location</th>
+        <th>Amenities</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -21,7 +22,8 @@
           <td class="well"><%= room.room_number %></td>
           <td><%= room.imgurl %></td>
           <td class="well"><%= room.location %></td>
-          <td><%= link_to 'Show', room  %></td>
+          <td><%= room.amenities.first.perk %></td>
+          <td class="well"><%= link_to 'Show', room  %></td>
         </tr>
       <% end %>
     </tbody>
