@@ -66,7 +66,6 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.find(params[:id])
     if employee_signed_in?
       all_rooms = Room.where(company_id: current_employee.company_id)
-      binding.pry
       @room_options = all_rooms.map { |room| [room.name, room.id] }
     end
     current_meeting = Meeting.find(params[:id])
