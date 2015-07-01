@@ -22,6 +22,15 @@
         border-color: <%= current_employee.company.primary_color %>;
         color: <%= current_employee.company.secondary_color %>;
       }
+      .btn-default {
+        background: <%= current_employee.company.primary_color %>;
+        border-color: <%= current_employee.company.primary_color %>;
+      }
+      .btn-default:hover {
+        background: <%= current_employee.company.primary_color %>;
+        border-color: <%= current_employee.company.primary_color %>;
+        color: <%= current_employee.company.secondary_color %>;
+      }
       .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
         background: <%= current_employee.company.primary_color %> ;
         border-color: <%= current_employee.company.primary_color %>;
