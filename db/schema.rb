@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629210054) do
+ActiveRecord::Schema.define(version: 20150630205137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "amenities", force: :cascade do |t|
+    t.string   "perk"
+    t.integer  "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "amenities", ["room_id"], name: "index_amenities_on_room_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
@@ -51,6 +60,13 @@ ActiveRecord::Schema.define(version: 20150629210054) do
   add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree
   add_index "employees", ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true, using: :btree
 
+  create_table "invitations", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.integer  "meeting_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "meetings", force: :cascade do |t|
     t.string   "title",                       null: false
     t.text     "agenda",                      null: false
@@ -62,6 +78,16 @@ ActiveRecord::Schema.define(version: 20150629210054) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
+
+  create_table "room_amenities", force: :cascade do |t|
+    t.integer  "room_id"
+    t.integer  "amenity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "room_amenities", ["amenity_id"], name: "index_room_amenities_on_amenity_id", using: :btree
+  add_index "room_amenities", ["room_id"], name: "index_room_amenities_on_room_id", using: :btree
 
   create_table "rooms", force: :cascade do |t|
     t.string   "name"
@@ -77,4 +103,7 @@ ActiveRecord::Schema.define(version: 20150629210054) do
     t.datetime "updated_at",                                null: false
   end
 
+  add_foreign_key "amenities", "rooms"
+  add_foreign_key "room_amenities", "amenities"
+  add_foreign_key "room_amenities", "rooms"
 end
