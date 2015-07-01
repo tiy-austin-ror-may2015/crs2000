@@ -39,6 +39,7 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.find(params[:id])
     if employee_signed_in?
       all_rooms = Room.where(company_id: current_employee.company_id)
+      binding.pry
       @room_options = all_rooms.map { |room| [room.name, room.id] }
     end
     current_meeting = Meeting.find(params[:id])
@@ -56,23 +57,33 @@ class MeetingsController < ApplicationController
 
   def create
     @meeting = Meeting.new(meeting_params)
-    @meeting.employee = current_employee
-      if @meeting.save
-        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
-        redirect_to @meeting, notice: 'Meeting was successfully created.'
-      else
-        render :new
-      end
+    if room_is_available?(@meeting)
+      @meeting.employee = current_employee
+        if @meeting.save
+          MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
+          redirect_to @meeting, notice: 'Meeting was successfully created.'
+        else
+          render :new
+        end
+    else
+      flash[:alert] = "That room is already occupied during that time."
+      redirect_to :back
+    end
   end
 
   def update
     @meeting = Meeting.find(params[:id])
+    if room_is_available?(@meeting)
       if @meeting.update(meeting_params)
         MeetingMailer.meeting_changed(current_employee, @meeting).deliver_now
         redirect_to @meeting, notice: 'Meeting was successfully updated.'
       else
         render :edit
       end
+    else
+      flash[:alert] = "That room is already occupied during that time."
+      redirect_to :back
+    end
   end
 
   def destroy
