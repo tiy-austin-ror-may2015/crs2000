@@ -22,6 +22,8 @@ class Meeting < ActiveRecord::Base
   has_many :invitations
   has_many :room_amenities
   has_many :employees, through: :employee_meetings
+  scope :today_forward, -> { where("start_time >= ?", Time.now.midnight).order(:start_time) }
+
 
   def self.search_for(search)
     self.where("lower(title) LIKE ? OR lower(agenda) LIKE ?",

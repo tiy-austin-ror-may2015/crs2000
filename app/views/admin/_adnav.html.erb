@@ -1,0 +1,9 @@
+ <ul class="nav nav-tabs">
+    <li role="presentation" class=<%= 'active' if request.fullpath == dashboard_path %>><%= link_to 'Admin Dashboard', dashboard_path %></li>
+    <li role="presentation" class=<%= 'active' if request.fullpath == new_room_path %>><a href="/rooms/new">Create a Room</a></li>
+    <li role="presentation" class=<%= 'active' if request.fullpath == admin_reports_meetings_path %>><a href="/admin/reports_meetings">Meetings Report</a></li>
+    <li role="presentation" class=<%= 'active' if request.fullpath == admin_reports_rooms_path %>><a href="/admin/reports_rooms">Rooms Report</a></li>
+    <li role="presentation" class=<%= 'active' if request.fullpath == admin_busiest_employees_path %>><a href="/admin/busiest_employees">Employee Report</a></li>
+    <li role="presentation" class=<%= 'active' if request.fullpath == admin_add_branding_path %>><a href="/admin/add_branding">Branding</a></li>
+    <li role="presentation" class=<%= 'active' if request.fullpath == admin_busiest_employees_path %>><a href="invitations/show">Meeting invites</a></li>
+  </ul>
