@@ -155,19 +155,19 @@ var DataRow = React.createClass({
     amenity_names.join(', ');
 
     if (meetings.length > 0) {
-      var next_start_time = meetings[0].start_time;
+      var next_start_time = new Date(meetings[0].start_time);
       meetings.forEach(function(meeting, i) {
-        if (meeting.start_time <= now && meeting.end_time >= now) {
+        var start_time = new Date(meeting.start_time);
+        var end_time = new Date(meeting.end_time);
+        if (start_time <= now && end_time >= now) {
           available = 'no';
         };
-        if (meeting.start_time > now && meeting.start_time <= next_start_time) {
-          next_start_time = meeting.start_time;
-          time = next_start_time;
+        if (start_time > now && start_time <= next_start_time) {
+          next_start_time = start_time;
+          time = next_start_time.toString();
         };
       });
     };
-
-
 
     return (
       <tr>

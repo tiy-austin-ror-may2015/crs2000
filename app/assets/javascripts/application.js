@@ -28,8 +28,8 @@ var ready = function() {
 
   var times = $('.timeDisplay');
   times.each(function () {
-    var time_text = $(this).html();
-    var formatted_time = moment(time_text).format('MMMM/DD/YYYY hh:mm a');
+    var time_text = $(this).html().format('MMMM/DD/YYYY hh:mm a');
+    var formatted_time = moment(time_text);
     $(this).html(formatted_time);
   });
 };

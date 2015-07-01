@@ -10,10 +10,9 @@
   <div class='row'>
     <p id='notice'><%= notice %></p>
 
-<h1>Search Results</h1>
-<%= react_component("RoomsTable", { rooms_array: @rooms_array, page: 1, limit: 10 }) %>
-
 <div class="container">
+  <h1>Search Results</h1>
+  <%= react_component("RoomsTable", { rooms_array: @rooms_array, page: 1, limit: 10 }) %>
   <div class="col-md-9"></div>
   <div class='col-md-3 well center room-search'>
     <form action='/search_advance/rooms' method='GET'>
