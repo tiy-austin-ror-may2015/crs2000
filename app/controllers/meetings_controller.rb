@@ -1,7 +1,14 @@
 class MeetingsController < ApplicationController
+  # before_action :check_employee_overlap!, only: [:join, :create]
 
   def index
     @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
+    # company   = Company.find(current_employee.company.id)
+    # @meetings = company.meetings
+    # binding.pry
+    # @meetings = Meeting.send_meetings(@meetings)
+
+    # @meetings.paginate(:page => params[:page], :per_page =>10)
   end
 
   def show
@@ -24,15 +31,14 @@ class MeetingsController < ApplicationController
   end
 
   def get_occupancy
-    @max_occupancy = Meeting.find(params[:id]).room.max_occupancy
-    attendees_num = EmployeeMeeting.where(meeting_id: params[:id]).count
-    @current_occupancy = @max_occupancy - attendees_num
+    capacity  = Meeting.capacity(params[:id])
+    attending = EmployeeMeeting.attending(params[:id])
+    @current_occupancy = capacity - attending
   end
 
   def new
     @meeting = Meeting.new
-    all_rooms = Room.where(company_id: current_employee.company_id)
-    @room_options = all_rooms.map { |room| [room.name, room.id] }
+    @room_options = Room.company_rooms(current_employee.company_id)
   end
 
   def edit
@@ -49,10 +55,8 @@ class MeetingsController < ApplicationController
   end
 
   def search
-    @meeting_title  = Meeting.search_for('title', params[:search])
-                             .paginate(:page => params[:page], :per_page => 10)
-    @meeting_agenda = Meeting.search_for('agenda', params[:search])
-                             .paginate(:page => params[:page], :per_page => 10)
+    @meeting_results = Meeting.search_for(params[:search])
+                              .paginate(:page => params[:page], :per_page => 10)
   end
 
   def create
@@ -68,7 +72,6 @@ class MeetingsController < ApplicationController
     else
       flash[:alert] = "That room is already occupied during that time."
       redirect_to :back
-    end
   end
 
   def update
@@ -98,7 +101,20 @@ class MeetingsController < ApplicationController
     end
   end
 
-private
+  # def check_employee_overlap!
+  #   @attendees = EmployeeMeeting.where(meeting_id: params[:id])
+  #   @attendees.each do |attendee|
+  #     @begin_time = attendee.meeting.start_time
+  #     @finish_time = attendee.meeting.end_time
+  #   end
+  #   if @meeting.start_time< Time.now
+  #     redirect_to @meeting, alert: 'You are already in another meeting.'
+  #   end
+  # end
+
+
+
+  private
   def set_meeting
     @meeting = Meeting.find(params[:id])
   end
