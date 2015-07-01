@@ -1,12 +1,11 @@
  <div class="container">
-  <h2 class="center">Search Results for <i><%= params[:search] %></i></h2>
+  <h2 class="center">Search Results for <i><%= params[:search] %></i> in <%= current_employee.company.name %></h2>
   <% if @employee_results.count > 0 %>
       <section class='panel panel-default'>
         <table class='table'>
           <thead>
             <tr>
               <th>Name</th>
-              <th>Company</th>
               <th>Email</th>
               <th colspan="3"></th>
             </tr>
@@ -15,8 +14,7 @@
             <% @employee_results.each do |employee| %>
               <tr>
                 <td class="well"><%= link_to employee.name, employee %></td>
-                <td><%= employee.company.name %></td>
-                <td class="well"><%= employee.email %></td>
+                <td><%= employee.email %></td>
                 <td class="well"><%= link_to 'Show', employee %></td>
                 <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
                 <td class="well"><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
