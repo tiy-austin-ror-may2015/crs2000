@@ -1,15 +1,30 @@
-<h2 class="center">Search Results for <i><%= params[:search] %></i></h2>
+<p id='notice'><%= notice %></p>
+
+  <div class='row pull-right margin-top'>
+    <form action='/search/rooms' method='GET'>
+      <input type='text' name='search'/>
+      <input type='submit' value='Search' class='btn btn-primary' />
+    </form>
+  </div>
+<div class='container'>
+  <div class='row'>
+    <p id='notice'><%= notice %></p>
+
+<h1>Search Results</h1>
+<!-- Shows all rooms where name like search params -->
 <% if @room_results.count > 0 %>
-<h3 class="center"><%= @room_results.count %> Room(s) found.</h3>
+<h3><%= @room_results.count %> Room(s) found.</h3>
   <section class='panel panel-default'>
   <table class='table'>
     <thead>
       <tr>
         <th>Name</th>
-        <th>Max Occupancy</th>
         <th>Room Number</th>
-        <th>Image</th>
         <th>Location</th>
+        <th>Company</th>
+        <th>Max Occupancy</th>
+        <th>Hours Until Next Meeting</th>
+        <th>Available</th>
         <th colspan='3'></th>
       </tr>
     </thead>
@@ -17,30 +32,32 @@
       <% @room_results.each do |room| %>
         <tr>
           <td class='well'><%= room.name %></td>
-          <td><%= room.max_occupancy %></td>
-          <td class='well'><%= room.room_number %></td>
-          <td><%= room.imgurl %></td>
+          <td><%= room.room_number %></td>
           <td class='well'><%= room.location %></td>
+          <td><%= room.company.name %></td>
+          <td class='well'><%= room.max_occupancy %></td>
+          <td class='well'><%= room.hours_until_next_meeting >= 0 ? room.hours_until_next_meeting : "N/A" %></td>
+          <td><%= room.available ? "yes" : "no" %></td>
           <td><%= link_to 'Show', room  %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
   </section>
-  <div class='center'><%= will_paginate @rooms,
-                        renderer: BootstrapPagination::Rails %></div>
+  <div class='center'>
+    <%= will_paginate @room_results, renderer: BootstrapPagination::Rails %>
+  </div>
 <% end %>
-
 <div class="container">
   <div class="col-md-9"></div>
   <div class='col-md-3 well center room-search'>
-    <form action='/search/rooms' method='GET'>
+    <form action='/search_advance/rooms' method='GET'>
       <div class='row'>
         <div class='col-md-4 align-right'>
           name
         </div>
         <div class='col-md-8 align-left'>
-          <input type='text' size= '10' name='name'/>
+          <input type='text' size= '12' name='name'/>
         </div>
       </div>
       <div class='row'>
@@ -48,7 +65,7 @@
           company
         </div>
         <div class='col-md-8 align-left'>
-          <input type='text' size= '10' name='company_name'/>
+          <input type='text' size= '12' name='company_name'/>
         </div>
       </div>
       <div class='row'>
@@ -56,7 +73,7 @@
           location
         </div>
         <div class='col-md-8 align-left'>
-          <input type='text' size= '10' name='location'/>
+          <input type='text' size= '12' name='location'/>
         </div>
       </div>
       <div class='row'>
