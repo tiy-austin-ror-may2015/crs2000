@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+  <div class="row pull-right margin-top">
+    <form action='/search/employees' method='GET'>
+      <input type='text' name='search'/>
+      <input type='submit' value='Search' class="btn btn-primary" />
+    </form>
+  </div>
+<div class="container">
+  <div class="row">
+    <p id="notice"><%= notice %></p>
+
+    <h1>All Employees</h1>
+    <div class='panel panel-default'>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class='well'>Name</th>
+          <th>Company</th>
+          <th class='well'>Email</th>
+          <% if user_is_admin? %>
+            <th colspan="3"></th>
+          <% end %>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @employees.each do |employee| %>
+          <tr>
+            <td class='well'><%= employee.name %></td>
+            <td><%= employee.company.name %></td>
+            <td class='well'><%= employee.email %></td>
+            <% if user_is_admin? %>
+              <td><%= link_to 'Show', employee %></td>
+              <td class="well"><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+    <br>
+    <div class="center">
+      <%= will_paginate @employees, renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>
+</div>

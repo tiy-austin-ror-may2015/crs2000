@@ -1,7 +1,7 @@
 <h2 class="center">Search Results for <i><%= params[:search] %></i></h2>
-<!-- Shows all meetings where title like search params -->
-<% if @meeting_title.count > 0 %>
-<h3 class="center"><%= @meeting_title.count %> Topic(s) found.</h3>
+<% if @meeting_results.count > 0 %>
+  </div>
+<h3 class="center"><%= @meeting_results.count %> Topic(s) found.</h3>
   <section class='panel panel-default'>
   <table class='table'>
     <thead>
@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @meeting_title.each do |meeting| %>
+      <% @meeting_results.each do |meeting| %>
         <tr>
           <td class="well"><%= meeting.title %></td>
           <td><%= meeting.agenda %></td>
@@ -28,76 +28,9 @@
     </tbody>
   </table>
   </section>
-  <div class="center"><%= will_paginate @meeting_title,
+  <div class="center"><%= will_paginate @meeting_results,
                         renderer: BootstrapPagination::Rails %></div>
 <% end %>
-<!-- Shows all meetings where agenda like search results -->
-<% if @meeting_agenda.count > 0 %>
-<h3 class="center"><%= @meeting_agenda.count %> Agenda(s) found.</h3>
-  <section class='panel panel-default'>
-  <table class='table'>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Agenda</th>
-        <th>Start time</th>
-        <th>End time</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @meeting_agenda.each do |meeting| %>
-        <tr>
-          <td class="well"><%= meeting.title %></td>
-          <td><%= meeting.agenda %></td>
-          <td class="well"><%= meeting.start_time %></td>
-          <td><%= meeting.end_time %></td>
-          <td class="well"><%= link_to 'Show', meeting %></td>
-          <td><%= link_to 'Edit', edit_meeting_path(meeting) %></td>
-          <td class="well"><%= link_to 'Destroy', meeting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </section>
-  <div class="center"><%= will_paginate @meeting_agenda,
-                        renderer: BootstrapPagination::Rails %></div>
-<% end %>
-<!-- Shows all meetings where room location like search results -->
-<% if @meeting_rooms.count > 0 %>
-  <h3 class="center"><%= @meeting_rooms.count %> Room(s) found.</h3>
-  <section class='panel panel-default'>
-  <table class='table'>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Max Occupancy</th>
-        <th>Room Number</th>
-        <th>Picture</th>
-        <th>Location</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @meeting_rooms.each do |room| %>
-        <tr>
-          <td class="well"><%= room.name %></td>
-          <td><%= room.max_occupancy %></td>
-          <td class="well"><%= room.room_number %></td>
-          <td><%= image_tag(room.imgurl, size: '200x150') %></td>
-          <td><%= room.location %></td>
-          <td class="well"><%= link_to 'Show', room %></td>
-          <td><%= link_to 'Edit', edit_room_path(room) %></td>
-          <td class="well"><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </section>
-  <div class="center"><%= will_paginate @meeting_rooms,
-                        renderer: BootstrapPagination::Rails %></div>
-<% end %>
-
   <div class="well center">
     <form action='/search/meetings' method='GET'>
       <input type='text' name='search'/>

@@ -4,6 +4,8 @@ class CompaniesControllerTest < ActionController::TestCase
   setup do
     @employee = Employee.create(email: 'user@example.com', password: 'foobar')
     @company = Company.create(name: 'foo-llc')
+    @request.env["devise.mapping"] = Devise.mappings[:employee]
+    @controller.stubs(:current_employee).returns(@employee)
     sign_in @employee
   end
 

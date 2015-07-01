@@ -1,8 +1,23 @@
 class EmployeesController < ApplicationController
 
+  def index
+    @employees = Employee.paginate(:page => params[:page], :per_page => 10)
+  end
+
   def show
     @employee = Employee.find(params[:id])
   end
+
+  # def invite
+  #   @employee = current_employee
+  #   em = Invitation.new(meeting_id: params[:id], employee_id: @employee.id)
+  #   if em.save
+  #   message = {notice: 'invitation successfully sent!'}
+  #   else
+  #     message = {alert: 'invitation sent failed!'}
+  #   end
+  #   redirect_to meeting_path(params[:id]), message
+  # end
 
   def edit
     @employee = Employee.find(params[:id])
@@ -10,16 +25,12 @@ class EmployeesController < ApplicationController
 
   def update
   @employee = Employee.find(params[:id])
-  respond_to do |format|
     if @employee.update(employee_params)
-      format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-      format.json { render :show, status: :ok, location: @employee }
+      redirect_to @employee, notice: 'Employee was successfully updated.'
     else
-      format.html { render :edit }
-      format.json { render json: @employee.errors, status: :unprocessable_entity }
+      render :edit
     end
   end
-end
 
 private
 
