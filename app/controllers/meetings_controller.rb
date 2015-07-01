@@ -1,18 +1,33 @@
 class MeetingsController < ApplicationController
 
   def index
-    @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
-
+    if current_employee
+        company   = Company.find(current_employee.company.id)
+      if user_is_admin?
+        @meetings = company.meetings.today_forward
+        @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+      else
+        @meetings = company.meetings.today_forward.where("private = false")
+        @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+      end
+    else
+      redirect_to root_path, alert: "Please Log In"
+    end
   end
 
   def show
     @meeting = Meeting.find(params[:id])
-    @current_employee = current_employee
-    @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
-    @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
-    @meeting_owner = (@meeting.employee_id == @current_employee.id)
-    get_occupancy
-
+    # if user_is_admin? && @meeting.room.company.id == current_employee.company.id ||
+    #    @meeting.invitations.exists?(employee_id: current_employee.id) ||
+    #    @meeting.employee_id == current_employee.id
+      @current_employee = current_employee
+      @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
+      @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
+      @meeting_owner = (@meeting.employee_id == @current_employee.id)
+      get_occupancy
+    # else
+    #   redirect_to :back, alert: "Access Denied"
+    # end
   end
 
   def get_occupancy
