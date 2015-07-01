@@ -7,16 +7,7 @@ class RoomsController < ApplicationController
   end
 
   def show
-    room = Room.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.pdf do
-        pdf = RoomPdf.new(@room)
-        send_data pdf.render, filename: "room.pdf"
-                              type: "applciation/pdf",
-                              disposition: "inline"
-      end
-    end
+    @room = Room.find(params[:id])
   end
 
   def new
