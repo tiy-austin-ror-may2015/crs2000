@@ -23,6 +23,9 @@
       .pagination > li > a, .pagination > li > span {
         color: <%= current_employee.company.primary_color %>;
       }
+      .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+        color: <%= current_employee.company.primary_color %>;
+      }
       footer {
         border-top: 5px solid black;
         border-top-color: <%= current_employee.company.primary_color %>;
