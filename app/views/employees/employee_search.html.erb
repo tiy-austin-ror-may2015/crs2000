@@ -1,5 +1,7 @@
  <div class="container">
-  <h2 class="center">Search Results for <i><%= params[:search] %></i> in <%= current_employee.company.name %></h2>
+  <h2 class="center">Search Results for
+  <i class="results"><%= params[:search] %></i> in <%= current_employee.company.name %>
+  </h2>
   <% if @employee_results.count > 0 %>
       <section class='panel panel-default'>
         <table class='table'>
@@ -27,12 +29,14 @@
     <div class="center"><%= will_paginate @employee_results, renderer: BootstrapPagination::Rails %></div>
 
     <% else %>
-      <p>No results found for your search.</p>
+      <p>No results found for
+        <i class="search-results"><%= params[:search].titleize %></i> search.
+      </p>
     <% end %>
 
     <div class="well center">
       <form action='/search/employees' method='GET'>
-        <input type='text' name='search'/>
+        <input type='text' name='search' placeholder="Employee name or email"/>
         <input type='submit' value='Search' class="btn btn-primary" />
       </form>
     </div>
