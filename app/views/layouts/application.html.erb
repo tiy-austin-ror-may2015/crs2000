@@ -8,6 +8,15 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+    <style type="text/css">
+      .navbar {
+        border-bottom: 5px solid black;
+        border-bottom-color: <%= current_employee.company.primary_color %>;
+      }
+      .btn.btn-default {
+        background: <%= current_employee.company.secondary_color %>;
+      }
+    </style>
 </head>
 <body>
 
@@ -22,7 +31,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/rooms">
-        <img alt="Brand" src="...">
+        <img alt="Brand" src="<%= current_employee.company.logo %>">
       </a>
     </div>
 
