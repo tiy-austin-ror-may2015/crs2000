@@ -7,9 +7,11 @@ class MeetingsController < ApplicationController
         @meetings = company.meetings.where("start_time >= ?", Time.now.midnight)
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       else
-        binding.pry
-        @meetings = current_employee.invitations.meeting
-         #viewable_meetings#.where("start_time >= ?", Time.now.midnight)
+        # binding.pry
+        company   = Company.find(current_employee.id)
+        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight) #.where("private = false OR employee_id = ${current_employee} OR
+                                                               # private = true AND employee_id = #{current_employee.id}")
+
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       end
     else
