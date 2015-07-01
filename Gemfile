@@ -9,6 +9,7 @@ group :development do
   gem "faker", "~> 1.4"
   gem 'guard' # NOTE: this is necessary in newer versions
   gem 'guard-minitest'
+  gem 'active_record_query_trace'
 end
 
 group :test do

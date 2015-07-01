@@ -72,6 +72,7 @@ class MeetingsController < ApplicationController
     else
       flash[:alert] = "That room is already occupied during that time."
       redirect_to :back
+    end
   end
 
   def update
