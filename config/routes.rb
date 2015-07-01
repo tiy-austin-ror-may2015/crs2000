@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
   get '/search_advance/rooms', to: 'rooms#search_advance'
+  get '/search/employees', to: 'employees#search'
 
   resources :rooms
   resources :companies

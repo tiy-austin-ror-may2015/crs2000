@@ -1,0 +1,38 @@
+<h2 class="center">Search Results for <i><%= params[:search] %></i></h2>
+<% if @employee_results.count > 0 %>
+  <h3 class="center"><%= @employee_results.all.size %> Topic(s) found.</h3>
+    <section class='panel panel-default'>
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Email</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_results.each do |employee| %>
+            <tr>
+              <td class="well"><%= employee.name %></td>
+              <td><%= employee.company %></td>
+              <td class="well"><%= employee.email %></td>
+              <td class="well"><%= link_to 'Show', employee %></td>
+              <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+              <td class="well"><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  </section>
+
+  <% else %>
+    <p>No results found for your search.</p>
+  <% end %>
+
+  <div class="well center">
+    <form action='/search/employees' method='GET'>
+      <input type='text' name='search'/>
+      <input type='submit' value='Search' class="btn btn-primary" />
+    </form>
+  </div>

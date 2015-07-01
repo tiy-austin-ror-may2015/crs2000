@@ -28,7 +28,7 @@
       <tbody>
         <% @rooms.each do |room| %>
           <tr>
-            <td class='well'><%= link_to room.name, room %></td>`
+            <td class='well'><%= link_to room.name, room %></td>
             <td><%= room.location %></td>
             <td class='well'><%= room.company.name %></td>
             <td><%= room.hours_until_next_meeting %></td>

@@ -32,6 +32,10 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def employee_search
+    @employee_results = Employee.search(params[:search])
+  end
+
 private
 
   def employee_params
