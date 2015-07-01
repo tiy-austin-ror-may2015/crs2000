@@ -1,5 +1,7 @@
  <div class="container">
-  <h2 class="center">Search Results for <i><%= params[:search] %></i> in <%= current_employee.company.name %></h2>
+  <h2 class="center">Search Results for
+  <i class="search-results"><%= params[:search] %></i> in <%= current_employee.company.name %>
+  </h2>
   <% if @employee_results.count > 0 %>
       <section class='panel panel-default'>
         <table class='table'>
