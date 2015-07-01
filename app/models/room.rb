@@ -68,14 +68,14 @@ end
     Room.where(where_query)
   end
 
-  def self.sort_with(params)
-    sort_by   = params.fetch("sort_by", "name||").split("||")
-    sort_dir  = params.fetch("sort_dir", "ASC||").split("||")
-    sort_hash = Hash[sort_by.zip(sort_dir)]
+  # def self.sort_with(params)
+  #   sort_by   = params.fetch("sort_by", "name||").split("||")
+  #   sort_dir  = params.fetch("sort_dir", "ASC||").split("||")
+  #   sort_hash = Hash[sort_by.zip(sort_dir)]
 
-    order_query = sort_hash.map { |sort_by, sort_dir| "#{sort_by} #{sort_dir}" }.join(", ")
-    self.order(order_query)
-  end
+  #   order_query = sort_hash.map { |sort_by, sort_dir| "#{sort_by} #{sort_dir}" }.join(", ")
+  #   self.order(order_query)
+  # end
 
   def self.company_rooms(company)
     self.where(company_id: company).map { |room| [room.name, room.id] }

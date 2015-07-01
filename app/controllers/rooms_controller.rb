@@ -2,19 +2,17 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
-    @company = current_employee.company
-    @rooms = Room.where(company_id: current_employee.company_id)
-    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
+    @company = employee_company
+    @rooms_array = get_rooms_array
   end
 
   def show
-    room = Room.find(params[:id])
   end
 
   def new
     if user_is_admin?
       @room = Room.new
-      @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+      @all_rooms = company_rooms.pluck(:name)
     else
       redirect_to :back, alert: "Access Denied"
     end
@@ -24,20 +22,16 @@ class RoomsController < ApplicationController
   end
 
   def search
-    @rooms   = Room.search_for(params[:search].downcase)
-    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
+    @rooms_array = get_rooms_array(company_rooms.search_for(params[:search].downcase))
   end
 
   def search_advance
-    @rooms = Room.search_with(params)
-                 .sort_with(params)
-    @rooms_array = @rooms.map { |room| [room, room.companies, room.amenities, room.meetings] }
+    @rooms_array = get_rooms_array(company_rooms.search_with(params))
     render :search
   end
 
- def create
-  if user_is_admin?
-
+  def create
+    if user_is_admin?
       user               = current_employee
       @company           = user.company
       @room              = Room.new(room_params)
@@ -51,13 +45,10 @@ class RoomsController < ApplicationController
      else
       redirect_to :back, alert: "Access Denied"
     end
- end
+  end
 
   def update
       if user_is_admin?
-
-      @room = Room.find(params[:id])
-
       @room = Room.updated_room(@room, params)
 
       if @room.save
@@ -72,8 +63,6 @@ class RoomsController < ApplicationController
 
   def destroy
     if user_is_admin?
-
-      @room = Room.find(params[:id])
       @room.destroy
       redirect_to rooms_url, notice: 'Room was successfully destroyed.'
     else
@@ -88,6 +77,18 @@ class RoomsController < ApplicationController
   private
     def set_room
       @room = Room.find(params[:id])
+    end
+
+    def company_rooms
+      Room.where(company_id: current_employee.company_id)
+    end
+
+    def get_rooms_array(rooms = company_rooms)
+      if user_is_admin?
+        rooms.map { |room| [room, room.amenities, room.meetings] }
+      else
+        rooms.map { |room| [room, room.amenities, room.meetings.where(private: false)] }
+      end
     end
 
     def room_params
