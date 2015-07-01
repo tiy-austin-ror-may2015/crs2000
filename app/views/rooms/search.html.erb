@@ -35,7 +35,7 @@
           <td><%= room.name %></td>
           <td class='well'><%= room.room_number %></td>
           <td><%= room.location %></td>
-          <td class="well"><%= room.amenities[0].perk %></td>>
+          <td class="well"><%= room.amenities[0].perk %></td>
           <td><%= room.company.name %></td>
           <td class='well'><%= room.max_occupancy %></td>
           <td><%= room.hours_until_next_meeting >= 0 ? room.hours_until_next_meeting : "N/A" %></td>
@@ -110,3 +110,5 @@
     </form>
   </div>
 </div>
+
+<%= react_component("RoomsTable", { data: @rooms, page: 1, limit: 10 }) %>
