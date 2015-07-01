@@ -1,8 +1,9 @@
 <p id='notice'><%= notice %></p>
+<p id='alert'><%= alert %> </p>
 
 <div class='row pull-right margin-top'>
   <form action='/search/rooms' method='GET'>
-    <input type='text' name='search'/>
+    <input type='text' name='search' placeholder="Room name, location or amenity" size="30"/>
     <input type='submit' value='Search' class='btn btn-primary' />
   </form>
 </div>
