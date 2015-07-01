@@ -10,7 +10,7 @@
   <div class='row'>
     <p id='notice'><%= notice %></p>
 
-<h1>Search Results</h1>
+<h1>Search Results for <%= params[:search].titleize %></h1>
 <%= react_component("RoomsTable", { rooms_array: @rooms_array, page: 1, limit: 10 }) %>
 
 <div class="container">
