@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   patch 'employees/:id(.:format)', to: 'employees#update', as: 'patch_employee'
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
+  get '/search_advance/rooms', to: 'rooms#search_advance'
 
   resources :rooms
   resources :companies
   get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
   resources :admin
-
   root to:'rooms#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -10,7 +10,15 @@
   }
 }
 
+.room-image {
+  width: 30em;
+  height: 30em;
+}
 
+.room-image img {
+  width: 100%;
+  height: auto;
+}
 
 .new-room {
   width: 250px;

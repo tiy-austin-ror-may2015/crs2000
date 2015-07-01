@@ -3,12 +3,7 @@ class RoomsController < ApplicationController
 
   def index
     Room.all.each { |room| room.update_time_sensitive_values }
-    @rooms = Room.search_with(params).sort_with(params).paginate(:page => params[:page], :per_page => 10)
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @rooms }
-    end
+    @rooms = Room.all.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
@@ -28,19 +23,17 @@ class RoomsController < ApplicationController
   end
 
   def search
-    if params[:search].to_i > 0
-      @room_occupancy = Room.where("max_occupancy >" + params[:search])
-                            .paginate(:page => params[:page], :per_page => 10)
-      @room_name = []
-      @room_location = []
-    else
-      @room_name      = Room.search_for("name", params[:search])
-                            .paginate(:page => params[:page], :per_page => 10)
+    Room.all.each { |room| room.update_time_sensitive_values }
+    @room_results   = Room.search_for(params[:search])
+                          .paginate(:page => params[:page], :per_page => 10)
+  end
 
-      @room_location  = Room.search_for("location", params[:search])
-                            .paginate(:page => params[:page], :per_page => 10)
-      @room_occupancy = []
-    end
+  def search_advance
+    Room.all.each { |room| room.update_time_sensitive_values }
+    @room_results = Room.search_with(params)
+                 .sort_with(params)
+                 .paginate(:page => params[:page], :per_page => 10)
+    render :search
   end
 
  def create
