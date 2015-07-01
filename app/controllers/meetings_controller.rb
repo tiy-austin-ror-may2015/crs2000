@@ -4,15 +4,12 @@ class MeetingsController < ApplicationController
     if current_employee
       if user_is_admin?
         company   = Company.find(current_employee.company.id)
-        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight).
-                                     where("private = false OR
-                                            private = true AND employee_id = #{current_employee.id}")
-                       #private = true AND meetings.invitations.employee_id = #{current_employee.id}")
+        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight)
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       else
-        @meetings = current_employee.viewable_meetings.where("start_time >= ?", Time.now.midnight)
-
-
+        binding.pry
+        @meetings = current_employee.invitations.meeting
+         #viewable_meetings#.where("start_time >= ?", Time.now.midnight)
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       end
     else
@@ -22,11 +19,17 @@ class MeetingsController < ApplicationController
 
   def show
     @meeting = Meeting.find(params[:id])
-    @current_employee = current_employee
-    @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
-    @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
-    @meeting_owner = (@meeting.employee_id == @current_employee.id)
-    get_occupancy
+    # if user_is_admin? && @meeting.room.company.id == current_employee.company.id ||
+    #    @meeting.invitations.exists?(employee_id: current_employee.id) ||
+    #    @meeting.employee_id == current_employee.id
+      @current_employee = current_employee
+      @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
+      @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
+      @meeting_owner = (@meeting.employee_id == @current_employee.id)
+      get_occupancy
+    # else
+    #   redirect_to :back, alert: "Access Denied"
+    # end
   end
 
   def get_occupancy
