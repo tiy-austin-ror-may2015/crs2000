@@ -1,5 +1,5 @@
 <p id='notice'><%= notice %></p>
-
+<div class="container">
   <div class='row pull-right margin-top'>
     <form action='/search/rooms' method='GET'>
       <input type='text' name='search'/>
@@ -32,6 +32,7 @@
     <% end %>
   </tbody>
 </table>
+</div>
 </section>
 <div class="center">
   <%= will_paginate @rooms, renderer: BootstrapPagination::Rails %>
