@@ -2,8 +2,8 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
-    Room.all.each { |room| room.update_time_sensitive_values }
-    @rooms = Room.where(company_id: current_employee.company_id).paginate(:page => params[:page], :per_page => 10)
+    @rooms = Room.where(company_id: current_employee.company_id
+    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
   end
 
   def show
@@ -24,16 +24,14 @@ class RoomsController < ApplicationController
   end
 
   def search
-    Room.all.each { |room| room.update_time_sensitive_values }
-    @room_results   = Room.search_for(params[:search].downcase)
-                          .paginate(:page => params[:page], :per_page => 10)
+    @rooms   = Room.search_for(params[:search].downcase)
+    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
   end
 
   def search_advance
-    Room.all.each { |room| room.update_time_sensitive_values }
-    @room_results = Room.search_with(params)
+    @rooms = Room.search_with(params)
                  .sort_with(params)
-                 .paginate(:page => params[:page], :per_page => 10)
+    @rooms_array = @rooms.map { |room| [room, room.companies, room.amenities, room.meetings] }
     render :search
   end
 

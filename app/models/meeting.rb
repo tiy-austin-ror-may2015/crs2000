@@ -20,6 +20,7 @@ class Meeting < ActiveRecord::Base
   has_many :employee_meetings
   has_many :invitations
   has_many :room_amenities
+  has_many :employees, through: :employee_meetings
 
   # def self.send_meetings(meetings)
   #   all_meetings = [] # create container for meetings to send

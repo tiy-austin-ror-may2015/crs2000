@@ -29,6 +29,9 @@ class MeetingsController < ApplicationController
       if Invitation.where(meeting_id: params[:meeting_id], employee_id: params[:employee_id]).count == 0
         invitation = Invitation.new(meeting_id: params[:meeting_id], employee_id: params[:employee_id])
         invitation.save
+        @employee = Employee.find(params[:employee_id])
+        @meeting = Meeting.find(params[:meeting_id])
+        MeetingMailer.invited_to_meeting(@employee, @meeting).deliver_now
           message = {notice: 'invitation successfully sent!'}
         else
           message = {alert: 'invitation has been already sent!'}
@@ -54,9 +57,9 @@ class MeetingsController < ApplicationController
   end
 
   def get_occupancy
-    capacity  = Meeting.capacity(params[:id])
+    @max_occupancy = Meeting.capacity(params[:id])
     attending = EmployeeMeeting.attending(params[:id])
-    @current_occupancy = capacity - attending
+    @current_occupancy = @max_occupancy  - attending
   end
 
   def new
@@ -130,6 +133,11 @@ class MeetingsController < ApplicationController
       end
     end
     return false
+  end
+
+# QUESTIONS? TALK TO WILL
+  def reports_meetings
+    @reports_meetings = Meeting.all
   end
 
   private
