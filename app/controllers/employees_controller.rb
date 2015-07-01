@@ -8,16 +8,6 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
   end
 
-  # def invite
-  #   @employee = current_employee
-  #   em = Invitation.new(meeting_id: params[:id], employee_id: @employee.id)
-  #   if em.save
-  #   message = {notice: 'invitation successfully sent!'}
-  #   else
-  #     message = {alert: 'invitation sent failed!'}
-  #   end
-  #   redirect_to meeting_path(params[:id]), message
-  # end
 
   def edit
     @employee = Employee.find(params[:id])
