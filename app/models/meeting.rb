@@ -2,6 +2,7 @@ class Meeting < ActiveRecord::Base
   belongs_to :room, counter_cache: true
   belongs_to :employee
   has_many :employee_meetings
+  has_many :invitations
 
   # def self.send_meetings(meetings)
   #   all_meetings = [] # create container for meetings to send
