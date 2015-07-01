@@ -34,7 +34,7 @@ end
     company_name = params.fetch("company_name", "")
     company_ids = Company.where("lower(name) LIKE lower('%#{company_name}%')").pluck(:id)
     company_id_query = company_ids.map{ |id| "company_id = #{id}" }.join(" OR ")
-    company_id_query.present? ? company_id_query.prepend(" AND (") << ")" : company_id_query = " AND id = 0"
+    company_id_query.present? ? company_id_query.prepend(" AND (") << ")" : company_id_query = " AND company_id = 0"
 
     name = params.fetch("name", "")
     max_occupancy = params.fetch("max_occupancy", "").empty? ? "-1" : params["max_occupancy"]
@@ -43,15 +43,13 @@ end
     location = params.fetch("location", "").empty? ? "%%" : params["location"]
 
     where_query = "lower(name) LIKE lower('%#{name}%') AND
-                   max_occupancy > #{max_occupancy} AND
+                   max_occupancy >= #{max_occupancy} AND
                    CAST(room_number AS TEXT) LIKE '#{room_number}' AND
                    available = #{available} AND
                    lower(location) LIKE lower('#{location}')" +
                    company_id_query
 
-    100.times { puts where_query }
     Room.where(where_query)
-
   end
 
   def self.sort_with(params)
