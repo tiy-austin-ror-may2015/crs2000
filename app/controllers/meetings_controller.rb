@@ -2,17 +2,20 @@ class MeetingsController < ApplicationController
   # before_action :check_employee_overlap!, only: [:join, :create]
 
   def index
-    # @meetings = Meeting.paginate(:page => params[:page], :per_page => 10)
-    company   = Company.find(current_employee.company.id)
-
-    if user_is_admin?
-      @meetings = company.meetings
-      @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+    if current_employee
+      if user_is_admin?
+        company   = Company.find(current_employee.company.id)
+        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight).
+                                     where("private = false OR
+                                            private = true AND employee_id = #{current_employee.id}")
+                       #private = true AND meetings.invitations.employee_id = #{current_employee.id}")
+        @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+      else
+        @meetings = current_employee.viewable_meetings.where("start_time >= ?", Time.now.midnight)
+        @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+      end
     else
-      # current_user.invites.meetings
-      # @meetings
-      # # binding.pry
-      # @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
+      redirect_to root_path, alert: "Please Log In"
     end
   end
 

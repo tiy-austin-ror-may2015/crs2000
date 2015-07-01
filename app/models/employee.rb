@@ -7,4 +7,6 @@ class Employee < ActiveRecord::Base
   belongs_to :company
   has_many :meetings
   has_many :employee_meetings
+  has_many :invitations
+  has_many :viewable_meetings, through: :invitations, source: :meeting
 end

@@ -79,9 +79,9 @@ ActiveRecord::Schema.define(version: 20150630202115) do
     t.integer  "company_id"
     t.integer  "meetings_count",           default: 0
     t.boolean  "available",                default: true
-    t.integer  "hours_until_next_meeting", default: -1
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.integer  "hours_until_next_meeting", default: 197730
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
 end
