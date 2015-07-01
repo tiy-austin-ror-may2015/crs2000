@@ -31,29 +31,35 @@ end
  # send true or false
 
   def self.search_with(params)
-    name = params.fetch("name", "")
-    max_occupancy = params.fetch("max_occupancy", "0")
-    room_number = params.fetch("room_number", "%%")
-    meetings_count = params.fetch("meetings_count", "%%")
-    available = params.fetch("available", "%%")
-    location = params.fetch("location", "%%")
+    company_name = params.fetch("company_name", "")
+    company_ids = Company.where("lower(name) LIKE lower('%#{company_name}%')").pluck(:id)
+    company_id_query = company_ids.map{ |id| "company_id = #{id}" }.join(" OR ")
+    company_id_query.present? ? company_id_query.prepend(" AND (") << ")" : company_id_query = " AND id = 0"
 
-    Room.where("lower(name) LIKE lower('%#{name}%') AND
-                max_occupancy >= #{max_occupancy} AND
-                CAST(room_number AS TEXT) LIKE '#{room_number}' AND
-                CAST(meetings_count AS TEXT) LIKE '#{meetings_count}' AND
-                CAST(available AS TEXT) LIKE '#{available}' AND
-                lower(location) LIKE lower('%#{location}%')")
+    name = params.fetch("name", "")
+    max_occupancy = params.fetch("max_occupancy", "").empty? ? "-1" : params["max_occupancy"]
+    room_number = params.fetch("room_number", "").empty? ? "%%" : params["room_number"]
+    available = params.fetch("available", "false")
+    location = params.fetch("location", "").empty? ? "%%" : params["location"]
+
+    where_query = "lower(name) LIKE lower('%#{name}%') AND
+                   max_occupancy > #{max_occupancy} AND
+                   CAST(room_number AS TEXT) LIKE '#{room_number}' AND
+                   available = #{available} AND
+                   lower(location) LIKE lower('#{location}')" +
+                   company_id_query
+
+    100.times { puts where_query }
+    Room.where(where_query)
+
   end
 
   def self.sort_with(params)
-    sort_by   = params.fetch("sort_by", "created_at||").split("||")
+    sort_by   = params.fetch("sort_by", "name||").split("||")
     sort_dir  = params.fetch("sort_dir", "ASC||").split("||")
     sort_hash = Hash[sort_by.zip(sort_dir)]
-    order_query = []
-    sort_hash.each { |sort_by, sort_dir| order_query << "#{sort_by} #{sort_dir}" }
-    order_query = order_query.join(", ")
 
+    order_query = sort_hash.map { |sort_by, sort_dir| "#{sort_by} #{sort_dir}" }.join(", ")
     self.order(order_query)
   end
 
