@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     employee_meetings += EmployeeMeeting.where(employee_id: current_employee.id).map{ |em| em.meeting }
     employee_meetings.each do |meeting|
       if requested_meeting.start_time < meeting.end_time && requested_meeting.start_time >= meeting.start_time ||
-         (meeting.start_time..meeting.end_time).cover?(requested_meeting.end_time)
+         requested_meeting.end_time > meeting.start_time && requested_meeting.start_time <= meeting.start_time
         return false
       else
         true
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     room_other_meetings = all_room_meetings - [requested_meeting]
     room_other_meetings.each do |meeting|
       if requested_meeting.start_time < meeting.end_time && requested_meeting.start_time >= meeting.start_time ||
-         (meeting.start_time..meeting.end_time).cover?(requested_meeting.end_time)
+         requested_meeting.end_time > meeting.start_time && requested_meeting.start_time <= meeting.start_time
         return false
       else
         true
