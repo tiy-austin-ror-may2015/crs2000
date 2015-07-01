@@ -8,6 +8,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def no_meeting_overlap? (requested_meeting)
+    employee_meetings = Meeting.where(employee_id: current_employee.id)
+    employee_meetings += EmployeeMeeting.where(employee_id: current_employee.id).map{ |em| em.meeting }
+    employee_meetings.each do |meeting|
+      if requested_meeting.start_time < meeting.end_time && requested_meeting.start_time > meeting.start_time
+        return false
+      else
+        true
+      end
+    end
+  end
+
   def room_is_available?(requested_meeting)
     all_room_meetings = requested_meeting.room.meetings
     room_other_meetings = all_room_meetings - [requested_meeting]
