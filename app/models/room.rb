@@ -84,5 +84,4 @@ end
     self.where("lower(name) LIKE ? OR lower(location) LIKE ? OR max_occupancy > ?",
                "%#{search}%", "%#{search}%", max_occupancy)
   end
-
 end
