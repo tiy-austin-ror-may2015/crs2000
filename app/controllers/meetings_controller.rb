@@ -125,8 +125,8 @@ class MeetingsController < ApplicationController
     all_meetings = Meeting.where(employee_id: current_employee.id) # owned meetings
     all_meetings += EmployeeMeeting.where(employee_id: current_employee.id).map{|em| em.meeting} # attending meetings
     all_meetings.each do |meeting|
-      if (meeting.start_time <= check_meeting.start_time and check_meeting.start_time <= meeting.end_time) or
-          (meeting.start_time <= check_meeting.end_time and check_meeting.end_time <= meeting.end_time)
+      if (meeting.start_time <= check_meeting.start_time && check_meeting.start_time <= meeting.end_time) ||
+          (meeting.start_time <= check_meeting.end_time && check_meeting.end_time <= meeting.end_time)
         return true
       end
     end
