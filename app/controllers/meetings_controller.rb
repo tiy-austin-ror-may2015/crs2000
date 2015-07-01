@@ -2,14 +2,12 @@ class MeetingsController < ApplicationController
 
   def index
     if current_employee
-      if user_is_admin?
         company   = Company.find(current_employee.company.id)
-        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight).order(:start_time)
+      if user_is_admin?
+        @meetings = company.meetings.today_forward
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       else
-        company   = Company.find(current_employee.company.id)
-        @meetings = company.meetings.where("start_time >= ?", Time.now.midnight).
-                                     where("private = false").order(:start_time)
+        @meetings = company.meetings.today_forward.where("private = false")
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       end
     else
