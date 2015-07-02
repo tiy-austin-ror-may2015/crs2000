@@ -4,10 +4,54 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crs2000</title>
+    <title>CRS2000</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+    <style type="text/css">
+      .navbar {
+        border-bottom: 5px solid black;
+        border-bottom-color: <%= primary_color %>;
+      }
+      .btnprimary {
+        background: <%= primary_color %>;
+        border-color: <%= primary_color %>;
+      }
+      .btnprimary:hover {
+        background: <%= primary_color %>;
+        border-color: <%= primary_color %>;
+        color: <%= secondary_color %>;
+      }
+      .btn-default {
+        background: <%= primary_color %>;
+        border-color: <%= primary_color %>;
+      }
+      .btn-default:hover {
+        background: <%= primary_color %>;
+        border-color: <%= primary_color %>;
+        color: <%= secondary_color %>;
+      }
+      .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+        background: <%= primary_color %> ;
+        border-color: <%= primary_color %>;
+      }
+      .pagination > li > a, .pagination > li > span {
+        color: <%= primary_color %>;
+      }
+      .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+        color: <%= primary_color %>;
+      }
+      .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        color: <%= primary_color %>;
+      }
+      .nav-tabs > li > a:hover {
+        color: <%= primary_color %>;
+      }
+      footer {
+        border-top: 5px solid black;
+        border-top-color: <%= primary_color %>;
+      }
+    </style>
 </head>
 <body>
 
@@ -21,7 +65,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/rooms">CRS2000</a>
+      <a class="navbar-brand" href="/rooms">
+        <img alt="Brand" src="<%= company_logo %>">
+      </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,6 +102,10 @@
 
 
 <%= yield %>
+
+<footer>
+  <p>CRS2000 by RustWorks &copy; 2015</p>
+</footer>
 
 </body>
 </html>
