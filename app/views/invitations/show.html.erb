@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row">
     <h2>Meeting invitations </h2>
+
     <div class="panel">
       <h4>New meeting invite</h4>
       <%= form_for (Invitation.new) do |f| %>
@@ -40,7 +41,7 @@
             <td class="timeDisplay"><%= invitation.meeting.start_time %></td>
             <td><%= link_to invitation.employee.name, invitation.employee %></td>
             <td><%= invitation.meeting.private  %></td>
-            <td><%= link_to 'Destroy', invitation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Delete', invitation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
         </tbody>
