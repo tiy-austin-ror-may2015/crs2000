@@ -1,4 +1,3 @@
-
 image =
 ["http://www.coolbusinessideas.com/wp-content/uploads/2014/05/modern-meeting-room.jpg",
  "http://montvilleoffice.com/wp-content/uploads/2014/07/169979447_conference-room.jpg",
@@ -21,7 +20,9 @@ image =
 
 amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
 
-random_start_times = [5.minutes.ago, 5.minutes.from_now, 2.hours.ago, 2.hours.from_now]
+
+earliest = 5.hours.ago
+latest = 5.hours.from_now
 3.times do
   company = Company.create(name: Faker::Company.name)
   50.times do
@@ -37,10 +38,11 @@ random_start_times = [5.minutes.ago, 5.minutes.from_now, 2.hours.ago, 2.hours.fr
       amenity = Amenity.create(perk: amenities.sample,
                                room_id: room.id)
         rand(3).times do
+          random_start_time = Time.at((latest.to_f - earliest.to_f)*rand + earliest.to_f)
           meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
-                            start_time: random_start_times.sample,
-                             end_time: random_start_times.sample + rand(15..45).minutes,
-                             private: [true, false, false, false, false, false].sample,
+                            start_time: random_start_time,
+                             end_time: random_start_time + rand(15..45).minutes,
+                             private: ([true] + [false] * 5).sample,
                                room_id: room.id, employee_id: employee.id)
           employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
                                                  employee_id: employee.id,
