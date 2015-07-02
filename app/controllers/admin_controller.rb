@@ -19,17 +19,10 @@ class AdminController < ApplicationController
 
   def room_table
     @rooms = Room.all
-     respond_to do |format|
-      format.html do
-
-      end
-      format.pdf do
-        pdf = RoomsPdf.new(Room.all)
-        send_data pdf.render, filename: "room.pdf",
-                              type: 'appliciation/pdf',
-                              disposition: "inline"
-     end
-    end
+    pdf = RoomsPdf.new(Room.all)
+    send_data pdf.render, filename: "room.pdf",
+                          type: 'appliciation/pdf',
+                          disposition: "inline"
   end
 
   def reports_rooms
