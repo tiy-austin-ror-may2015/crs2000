@@ -8,7 +8,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <% unless primary_color == nil %>
+    <% unless primary_color == nil || company_logo == nil%>
       <style type="text/css">
         .navbar {
           border-bottom: 5px solid black;
