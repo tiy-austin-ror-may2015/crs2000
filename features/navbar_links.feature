@@ -14,3 +14,15 @@ Feature:
     And I click "All Meetings"
     Then I should be on the "/meetings"
 
+  Scenario: I click on all rooms
+    And I click "All Rooms"
+    Then I should be on the "/rooms"
+
+  Scenario: I click on all employees
+    And I click "All Employees"
+    Then I should be on the "/employees"
+
+  Scenario: I click on my profile link
+    And I click "Logged in as: foobar"
+    Then I should be on my profile page
+
