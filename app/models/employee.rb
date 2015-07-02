@@ -25,16 +25,14 @@ class Employee < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
   belongs_to :company
   has_many :meetings
   has_many :employee_meetings
+  has_many :invitations
+  has_many :viewable_meetings, through: :invitations, source: :meeting
 
   def self.search(search)
     self.where("lower(name) LIKE ? OR lower(email) LIKE ?",
                "%#{search}%", "%#{search}%")
   end
-
-  has_many :invitations
-  has_many :viewable_meetings, through: :invitations, source: :meeting
 end
