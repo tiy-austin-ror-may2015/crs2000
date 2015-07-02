@@ -31,13 +31,14 @@ class Employee < ActiveRecord::Base
   has_many :invitations
   has_many :viewable_meetings, through: :invitations, source: :meeting
   has_many :confirmed_meetings, through: :employee_meetings, source: :meeting
-  scope :next_meeting, -> { confirmed_meetings.order(:star_time) }
+  scope :next_meeting, -> { confirmed_meetings.where("star_time = ?", Time.now.midnight - 5.minute).order(:star_time).limit(1) }
 
   def self.search(search)
     self.where("lower(name) LIKE ? OR lower(email) LIKE ?",
                "%#{search}%", "%#{search}%")
   end
-  def self.next_mtn
-    self.confirmed_meetings.order(:star_time).limit(1)
+
+  def self.next_mtn(employee)
+    employee.confirmed_meetings.where("star_time = ?", Time.now.midnight - 5.minute).order(:star_time).limit(1)
   end
 end

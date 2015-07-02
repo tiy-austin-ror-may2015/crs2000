@@ -47,8 +47,13 @@ var ready = function() {
 $(document).ready(ready);
 $(document).on("page:load", ready);
 
-
-
+// var = next_meet = $('.relTime');
+// times.each(function() {
+//   var time_text = $(this).html().format('hour');
+//   var formatted_time = moment(time_text);
+//   $(this).html(formatted_time);
+// });
+// moment().startOf('hour').fromNow();
 
 
 

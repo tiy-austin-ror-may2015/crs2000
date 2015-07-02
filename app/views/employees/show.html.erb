@@ -9,8 +9,8 @@
       </div>
       <div class='employee-details col-md-6'>
         <h4>Next Meeting</h4>
-        <% m = @employee.next_mtn %>
-        <p><%= m %></p>
+        <p><%= @next_meeting.title.capitalize if @next_meeting %></p>
+        <p class="relTime"><%= @next_meeting.start_time if @next_meeting %></p>
       </div>
     </div>
     <div class="row">
@@ -18,10 +18,10 @@
         <h4>Meeting participation</h4>
         <ul>
           <% @employee.meetings.each do |meeting| %>
-            <li><%= link_to meeting.title, meeting %></li>
+            <li><%= link_to meeting.title.capitalize, meeting %></li>
           <% end %>
           <% @employee.viewable_meetings.each do |meeting| %>
-            <li><%= link_to meeting.title, meeting %></li>
+            <li><%= link_to meeting.title.capitalize, meeting %></li>
           <% end %>
         </ul>
       </div>

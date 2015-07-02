@@ -6,6 +6,7 @@ class EmployeesController < ApplicationController
 
   def show
     @employee = Employee.find(params[:id])
+    @next_meeting = @employee.confirmed_meetings.order(:start_time).limit(1).first
   end
 
 
