@@ -31,7 +31,7 @@
       <p><strong>Occupancy: </strong><%= @room.max_occupancy %></p>
       <p><strong>Room Number: </strong><%= @room.room_number%></p>
       <p><strong>Amenity: </strong><% @room.amenities.each do |amenity|%> <%= amenity.perk %><% end %></p>
-      <p><%= link_to 'Schedule A Meeting', new_meeting_path, class: 'btn btn-default' %></p>
+      <p><%= link_to 'Schedule A Meeting', new_meeting_path(room_id: @room.id), class: 'btn btn-default' %></p>
     </div>
   </div>
 </div>
