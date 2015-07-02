@@ -104,3 +104,18 @@ Feature:
   Scenario: Routing to show meeting
     When I navigate to "/meetings/1"
     Then I should be on the "/employees/sign_in"
+
+  Scenario: Routing to all meetings
+    When I sign up
+    And I navigate to "/meetings"
+    Then I should be on the "/meetings"
+
+  Scenario: Routing to all rooms
+    When I sign up
+    And I navigate to "/rooms"
+    Then I should be on the "/rooms"
+
+  Scenario: Routing to all employees
+    When I sign up
+    And I navigate to "/employees"
+    Then I should be on the "/employees"
