@@ -5,7 +5,7 @@ class CreateRooms < ActiveRecord::Migration
       t.integer :max_occupancy
       t.integer :room_number
       t.string :imgurl
-      t.string :location
+      t.string :location, null: false
       t.references :company
       t.integer :meetings_count, default: 0
 
