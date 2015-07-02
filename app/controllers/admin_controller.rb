@@ -43,7 +43,7 @@ class AdminController < ApplicationController
   end
 
   def add_branding
-      @company = current_employee.company
+      @company = current_company
       render 'companies/_form'
   end
 end

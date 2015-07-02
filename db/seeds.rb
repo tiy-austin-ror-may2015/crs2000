@@ -16,36 +16,35 @@ image =
  "https://s-media-cache-ak0.pinimg.com/736x/35/aa/5c/35aa5c879d51fba1fca7fd8435761460.jpg",
  "http://static.paradizo.com/albums/large/elysium-resort-spa/elysium-resort-spa-meeting-rooms/elysium-resort-spa-meeting-room-1.jpg",
  "http://azhari.typepad.com/.a/6a0120a6cd4566970b017c38a9059e970b-pi",
- "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg",
- "http://i.ytimg.com/vi/bDUkzYWxR7E/hqdefault.jpg"]
+ "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg"]
 
-amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
+company_name = ['Advanced Digital Creations', 'Prestige WorldWide', 'Capstone Audio Development']
+amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'VideoConferencing Capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
+location = ['Design Building', 'Engineering Building', 'Research Lab', 'Skunkworks Center', 'Corporate']
 
 random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12.hours),(Time.now + 13.hours)]
 3.times do
-  company = Company.create(name: Faker::Company.name)
+  company = Company.create(name: company_name.sample )
   50.times do
-      employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
-                               password: 'password', password_confirmation: 'password',
-                             company_id: company.id)
+    employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
+                             password: 'password', password_confirmation: 'password',
+                           company_id: company.id)
 
-    2.times do
-      room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room", max_occupancy: Faker::Number.number(2),
-                  room_number: rand(200..400),
-                       imgurl: image.sample,
-                     location: Faker::App.name, company_id: company.id)
-      amenity = Amenity.create(perk: amenities.sample,
-                               room_id: room.id)
-        2.times do
-          meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
-                            start_time: random_start_times.sample,
-                             end_time: random_start_times.sample + 4.hours,
-                               room_id: room.id, employee_id: employee.id)
-          employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
-                                                 employee_id: employee.id,
-                                            meeting_id: meeting.id)
-      end
-    end
+    room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room", max_occupancy: Faker::Number.number(2),
+                room_number: rand(200..400),
+                     imgurl: image.sample,
+                   location: location.sample,
+                    company_id: company.id)
+    amenity = Amenity.create(perk: amenities.sample,
+                             room_id: room.id)
+
+    meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
+                      start_time: random_start_times.sample,
+                       end_time: random_start_times.sample + 4.hours,
+                         room_id: room.id, employee_id: employee.id)
+    employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
+                                           employee_id: employee.id,
+                                      meeting_id: meeting.id)
   end
 end
 

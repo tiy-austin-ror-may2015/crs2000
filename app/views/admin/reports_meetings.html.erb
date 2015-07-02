@@ -19,8 +19,8 @@
             <tr>
             <td><%= reports_meeting.title %></td>
             <td><%= reports_meeting.agenda %></td>
-            <td><%= reports_meeting.start_time %></td>
-            <td><%= reports_meeting.end_time %></td>
+            <td><%= reports_meeting.start_time.strftime("%m/%d/%Y %l:%M %p") %></td>
+            <td><%= reports_meeting.end_time.strftime("%m/%d/%Y %l:%M %p") %></td>
             <td><%= reports_meeting.private %></td>
             <td><%= reports_meeting.room.room_number %></td>
             <td><%= reports_meeting.employee.name %></td>

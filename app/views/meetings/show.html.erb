@@ -1,7 +1,5 @@
 <div class="container">
   <div class="row">
-    <p id="notice" class="alert"><%= notice %></p>
-    <p style='color:red;'><%= flash[:alert] %></p>
 
 <div>
     <div class="col-md-12">
@@ -49,11 +47,11 @@
     <br>
     <br>
     <h2>Invite Employees</h2>
-    <p><strong>Company: </strong><%= link_to current_employee.company.name,  current_employee.company %> </p>
+    <p><strong>Company: </strong><%= link_to current_company.name,  current_company %> </p>
     <% if @invitees.count > 0 %>
         <div class="well center invite" >
             <input type='text' id='search' placeholder="name" />
-         
+
         </div>
 
 
