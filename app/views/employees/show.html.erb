@@ -1,28 +1,34 @@
 <div class="container">
-  <h2><%=@employee.company.name %> Employee</h2>
-
   <div class="row">
-      <div class="employee-details col-md-6">
-        <h2><%= @employee.name %></h2>
-        <h3><%= link_to @employee.company.name, @employee.company %></h3>
-          <h4>Employee details</h4>
-          <p><strong>Email: </strong><%= @employee.email %></p>
+      <div class='col-md-6'>
+        <h2><%=@employee.name %></h2>
+        <span><strong>Email: </strong><%= @employee.email %></span>
       </div>
-      <div class='employee-details col-md-6'>
-        <h4>Next Meeting</h4>
-        <p><%= @next_meeting.title.capitalize if @next_meeting %></p>
-        <p class="relTime"><%= @next_meeting.start_time if @next_meeting %></p>
+      <div class='col-md-6'>
+        <h4 class='margin-20'>Next Meeting</h4>
+          <% if @next_meeting %>
+            <p><%= link_to @next_meeting.title, meeting_path(@next_meeting.id) %></p>
+            <strong><p class='countDown' data-id=<%= @next_meeting.start_time %>></p></strong>
+          <% end %>
       </div>
-    </div>
+  </div>
     <div class="row">
       <div class="employee-details col-md-6">
-        <h4>Meeting participation</h4>
+        <h4>Meeting participation <span class="badge"><%= @employee.confirmed_meetings.count + @employee.viewable_meetings.count %></span></h4>
         <ul>
-          <% @employee.meetings.each do |meeting| %>
-            <li><%= link_to meeting.title.capitalize, meeting %></li>
+          <% @employee.confirmed_meetings.each do |meeting| %>
+            <li><%= link_to meeting.title, meeting %></li>
           <% end %>
           <% @employee.viewable_meetings.each do |meeting| %>
-            <li><%= link_to meeting.title.capitalize, meeting %></li>
+            <li><%= link_to meeting.title, meeting %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="employee-details col-md-6">
+        <h4>Meetings you Created <span class="badge"><%= @employee.meetings.count %></span></h4>
+        <ul>
+          <% @employee.meetings.each do |meeting| %>
+            <li><%= link_to meeting.title, meeting %></li>
           <% end %>
         </ul>
       </div>
