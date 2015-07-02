@@ -8,3 +8,7 @@ When(/^I create a meeting$/) do
   fill_in 'meeting_end_time', with: '2016/07/10 19:29'
   click_button("Create Meeting")
 end
+
+Then(/^I should be on the that meeting's page$/) do
+  assert_equal meeting_path(Meeting.last), current_path
+end
