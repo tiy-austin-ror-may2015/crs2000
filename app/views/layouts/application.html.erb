@@ -11,45 +11,45 @@
     <style type="text/css">
       .navbar {
         border-bottom: 5px solid black;
-        border-bottom-color: <%= current_employee.company.primary_color %>;
+        border-bottom-color: <%= primary_color %>;
       }
-      .btn-primary {
-        background: <%= current_employee.company.primary_color %>;
-        border-color: <%= current_employee.company.primary_color %>;
+      .btnprimary {
+        background: <%= primary_color %>;
+        border-color: <%= primary_color %>;
       }
-      .btn-primary:hover {
-        background: <%= current_employee.company.primary_color %>;
-        border-color: <%= current_employee.company.primary_color %>;
-        color: <%= current_employee.company.secondary_color %>;
+      .btnprimary:hover {
+        background: <%= primary_color %>;
+        border-color: <%= primary_color %>;
+        color: <%= secondary_color %>;
       }
       .btn-default {
-        background: <%= current_employee.company.primary_color %>;
-        border-color: <%= current_employee.company.primary_color %>;
+        background: <%= primary_color %>;
+        border-color: <%= primary_color %>;
       }
       .btn-default:hover {
-        background: <%= current_employee.company.primary_color %>;
-        border-color: <%= current_employee.company.primary_color %>;
-        color: <%= current_employee.company.secondary_color %>;
+        background: <%= primary_color %>;
+        border-color: <%= primary_color %>;
+        color: <%= secondary_color %>;
       }
       .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
-        background: <%= current_employee.company.primary_color %> ;
-        border-color: <%= current_employee.company.primary_color %>;
+        background: <%= primary_color %> ;
+        border-color: <%= primary_color %>;
       }
       .pagination > li > a, .pagination > li > span {
-        color: <%= current_employee.company.primary_color %>;
+        color: <%= primary_color %>;
       }
       .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
-        color: <%= current_employee.company.primary_color %>;
+        color: <%= primary_color %>;
       }
       .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-        color: <%= current_employee.company.primary_color %>;
+        color: <%= primary_color %>;
       }
       .nav-tabs > li > a:hover {
-        color: <%= current_employee.company.primary_color %>;
+        color: <%= primary_color %>;
       }
       footer {
         border-top: 5px solid black;
-        border-top-color: <%= current_employee.company.primary_color %>;
+        border-top-color: <%= primary_color %>;
       }
     </style>
 </head>
@@ -66,7 +66,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/rooms">
-        <img alt="Brand" src="<%= current_employee.company.logo %>">
+        <img alt="Brand" src="<%= company_logo %>">
       </a>
     </div>
 
