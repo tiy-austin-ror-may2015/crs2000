@@ -32,13 +32,13 @@ Rails.application.routes.draw do
   get '/search/employees', to: 'employees#employee_search'
 
 
-  post 'invitations/new', to: 'invitations#create', as: :invitations
+  post 'meetings/:meeting_id/invite/:employee_id', to: 'meetings#invite', as: 'send_invitation'
   post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
 
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
   get '/search_advance/rooms', to: 'rooms#search_advance'
-  root to:'rooms#index'
+  root to:'meetings#index'
   end
 end
 

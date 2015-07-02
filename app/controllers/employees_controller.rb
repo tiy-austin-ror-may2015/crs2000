@@ -1,7 +1,9 @@
 class EmployeesController < ApplicationController
 
   def index
-    @employees = Employee.paginate(:page => params[:page], :per_page => 10)
+    @company = current_company
+    employee = Employee.where(company_id: current_company_id)
+    @employees = employee.paginate(:page => params[:page])
   end
 
   def show

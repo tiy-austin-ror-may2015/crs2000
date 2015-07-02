@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+
   def user_is_admin?
-    current_employee ? current_employee.admin : false
+    @user_is_admin ||= current_employee ? current_employee.admin : false
   end
 
   def no_meeting_overlap? (requested_meeting)
@@ -36,6 +37,15 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :user_is_admin?
+  helper_method :current_company
+
+  def current_company
+    @current_company ||= current_employee.company if current_employee
+  end
+
+  def current_company_id
+    current_company.id
+  end
 
   protected
 

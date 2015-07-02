@@ -4,10 +4,75 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crs2000</title>
+
+    <title>CRS2000</title>
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="//cdn datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+    <title>CRS2000</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <% unless primary_color == nil || company_logo == nil %>
+      <style type="text/css">
+        .navbar {
+          border-bottom: 5px solid black;
+          border-bottom-color: <%= primary_color %>;
+        }
+        .btn-primary {
+          background: <%= primary_color %>;
+          border-color: <%= primary_color %>;
+        }
+        .btn-primary:hover {
+          background: <%= primary_color %>;
+          border-color: <%= primary_color %>;
+          color: <%= secondary_color %>;
+        }
+        .btn {
+          background: <%= primary_color %>;
+          border-color: <%= primary_color %>;
+          color: white;
+        }
+        .btn:visited {
+          color: white;
+        }
+        .btn:hover {
+          background: <%= primary_color %>;
+          border-color: <%= primary_color %>;
+          color: <%= secondary_color %>;
+        }
+        .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+          background: <%= primary_color %> ;
+          border-color: <%= primary_color %>;
+        }
+        .pagination > li > a, .pagination > li > span {
+          color: <%= primary_color %>;
+        }
+        .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+          color: <%= primary_color %>;
+        }
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+          color: <%= primary_color %>;
+        }
+        .nav-tabs > li > a:hover {
+          color: <%= primary_color %>;
+        }
+
+        footer {
+          border-top: 5px solid black;
+          border-top-color: <%= primary_color %>;
+        }
+      <% end %>
+    </style>
+
 </head>
 <body>
 
@@ -21,24 +86,30 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/rooms">CRS2000</a>
+      <a class="navbar-brand" href="/rooms">
+        <% if company_logo == nil %>
+          <a class="navbar-brand" href="/rooms">CRS2000</a>
+        <% else %>
+          <img alt="Brand" src="<%= company_logo %>">
+        <% end %>
+      </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Meetings<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/meetings">All Meetings</a></li>
-            <li><a href="/meetings/new">New Meeting</a></li>
-          </ul>
-        </li>
+        <li><a href="/meetings/new">New Meeting</a></li>
+        <li><a href="/meetings">All Meetings</a></li>
         <li><a href="/rooms">All Rooms</a></li>
         <li><a href="/employees">All Employees</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if employee_signed_in? %>
+          <li><a href="/employees/<%= current_employee.id %>"> Logged in as: <%= current_employee.name %>
+            <% if user_is_admin? %>
+              ADMIN
+            <% end %>
+          </a></li>
           <li><%= link_to 'Log Out', destroy_employee_session_path, :method => :delete %></li>
         <% else %>
           <li><%= link_to 'Log In', "/employees/sign_in" %></li>
@@ -54,8 +125,29 @@
     <%= render partial: 'admin/adnav' %>
 <% end %>
 
+<% if notice %>
+  <div class="alert alert-success" role="alert">
+    <%= notice %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<% end %>
+
+<% if alert %>
+  <div class="alert alert-danger" role="alert">
+    <%= alert %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<% end %>
 
 <%= yield %>
+
+<footer>
+  <p>CRS2000 by RustWorks &copy; 2015</p>
+</footer>
 
 </body>
 </html>

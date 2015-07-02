@@ -1,9 +1,5 @@
 <div class="container">
-  <p id='notice'><%= notice %></p>
-  <p id='alert'><%= alert %> </p>
-
   <h1><%= @company.name %> Rooms</h1>
-
   <%= react_component("RoomsTable", { current_employee: current_employee, rooms_array: @rooms_array, page: 1, limit: 10, search: params[:search].to_s.titleize }) %>
 </div>
 

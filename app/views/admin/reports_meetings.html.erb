@@ -1,7 +1,7 @@
+
 <div class="report-inner">
   <h1>MEETINGS</h1>
-    <table class="report-container">
-      <table id="meetings">
+      <table id="meetings" class="table display">
         <thead>
           <tr>
             <th>TITLE</th>
@@ -19,8 +19,8 @@
             <tr>
             <td><%= reports_meeting.title %></td>
             <td><%= reports_meeting.agenda %></td>
-            <td><%= reports_meeting.start_time %></td>
-            <td><%= reports_meeting.end_time %></td>
+            <td><%= reports_meeting.start_time.strftime("%m/%d/%Y %l:%M %p") %></td>
+            <td><%= reports_meeting.end_time.strftime("%m/%d/%Y %l:%M %p") %></td>
             <td><%= reports_meeting.private %></td>
             <td><%= reports_meeting.room_id %></td>
             <td><%= reports_meeting.employee_id %></td>
@@ -28,5 +28,4 @@
         <% end %>
       </tbody>
     </table>
-  </table>
 </div>

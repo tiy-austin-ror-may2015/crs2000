@@ -125,24 +125,6 @@ var PageButton = React.createClass({
   }
 });
 
-var TableHead = React.createClass({
-  render: function () {
-    return(
-      <thead>
-        <tr>
-          <SortButton name='Name' grandparent={ this.props.parent } />
-          <SortButton name='Room Number' grandparent={ this.props.parent } />
-          <SortButton name='Location' grandparent={ this.props.parent } />
-          <SortButton name='Amenities' grandparent={ this.props.parent } />
-          <SortButton name='Max Occupancy' grandparent={ this.props.parent } />
-          <SortButton name='Time Until Next Meeting' grandparent={ this.props.parent } />
-          <SortButton name='Available' grandparent={ this.props.parent } />
-        </tr>
-      </thead>
-    );
-  }
-});
-
 var SortButton = React.createClass({
   componentWillMount: function () {
     this.setState({sort_dir: 'asc'});
@@ -282,6 +264,16 @@ var NavLink = React.createClass({
     };
   },
   clicked: function () {
-    window.location.href = this.props.url;
+    if (this.props.method === 'DELETE') {
+      $.ajax({
+        url: this.props.url,
+        type: 'DELETE',
+        error: function () {
+          this.state.grandparent.setState({ show: 'false'});
+        }.bind(this)
+      });
+    } else {
+      window.location.href = this.props.url;
+    }
   }
 });

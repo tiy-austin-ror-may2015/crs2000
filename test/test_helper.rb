@@ -4,8 +4,10 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'mocha'
 require 'mocha/test_unit'
-
-
+if ENV['CI']
+    require 'codeclimate_batch'
+    CodeclimateBatch.start
+end
 CodeClimate::TestReporter.start
 include Devise::TestHelpers
 class ActiveSupport::TestCase

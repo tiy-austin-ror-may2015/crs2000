@@ -16,11 +16,11 @@
   </div>
   <div class="field">
     <%= f.label :agenda %><br>
-    <%= f.text_field :agenda %>
+    <%= f.text_area :agenda %>
   </div>
   <div class="field">
     <%= f.label :room_id %><br>
-    <%= f.select :room_id, @room_options %>
+    <%= f.select :room_id, @room_options, selected: params[:room_id] %>
   </div>
   <div class="field">
     <%= f.label :start_time %><br>

@@ -15,8 +15,7 @@ image =
  "https://s-media-cache-ak0.pinimg.com/736x/35/aa/5c/35aa5c879d51fba1fca7fd8435761460.jpg",
  "http://static.paradizo.com/albums/large/elysium-resort-spa/elysium-resort-spa-meeting-rooms/elysium-resort-spa-meeting-room-1.jpg",
  "http://azhari.typepad.com/.a/6a0120a6cd4566970b017c38a9059e970b-pi",
- "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg",
- "http://i.ytimg.com/vi/bDUkzYWxR7E/hqdefault.jpg"]
+ "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg"]
 
 perks = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
 amenities = perks.map { |perk| Amenity.create(perk: perk) }
@@ -54,3 +53,6 @@ latest = 5.hours.from_now
     end
   end
 end
+
+Employee.create!(name: 'example user', email: 'user@example.com', password: 'password', password_confirmation: 'password', company_id: Company.first.id, admin: false)
+Employee.create!(name: 'example admin', email: 'admin@example.com', password: 'password', password_confirmation: 'password', company_id: Company.first.id, admin: true)

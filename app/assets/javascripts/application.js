@@ -12,8 +12,8 @@
 // about supported directives.
 //
 //= require jquery
-//= require bootstrap-sprockets
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require dataTables/jquery.dataTables
 //= require turbolinks
 //= require react
@@ -23,18 +23,19 @@
 //= require datetimepicker
 //= require_tree .
 
-var ready = function() {
-  $('.datetimepicker').datetimepicker();
-
+var formatTimes = function () {
   var times = $('.timeDisplay');
   times.each(function () {
-    var time_text = $(this).html().format('MMMM/DD/YYYY hh:mm a');
-    var formatted_time = moment(time_text);
+    var time_text = $(this).html();
+    var formatted_time = moment(time_text).format('MMMM/DD/YYYY hh:mm a');
     $(this).html(formatted_time);
   });
+};
+
+var formatCountdown = function () {
   var setTime = function () {
-    var times = $('.countDown');
-    times.each(function () {
+    var countdown_times = $('.countDown');
+    countdown_times.each(function () {
       var time_text = $(this).attr("data-id");
       if (time_text === 'N/A') {
         var formatted_time = 'N/A';
@@ -44,16 +45,27 @@ var ready = function() {
       $(this).html(formatted_time);
     });
   };
-  setInterval(setTime, 100);
+  setInterval(setTime, 5000);
   setTimeout(setTime, 0);
+};
+
+var inviteSearchFilter = function () {
+  $("#search").on("keyup paste change", function(){
+      var re = new RegExp(this.value, "i");
+      $("#invitees tr").each(function(index){
+          var invitee_name = $("#invitee_name", this).html();
+          this.hidden = !re.test(invitee_name);
+      });
+  });
+};
+
+var ready = function() {
+  $('.datetimepicker').datetimepicker();
+  formatTimes();
+  formatCountdown();
+  inviteSearchFilter();
 };
 
 $(document).ready(ready);
 $(document).on("page:load", ready);
-
-
-
-
-
-
 

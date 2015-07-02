@@ -1,6 +1,5 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
-//You need to now manually import every other scss file.
 @import 'datetimepicker';
 @import 'admin';
 @import 'dataTables/jquery.dataTables';
@@ -9,10 +8,8 @@
 @import 'meetings';
 @import 'employee';
 @import 'invitations';
+
 //You need to now manually import every other scss file.
-.center{
-  text-align: center;
-}
 
 .pull-right{
   margin-right: 20px;
@@ -54,20 +51,33 @@
   padding: 20px;
   margin-left: auto;
   margin-right:auto;
-  border: 1px solid orange;
-  background-color: #eeeeee;
+  border: 1px solid #999999;
+  background-color: white;
 }
 
 .report-inner {
   padding: 20px;
   margin: 40px;
-  border: 1px solid orange;
-  background-color: #eeeeee;
+  border: 1px solid #999999;
+  background-color: white;
 }
 
 .results{
   font-weight: bold;
 }
+
+footer {
+  margin-top: 40px;
+  background: #F8F8F8;
+  width: 100%;
+  text-align: center;
+} p {
+  margin-bottom: 0px;
+  padding: 10px 0;
+}
+  .invite {
+    width:50%
+  }
 
 .asc{
   color: lighten(black, 50%);

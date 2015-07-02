@@ -19,7 +19,7 @@ class RoomsPdf < Prawn::Document
   def rooms_rows
       [["Room Name", "Location", "Max Occupancy", "Available"]] +
     @room.map do |item|
-      [item.name, item.location, item.max_occupancy, item.available.inspect ]
+      [item.name, item.location, item.max_occupancy, item.available.inspect]
     end
   end
 end

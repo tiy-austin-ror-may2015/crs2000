@@ -1,14 +1,14 @@
 class MeetingsController < ApplicationController
 
   def index
-    @company = current_employee.company
+    @company = current_company
     if current_employee
-        company   = Company.find(current_employee.company.id)
+        company   = Company.find(current_company.id)
       if user_is_admin?
-        @meetings = current_employee.company.meetings.today_forward
+        @meetings = current_company.meetings.today_forward
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       else
-        @meetings = current_employee.company.meetings.today_forward.where("private = false")
+        @meetings = current_company.meetings.today_forward.where("private = false")
         @meetings = @meetings.paginate(:page => params[:page], :per_page => 10)
       end
     else
@@ -23,7 +23,7 @@ class MeetingsController < ApplicationController
       if user_has_access_to?(@meeting)
         @current_employee = current_employee
         @attendees = EmployeeMeeting.where(meeting_id: @meeting.id).map{|em| em.employee}
-        @invitees = Employee.where(company_id: current_employee.company_id) - @attendees
+        @invitees = Employee.where(company_id: current_company_id) - @attendees
         @meeting_owner = (@meeting.employee_id == @current_employee.id)
         get_occupancy
       else
@@ -59,11 +59,11 @@ class MeetingsController < ApplicationController
     if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @current_employee.id).count == 0
       meeting = Meeting.find(params[:id])
       if no_meeting_overlap? (meeting)
-        message = {alert: 'You own or are already in another meeting at this time.'}
-      else
         em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @current_employee.id)
         em.save
         message = {notice: 'Employee successfully joined!'}
+      else
+        message = {alert: 'You own or are already in another meeting at this time.'}
       end
     else
       message = {alert: 'Employee already joined!'}
@@ -71,21 +71,15 @@ class MeetingsController < ApplicationController
     redirect_to meeting_path(params[:id]), message
   end
 
-  def get_occupancy
-    @max_occupancy = Meeting.capacity(params[:id])
-    attending = EmployeeMeeting.attending(params[:id])
-    @current_occupancy = @max_occupancy  - attending
-  end
-
   def new
     @meeting = Meeting.new
-    @room_options = Room.company_rooms(current_employee.company_id)
+    @room_options = Room.company_rooms(current_company_id)
   end
 
   def edit
     @meeting = Meeting.find(params[:id])
     if employee_signed_in?
-      all_rooms = Room.where(company_id: current_employee.company_id)
+      all_rooms = Room.where(company_id: current_company_id)
       @room_options = all_rooms.map { |room| [room.name, room.id] }
     end
     current_meeting = Meeting.find(params[:id])
@@ -103,7 +97,10 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new(meeting_params)
     if room_is_available?(@meeting) && no_meeting_overlap?(@meeting)
       @meeting.employee = current_employee
+
       if @meeting.save
+        em = EmployeeMeeting.new(meeting_id: @meeting.id, employee_id: current_employee.id)
+        em.save
         MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
         redirect_to @meeting, notice: 'Meeting was successfully created.'
       else
@@ -153,7 +150,7 @@ class MeetingsController < ApplicationController
   end
 
   def user_has_access_to?(meeting)
-    if current_employee.company.id == meeting.company.id &&
+    if current_company.id == meeting.company.id &&
        user_is_admin? ||
        meeting.invitations.exists?(employee_id: current_employee.id) ||
        meeting.employee_id == current_employee.id ||

@@ -8,7 +8,6 @@
   </div>
 <div class="container">
   <div class="row">
-    <p id="notice"><%= notice %></p>
 
     <h1><%= @company.name%> Meetings</h1>
     <div class='panel panel-default'>
@@ -17,8 +16,8 @@
       <thead>
         <tr>
           <th class='well'>Title</th>
-          <th>Room</th>
-          <th class='well'>Agena</th>
+          <th>Room and Location</th>
+          <th class='well'>Agenda</th>
           <th>Start Time</th>
           <th class = 'well'>End Time</th>
         </tr>
@@ -28,7 +27,7 @@
         <% @meetings.each do |meeting| %>
           <tr>
             <td class='well'><%= link_to meeting.title, meeting %></td>
-            <td><%= meeting.room.name %> </td>
+            <td><%= link_to meeting.room.name, meeting.room %> at <%= meeting.room.location %></td>
              <td class='well' ><%= meeting.agenda %></td>
             <td><p class="timeDisplay"><%= meeting.start_time %></p></td>
             <td><p class="timeDisplay"><%= meeting.end_time %></p></td>
@@ -42,7 +41,7 @@
       <%= will_paginate @meetings, renderer: BootstrapPagination::Rails %>
     </div>
     <div class="center margin-bottom">
-      <%= link_to 'New Meeting', new_meeting_path, class: "btn btn-info" %>
+      <%= link_to 'New Meeting', new_meeting_path, class: "btn btn-primary" %>
     </div>
   </div>
 </div>

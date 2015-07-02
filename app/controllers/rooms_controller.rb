@@ -3,19 +3,19 @@ class RoomsController < ApplicationController
 
   def index
     @company = employee_company
-    @current_employee = current_employee
     @rooms_array = get_rooms_array
   end
 
   def show
+    @room = Room.find(params[:id])
   end
 
   def new
     if user_is_admin?
       @room = Room.new
-      @all_rooms = company_rooms.pluck(:name)
+      @all_rooms = Room.where(company_id: current_company_id).pluck(:name)
     else
-      redirect_to :back, alert: "Access Denied"
+      redirect_to root_path, alert: "Access Denied"
     end
   end
 
@@ -30,8 +30,9 @@ class RoomsController < ApplicationController
     end
   end
 
-  def create
-    if user_is_admin?
+ def create
+  if user_is_admin?
+
       user               = current_employee
       @company           = user.company
       @room              = Room.new(room_params)
@@ -40,15 +41,18 @@ class RoomsController < ApplicationController
       if @room.save
          redirect_to @room, notice: "#{@room.name} has been created"
        else
-         redirect_to :back, alert: "Error occured, room not saved"
+         redirect_to root_path, alert: "Error occured, room not saved"
        end
      else
-      redirect_to :back, alert: "Access Denied"
+      redirect_to root_path, alert: "Access Denied"
     end
-  end
+ end
 
   def update
       if user_is_admin?
+
+      @room = Room.find(params[:id])
+
       @room = Room.updated_room(@room, params)
 
       if @room.save
@@ -63,6 +67,8 @@ class RoomsController < ApplicationController
 
   def destroy
     if user_is_admin?
+
+      @room = Room.find(params[:id])
       @room.destroy
       redirect_to rooms_url, notice: 'Room was successfully destroyed.'
     else
@@ -71,7 +77,7 @@ class RoomsController < ApplicationController
   end
 
   def employee_company
-    current_employee.company
+    current_company
   end
 
   private

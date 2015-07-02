@@ -18,5 +18,5 @@ When(/^I click "(.*?)"$/) do |link_name|
 end
 
 Then(/^I should be on the "(.*?)"$/) do |path|
-  assert_equal current_path, path
+  assert_equal path, current_path
 end
