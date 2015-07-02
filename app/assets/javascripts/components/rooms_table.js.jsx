@@ -26,6 +26,11 @@ var RoomsTable = React.createClass({
 
     return(
       <div>
+        <div className='row'>
+          <span>show </span>
+          <input id='limit' type='text' size= '3' onKeyUp={ this.changed.bind(this) } />
+          <span> rooms per page</span>
+        </div>
         <section className='panel panel-default'>
           <table className='table'>
             <TableHead parent={ this } />
@@ -38,21 +43,23 @@ var RoomsTable = React.createClass({
         <RoomsSearch parent={ this } />
       </div>
     );
+  },
+  changed: function (key) {
+    if (key.keyCode === 13) {
+      var new_limit = parseInt(key.target.value.trim());
+      this.setState({ limit: new_limit });
+    }
   }
 });
 
 var Paginate = React.createClass({
-  getInitialState: function () {
-    return {
-      limit: this.props.parent.state.limit
-    };
-  },
   render: function () {
     var rooms_table = this.props.parent;
+    var limit = rooms_table.state.limit;
     var current_page = rooms_table.state.page;
     var data = rooms_table.state.rooms_array;
     var data_length = data.length;
-    var last_page = Math.ceil(data_length / this.state.limit);
+    var last_page = Math.ceil(data_length / limit);
     var pages = [];
 
     for (var i = 1; i <= last_page; i++) {

@@ -55,12 +55,12 @@ end
     name = params.fetch("name", "")
     max_occupancy = params.fetch("max_occupancy", "").empty? ? "-1" : params["max_occupancy"]
     room_number = params.fetch("room_number", "").empty? ? "%%" : params["room_number"]
-    location = params.fetch("location", "").empty? ? "%%" : params["location"]
+    location = params.fetch("location", "").empty? ? "" : params["location"]
 
     where_query = "lower(name) LIKE lower('%#{name}%') AND
                    max_occupancy >= #{max_occupancy} AND
                    CAST(room_number AS TEXT) LIKE '#{room_number}' AND
-                   lower(location) LIKE lower('#{location}')" +
+                   lower(location) LIKE lower('%#{location}%')" +
                    company_id_query
 
     Room.where(where_query)
