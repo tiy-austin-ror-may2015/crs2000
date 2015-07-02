@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   get 'admin/reports_rooms/top_rooms', to: 'admin#top_rooms'
   get 'admin/busiest_employees', to: 'admin#busiest_employees'
   get 'admin/add_branding', to: 'admin#add_branding'
+  get 'admin', to: 'admin#dashboard'
+  get 'admin/room_report', to: 'admin#room_table'
+  get 'admin/meeting_report', to: 'admin#meeting_table'
 
   #EMPLOYEES
   get 'employees/:id', to: 'employees#show', as: 'employee'
