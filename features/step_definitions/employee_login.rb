@@ -1,9 +1,9 @@
 Given(/^I have an account$/) do
-  company = Company.create(name: 'fooo inc')
+  @company = Company.create(name: 'fooo inc')
   @employee = Employee.create!(name: 'foobar', email: 'user@example.com',
                                  password: 'password',
                               password_confirmation: 'password',
-                              company_id: company.id)
+                              company_id: @company.id)
 end
 
 When(/^I login$/) do
@@ -18,5 +18,5 @@ When(/^I click "(.*?)"$/) do |link_name|
 end
 
 Then(/^I should be on the "(.*?)"$/) do |path|
-  assert_equal current_path, path
+  assert_equal path, current_path
 end

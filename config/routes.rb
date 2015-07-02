@@ -38,11 +38,8 @@ Rails.application.routes.draw do
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
   get '/search_advance/rooms', to: 'rooms#search_advance'
-
-  end
-
   root to:'rooms#index'
-
+  end
 end
 
 #                        Prefix Verb   URI Pattern                                         Controller#Action
