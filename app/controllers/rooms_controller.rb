@@ -16,7 +16,7 @@ class RoomsController < ApplicationController
       @room = Room.new
       @all_rooms = Room.where(company_id: current_company_id).pluck(:name)
     else
-      redirect_to :back, alert: "Access Denied"
+      redirect_to root_path, alert: "Access Denied"
     end
   end
 
@@ -46,10 +46,10 @@ class RoomsController < ApplicationController
       if @room.save
          redirect_to @room, notice: "#{@room.name} has been created"
        else
-         redirect_to :back, alert: "Error occured, room not saved"
+         redirect_to root_path, alert: "Error occured, room not saved"
        end
      else
-      redirect_to :back, alert: "Access Denied"
+      redirect_to root_path, alert: "Access Denied"
     end
  end
 
