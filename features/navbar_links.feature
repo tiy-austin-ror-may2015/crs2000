@@ -27,6 +27,6 @@ Feature:
     Then I should be on the "/employees"
 
   Scenario: I click on my profile link
-    And I click "Logged in as: foobar"
+    And I click "Foobar"
     Then I should be on my profile page
 

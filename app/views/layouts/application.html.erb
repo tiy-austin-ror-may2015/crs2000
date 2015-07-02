@@ -90,7 +90,7 @@
         <% if company_logo == nil %>
           <a class="navbar-brand" href="/">CRS2000</a>
         <% else %>
-          <img alt="Brand" src="<%= company_logo %>">
+          <img alt="Brand" src="<%= company_logo %>" href="/">
         <% end %>
       </a>
     </div>
@@ -105,10 +105,11 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if employee_signed_in? %>
-          <li><a href="/employees/<%= current_employee.id %>"> Logged in as: <%= current_employee.name %>
+          <li><a href="/employees/<%= current_employee.id %>">
             <% if user_is_admin? %>
-              ADMIN
+              ADMIN:
             <% end %>
+            <%= current_employee.name.titleize %>
           </a></li>
           <li><%= link_to 'Log Out', destroy_employee_session_path, :method => :delete %></li>
         <% else %>

@@ -1,5 +1,7 @@
  <ul class="nav nav-tabs">
-    <li role="presentation" class=<%= active_if(dashboard_path) %>><%= link_to 'Admin Dashboard', dashboard_path %></li>
+    <li role="presentation" class=<%= active_if(dashboard_path) %> >
+        <%= link_to 'Admin Dashboard', dashboard_path %>
+    </li>
     <li role="presentation" class=<%= active_if(new_room_path) %>><a href="/rooms/new">Create a Room</a></li>
     <li role="presentation" class=<%= active_if(admin_reports_meetings_path) %>><a href="/admin/reports_meetings">Meetings Report</a></li>
     <li role="presentation" class=<%= active_if(admin_reports_rooms_path) %>><a href="/admin/reports_rooms">Rooms Report</a></li>
