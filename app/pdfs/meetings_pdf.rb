@@ -6,6 +6,7 @@ class MeetingsPdf < Prawn::Document
     meetings_rows
   end
 
+
   def meetings
     move_down 10
     table meetings_rows do
