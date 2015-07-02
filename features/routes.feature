@@ -134,3 +134,13 @@ Feature:
     When I sign up
     And I navigate to "/admin/reports_rooms"
     Then I should be on the root_path
+
+  Scenario: Routing to admin busiest_employees
+    When I sign up
+    And I navigate to "/admin/busiest_employees"
+    Then I should be on the root_path
+
+  Scenario: Routing to admin branding
+    When I sign up
+    And  I navigate to "/admin/add_branding"
+    Then I should be on the root_path
