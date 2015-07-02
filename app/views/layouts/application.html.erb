@@ -49,11 +49,11 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
 <% if user_is_admin? %>
-  <%= render partial: 'admin/adnav' %>
+    <%= render partial: 'admin/adnav' %>
 <% end %>
-  <!-- <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p> -->
+
 
 <%= yield %>
 
