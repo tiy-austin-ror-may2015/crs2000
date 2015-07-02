@@ -9,9 +9,9 @@ class InvitationsController < ApplicationController
         @employee = Employee.find(employee_id)
         @meeting = Meeting.find(meeting_id)
         MeetingMailer.invited_to_meeting(@employee, @meeting).deliver_now
-          message = {notice: 'invitation successfully sent!'}
+          message = {notice: 'Invitation successfully sent!'}
         else
-          message = {alert: 'invitation has been already sent!'}
+          message = {alert: 'Invitation has been already sent!'}
         end
       redirect_to admin_invitations_show_path, message
   end

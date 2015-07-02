@@ -70,7 +70,7 @@
             <tr>
               <td>
                 <% if invitee.invitations.where(meeting_id: @meeting.id).exists? %>
-                    <br><p style="font-style: italic">Already invited!</p>
+                    <br><p>Invitation sent!</p>
                 <% else %>
                     <%= link_to 'Invite', send_invitation_path(@meeting.id, invitee.id), method: 'POST', class: 'btn btn-default' %>
                 <% end %>
