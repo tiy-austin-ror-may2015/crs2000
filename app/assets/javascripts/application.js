@@ -41,7 +41,7 @@ var formatCountdown = function () {
       $(this).html(formatted_time);
     });
   };
-  setInterval(setTime, 5000);
+  setInterval(setTime, 100);
   setTimeout(setTime, 0);
 };
 
@@ -60,6 +60,10 @@ var ready = function() {
   formatTimes();
   formatCountdown();
   inviteSearchFilter();
+  $('#meetings').dataTable();
+  $('#rooms').dataTable();
+  $('#busiest_employees').dataTable()
+  $('#top_rooms').dataTable()
 };
 
 $(document).ready(ready);
