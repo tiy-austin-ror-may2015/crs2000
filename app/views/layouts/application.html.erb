@@ -8,6 +8,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+    <% unless primary_color == nil %>
       <style type="text/css">
         .navbar {
           border-bottom: 5px solid black;
@@ -51,6 +52,7 @@
           border-top: 5px solid black;
           border-top-color: <%= primary_color %>;
         }
+      <% end %>
     </style>
 </head>
 <body>
@@ -66,7 +68,11 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/rooms">
-        <img alt="Brand" src="<%= company_logo %>">
+        <% if company_logo == nil %>
+          <a class="navbar-brand" href="/rooms">CRS2000</a>
+        <% else %>
+          <img alt="Brand" src="<%= company_logo %>">
+        <% end %>
       </a>
     </div>
 
