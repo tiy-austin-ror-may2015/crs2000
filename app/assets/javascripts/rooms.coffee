@@ -1,2 +1,1 @@
-jQuery ->
-  $('#rooms').dataTable()
+

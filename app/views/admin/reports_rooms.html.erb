@@ -6,7 +6,7 @@
         <thead>
           <tr>
             <th>NAME</th>
-            <th>NUMBER</th>
+            <th>ROOM NUMBER</th>
             <th>MAX OCC</th>
             <th>IMAGE</th>
             <th>LOCATION</th>
@@ -61,8 +61,8 @@
         <thead>
           <tr>
             <th>NAME</th>
-            <th>MAX OCC</th>
             <th>ROOM NUMBER</th>
+            <th>MAX OCC</th>
             <th>IMAGE</th>
             <th>LOCATION</th>
           </tr>
@@ -71,8 +71,8 @@
         <tbody>
           <tr><% @reports_rooms.each do |reports_rooms| %>
             <td><%= reports_rooms.name %></td>
-            <td><%= reports_rooms.max_occupancy %></td>
             <td><%= reports_rooms.room_number %></td>
+            <td><%= reports_rooms.max_occupancy %></td>
             <td>
             <!-- Button for Image Modal -->
             <a href="#image_show_modal" role="button" class="btn btn-default" data-toggle="modal">click to see image</a>
