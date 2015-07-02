@@ -76,6 +76,8 @@ GEM
       xpath (~> 2.0)
     codeclimate-test-reporter (0.4.7)
       simplecov (>= 0.7.1, < 1.0.0)
+    codeclimate_batch (0.2.0)
+      json
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -301,6 +303,7 @@ DEPENDENCIES
   bullet (~> 4.14)
   byebug (~> 5.0)
   codeclimate-test-reporter (~> 0.4)
+  codeclimate_batch
   coffee-rails (~> 4.1)
   cucumber-rails
   database_cleaner
