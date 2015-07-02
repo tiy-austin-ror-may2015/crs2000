@@ -234,25 +234,19 @@ var SortButton = React.createClass({
 
 var DataRow = React.createClass({
   render: function () {
-    var room = this.props.elem[0];
-    var amenity_names = this.props.elem[1];
-    var time = this.props.elem[2][0];
-    var available = this.props.elem[2][1];
-    var next_meeting = this.props.elem[2][2];
+    var room_array = this.props.elem;
     var current_employee = this.props.current_employee;
+    var room = room_array[0];
+    var amenity_names = room_array[1];
+    var next_meeting_details = room_array[2];
+    var start_time = next_meeting_details.start_time;
+    var available = next_meeting_details.available;
+    var next_meeting = next_meeting_details.next_meeting;
     var room_url = '/rooms/' + room.id;
-    if (next_meeting === null) {
-      var meeting_url = '';
-    } else {
-      if (next_meeting.private === true) {
-        if (current_employee.admin === true) {
-          var meeting_url = '/meetings/' + next_meeting.id;
-        } else {
-          var meeting_url = '';
-        };
-      } else {
-        var meeting_url = '/meetings/' + next_meeting.id;
-      };
+    var meeting_url = '/meetings/';
+
+    if (next_meeting === null) || (current_employee.admin !== true && next_meeting.private === true) {
+      meeting_url = '';
     };
 
     return (
@@ -265,7 +259,7 @@ var DataRow = React.createClass({
         <td className='well'>{ amenity_names }</td>
         <td>{ room.max_occupancy }</td>
         <td className='well' >
-          <NavLink className='countDown' dataID={ time } name='' url={ meeting_url }  />
+          <NavLink className='countDown' dataID={ start_time } name='' url={ meeting_url }  />
         </td>
         <td>{ available }</td>
       </tr>
