@@ -30,31 +30,29 @@ random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12
     @employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
                              password: 'password', password_confirmation: 'password',
                            company_id: company.id)
-  end
 
-  15.times do
+    15.times do
 
-    @room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room",
-              max_occupancy: Faker::Number.number(2),
-                room_number: rand(200..400),
-                     imgurl: image.sample,
-                   location: location.sample,
-                    company_id: company.id)
-    amenity = Amenity.create(perk: amenities.sample,
-                             room_id: @room.id)
-  end
+      @room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room",
+                max_occupancy: Faker::Number.number(2),
+                  room_number: rand(200..400),
+                       imgurl: image.sample,
+                     location: location.sample,
+                      company_id: company.id)
+      amenity = Amenity.create(perk: amenities.sample,
+                               room_id: @room.id)
 
-  15.times do
 
-    meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
-                      start_time: random_start_times.sample,
-                       end_time: random_start_times.sample + 4.hours,
-                         room_id: @room.id, employee_id: @employee.id)
 
-    employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
-                                           employee_id: @employee.id,
-                                      meeting_id: meeting.id)
+      meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
+                        start_time: random_start_times.sample,
+                         end_time: random_start_times.sample + 4.hours,
+                           room_id: @room.id, employee_id: @employee.id)
 
+      employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
+                                             employee_id: @employee.id,
+                                        meeting_id: meeting.id)
+    end
   end
 end
 
