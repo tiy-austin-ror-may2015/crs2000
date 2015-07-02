@@ -3,7 +3,7 @@
 
 <div>
     <div class="col-md-12">
-      <h2><%= @meeting.title.titleize %> in <%= @meeting.room.name %></h2>
+      <h2><%= @meeting.title.titleize %> in <%= @meeting.room.name.titleize %></h2>
       <div class="meeting-buttons">
         <%= link_to 'Join', join_employee_path(@meeting.id), method: 'POST', class: 'btn btn-default join-button' %>
         <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-default" %>
