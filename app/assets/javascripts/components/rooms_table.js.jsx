@@ -185,8 +185,8 @@ var SortButton = React.createClass({
             b = b[0].max_occupancy;
             break;
           case 'Time Until Next Meeting':
-            a = a[2][0];
-            b = b[2][0];
+            a = a[2].start_time;
+            b = b[2].start_time;
             if (a === 'N/A') {
               a = new Date(2038);;
             };
@@ -197,8 +197,8 @@ var SortButton = React.createClass({
             b = new Date(b);
             break;
           case 'Available':
-            a = a[2][1];
-            b = b[2][1];
+            a = a[2].available;
+            b = b[2].available;
         }
 
         if (this.state.sort_dir === 'asc') {
@@ -234,8 +234,8 @@ var SortButton = React.createClass({
 
 var DataRow = React.createClass({
   render: function () {
-    var room_array = this.props.elem;
     var current_employee = this.props.current_employee;
+    var room_array = this.props.elem;
     var room = room_array[0];
     var amenity_names = room_array[1];
     var next_meeting_details = room_array[2];
@@ -245,7 +245,7 @@ var DataRow = React.createClass({
     var room_url = '/rooms/' + room.id;
     var meeting_url = '/meetings/';
 
-    if (next_meeting === null) || (current_employee.admin !== true && next_meeting.private === true) {
+    if ((next_meeting === null) || (current_employee.admin !== true && next_meeting.private === true)) {
       meeting_url = '';
     };
 
@@ -276,16 +276,6 @@ var NavLink = React.createClass({
     };
   },
   clicked: function () {
-    if (this.props.method === 'DELETE') {
-      $.ajax({
-        url: this.props.url,
-        type: 'DELETE',
-        error: function () {
-          this.state.grandparent.setState({ show: 'false'});
-        }.bind(this)
-      });
-    } else {
-      window.location.href = this.props.url;
-    }
+    window.location.href = this.props.url;
   }
 });

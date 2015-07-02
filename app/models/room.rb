@@ -58,7 +58,7 @@ end
       "available": "yes",
       "next_meeting": nil
     }
-    return if self.meetings.none?
+    return next_meeting_details if self.meetings.none?
 
     now = Time.now
     next_earliest_start_time = self.meetings.first.start_time
