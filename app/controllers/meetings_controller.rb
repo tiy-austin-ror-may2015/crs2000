@@ -126,7 +126,7 @@ class MeetingsController < ApplicationController
       end
     else
       flash[:alert] = "The room is occupied or you have a meeting during that time."
-      redirect_to :back
+      redirect_to meeting_path
     end
   end
 
