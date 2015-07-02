@@ -47,38 +47,6 @@ end
  # check the number of attandents and compare to room capacity
  # send true or false
 
-<<<<<<< HEAD
-=======
-  def self.search_with(params)
-    company_name = params.fetch("company_name", "")
-    company_ids = Company.where("lower(name) LIKE lower('%#{company_name}%')").pluck(:id)
-    company_id_query = company_ids.map{ |id| "company_id = #{id}" }.join(" OR ")
-    company_id_query.present? ? company_id_query.prepend(" AND (") << ")" : company_id_query = " AND company_id = 0"
-
-    name = params.fetch("name", "")
-    max_occupancy = params.fetch("max_occupancy", "").empty? ? "-1" : params["max_occupancy"]
-    room_number = params.fetch("room_number", "").empty? ? "%%" : params["room_number"]
-    location = params.fetch("location", "").empty? ? "%%" : params["location"]
-
-    where_query = "lower(name) LIKE lower('%#{name}%') AND
-                   max_occupancy >= #{max_occupancy} AND
-                   CAST(room_number AS TEXT) LIKE '#{room_number}' AND
-                   lower(location) LIKE lower('#{location}')" +
-                   company_id_query
-
-    Room.where(where_query)
-  end
-
-  def self.sort_with(params)
-    sort_by   = params.fetch("sort_by", "name||").split("||")
-    sort_dir  = params.fetch("sort_dir", "ASC||").split("||")
-    sort_hash = Hash[sort_by.zip(sort_dir)]
-
-    order_query = sort_hash.map { |sort_by, sort_dir| "#{sort_by} #{sort_dir}" }.join(", ")
-    self.order(order_query)
-  end
-
->>>>>>> ae0ff322f5e7f82cb024fa2d4c4b291147a41d6f
   def self.company_rooms(company)
     self.where(company_id: company).map { |room| [room.name, room.id] }
   end
@@ -99,7 +67,6 @@ end
                     AND CAST(room_number AS TEXT) LIKE '#{room_number}'" + amenity_query
     self.where(search_query)
   end
-<<<<<<< HEAD
 
   def get_next_meeting_details
     time = "N/A"
@@ -120,6 +87,4 @@ end
     end
     [time, available, next_meeting]
   end
-=======
->>>>>>> ae0ff322f5e7f82cb024fa2d4c4b291147a41d6f
 end
