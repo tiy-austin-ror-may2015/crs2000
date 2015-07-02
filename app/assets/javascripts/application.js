@@ -64,6 +64,10 @@ var ready = function() {
   formatTimes();
   formatCountdown();
   inviteSearchFilter();
+  $('#meetings').dataTable();
+  $('#rooms').dataTable();
+  $('#busiest_employees').dataTable()
+  $('#top_rooms').dataTable()
 };
 
 $(document).ready(ready);
