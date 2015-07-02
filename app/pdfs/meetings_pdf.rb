@@ -1,11 +1,26 @@
 class MeetingsPdf < Prawn::Document
-  def initialize(meeting)
+  def initialize(meeting, admin, company)
     super()
     @meeting = meeting
+    @admin = admin
+    @company = company
+    greeting
+    # footers
     meetings
     meetings_rows
   end
 
+  def greeting
+    move_down 2
+    text "#{@admin.name.capitalize},"
+    move_down 10
+    text "This is the room inventory information for #{@company.name}."
+  end
+
+  # def footers
+
+  #   end
+  # end
 
   def meetings
     move_down 10

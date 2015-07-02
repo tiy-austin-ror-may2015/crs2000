@@ -1,8 +1,9 @@
 class RoomsPdf < Prawn::Document
-  def initialize(room, admin)
+  def initialize(room, admin, company)
     super()
     @room = room
     @admin = admin
+    @company = company
     greeting
     rooms
     rooms_rows
@@ -11,8 +12,8 @@ class RoomsPdf < Prawn::Document
   def greeting
     move_down 2
     text "#{@admin.name.capitalize},"
-    move_down 4
-    text "This is an inventory of your current rooms"
+    move_down 10
+    text "This is the room inventory information for #{@company.name}."
   end
 
   def rooms
