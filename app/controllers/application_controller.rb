@@ -23,15 +23,19 @@ class ApplicationController < ActionController::Base
   end
 
   def room_is_available?(requested_meeting)
-    all_room_meetings = requested_meeting.room.meetings
-    room_other_meetings = all_room_meetings - [requested_meeting]
-    room_other_meetings.each do |meeting|
-      if requested_meeting.start_time < meeting.end_time && requested_meeting.start_time >= meeting.start_time ||
-         requested_meeting.end_time > meeting.start_time && requested_meeting.start_time <= meeting.start_time
-        return false
-      else
-        true
+    if requested_meeting.room != nil
+      all_room_meetings = requested_meeting.room.meetings
+      room_other_meetings = all_room_meetings - [requested_meeting]
+      room_other_meetings.each do |meeting|
+        if requested_meeting.start_time < meeting.end_time && requested_meeting.start_time >= meeting.start_time ||
+           requested_meeting.end_time > meeting.start_time && requested_meeting.start_time <= meeting.start_time
+          return false
+        else
+          true
+        end
       end
+    else
+      true
     end
   end
 

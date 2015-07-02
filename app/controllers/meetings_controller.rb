@@ -40,7 +40,19 @@ class MeetingsController < ApplicationController
     @current_occupancy = @max_occupancy - attendees_num
   end
 
-#Moved Invitations (def invite) to invitations controller
+  def invite
+      if Invitation.where(meeting_id: params[:meeting_id], employee_id: params[:employee_id]).count == 0
+        invitation = Invitation.new(meeting_id: params[:meeting_id], employee_id: params[:employee_id])
+        invitation.save
+        @employee = Employee.find(params[:employee_id])
+        @meeting = Meeting.find(params[:meeting_id])
+        MeetingMailer.invited_to_meeting(@employee, @meeting).deliver_now
+          message = {notice: 'invitation successfully sent!'}
+        else
+          message = {alert: 'invitation has been already sent!'}
+        end
+      redirect_to meeting_path(params[:meeting_id]), message
+  end
 
   def join
     @current_employee = current_employee
@@ -91,12 +103,12 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new(meeting_params)
     if room_is_available?(@meeting) && no_meeting_overlap?(@meeting)
       @meeting.employee = current_employee
-        if @meeting.save
-          MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
-          redirect_to @meeting, notice: 'Meeting was successfully created.'
-        else
-          render :new
-        end
+      if @meeting.save
+        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
+        redirect_to @meeting, notice: 'Meeting was successfully created.'
+      else
+        render :new
+      end
     else
       flash[:alert] = "The room is occupied or you have a meeting during that time."
       redirect_to :back
