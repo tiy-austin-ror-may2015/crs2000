@@ -84,11 +84,7 @@ class RoomsController < ApplicationController
     end
 
     def get_rooms_array(rooms = company_rooms)
-      if user_is_admin?
-        rooms.map { |room| [room, room.amenities, room.meetings] }
-      else
-        rooms.map { |room| [room, room.amenities, room.meetings.where(private: false)] }
-      end
+      rooms.map { |room| [room, room.amenities.pluck(:perk).sort.join(" , "), room.get_next_meeting_start_time_and_availability(user_is_admin?)] }
     end
 
     def room_params

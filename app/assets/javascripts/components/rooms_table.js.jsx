@@ -113,65 +113,97 @@ var TableHead = React.createClass({
 });
 
 var SortButton = React.createClass({
+  // getInitialState: function () {
+  //   return {
+  //     className: ''
+  //   };
+  // },
   componentWillMount: function () {
-    this.setState({
-      sort_dir: null
-    });
+    this.setState({sort_dir: 'asc'});
   },
   render: function () {
     return (
-      <th onClick={ this.clicked } >{ this.props.name }</th>
+      <th className={ this.state.className } onClick={ this.clicked } >{ this.props.name }</th>
     );
   },
   clicked: function () {
+    var all_buttons = $('th');
+      all_buttons.each(function () {
+      $(this).removeClass('asc desc');
+    });
+
     var grandparent = this.props.grandparent;
     var array = grandparent.state.rooms_array;
 
-    array.sort(function (a, b) {
-      var room_a = a[0];
-      var room_b = b[0];
+    var new_rooms_array = array.sort(
+      function (a, b) {
+        switch (this.props.name) {
+          case 'Name':
+            a = a[0].name.replace(/^(the )/i,'');
+            b = b[0].name.replace(/^(the )/i,'');
+            break;
+          case 'Room Number':
+            a = a[0].room_number;
+            b = b[0].room_number;
+            break;
+          case 'Location':
+            a = a[0].location;
+            b = b[0].location;
+            break;
+          case 'Amenities':
+            a = a[1]
+            b = b[1]
+            break;
+          case 'Max Occupancy':
+            a = a[0].max_occupancy;
+            b = b[0].max_occupancy;
+            break;
+          case 'Time Until Next Meeting':
+            a = new Date(a[2][0]);
+            b = new Date(b[2][0]);
+            break;
+          case 'Available':
+            a = a[2][1];
+            b = b[2][1];
+        }
 
-      if (room_a.name > room_b.name) {
-        return 1;
-      }
-      if (room_a.name < room_b.name) {
-        return -1;
-      }
-      return 0;
-    });
-    grandparent.setState({ rooms_array: array, page: 1 })
+        if (this.state.sort_dir === 'asc') {
+          this.setState({
+            sort_dir: 'desc',
+            className: 'desc'
+          });
+          if (a > b) {
+            return 1;
+          }
+          if (a < b) {
+            return -1;
+          }
+          return 0;
+        } else {
+          this.setState({
+            sort_dir: 'asc',
+            className: 'asc'
+          });
+          if (a < b) {
+            return 1;
+          }
+          if (a > b) {
+            return -1;
+          }
+          return 0;
+        }
+      }.bind(this)
+    );
+    grandparent.setState({ rooms_array: new_rooms_array, page: 1 })
   }
 });
 
 var DataRow = React.createClass({
   render: function () {
     var room = this.props.elem[0];
-    var amenities = this.props.elem[1];
-    var meetings = this.props.elem[2];
-    var amenity_names = [];
-    var now = new Date();
-    var time = 'N/A';
-    var available = 'yes';
-
-    amenities.forEach(function(amenity) {
-      amenity_names.push(amenity.perk);
-    });
-    amenity_names.join(', ');
-
-    if (meetings.length > 0) {
-      var next_start_time = new Date(meetings[0].start_time);
-      meetings.forEach(function(meeting, i) {
-        var start_time = new Date(meeting.start_time);
-        var end_time = new Date(meeting.end_time);
-        if (start_time <= now && end_time >= now) {
-          available = 'no';
-        };
-        if (start_time > now && start_time <= next_start_time) {
-          next_start_time = start_time;
-          time = next_start_time.toString();
-        };
-      });
-    };
+    var amenity_names = this.props.elem[1];
+    var time = this.props.elem[2][0];
+    var available = this.props.elem[2][1];
 
     return (
       <tr>
@@ -183,7 +215,7 @@ var DataRow = React.createClass({
         <td className='well'>{ amenity_names }</td>
         <td>{ room.max_occupancy }</td>
         <td className='well countDown' data-id={ time }></td>
-        <td className='well'>{ available }</td>
+        <td>{ available }</td>
       </tr>
     );
   }
