@@ -124,3 +124,13 @@ Feature:
     When I sign up
     And I navigate to "/admin/dashboard"
     Then I should be on the root_path
+
+  Scenario: Routing to admin meeting reports as non-admin
+    When I sign up
+    And I navigate to "/admin/reports_meetings"
+    Then I should be on the root_path
+
+  Scenario: Routing to admin room reports as non-admin
+    When I sign up
+    And I navigate to "/admin/reports_rooms"
+    Then I should be on the root_path
