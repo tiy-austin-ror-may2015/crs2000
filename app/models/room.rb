@@ -60,11 +60,11 @@ end
     room_ids = amenities.map{ |amenity| amenity.rooms.pluck(:id) }.flatten.uniq
 
     amenity_query = room_ids.map{ |id| "id = #{id}" }.join(" OR ")
-    amenity_query.empty? ? amenity_query = " AND id = 0)" : amenity_query.prepend(" AND (") << "))"
-    search_query = "(lower(name) LIKE '%#{search}%'
-                    OR lower(location) LIKE ('%#{search}%'))
-                    OR (max_occupancy >= #{max_occupancy}
-                    AND CAST(room_number AS TEXT) LIKE '#{room_number}'" + amenity_query
+    amenity_query.empty? ? amenity_query = " OR id = 0)" : amenity_query.prepend(" OR (") << "))"
+    search_query = "max_occupancy >= #{max_occupancy}
+                    AND CAST(room_number AS TEXT) LIKE '#{room_number}'
+                    AND (lower(name) LIKE '%#{search}%'
+                    OR lower(location) LIKE ('%#{search}%')" + amenity_query
     self.where(search_query)
   end
 
