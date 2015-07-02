@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Crs2000</title>
+    <title>CRS2000</title>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -41,7 +41,6 @@
           border-color: <%= primary_color %>;
           color: white;
         }
-
         .btn:visited {
           color: white;
         }
@@ -111,6 +110,11 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if employee_signed_in? %>
+          <li><a href="/employees/<%= current_employee.id %>"> Logged in as: <%= current_employee.name %>
+            <% if user_is_admin? %>
+              ADMIN
+            <% end %>
+          </a></li>
           <li><%= link_to 'Log Out', destroy_employee_session_path, :method => :delete %></li>
         <% else %>
           <li><%= link_to 'Log In', "/employees/sign_in" %></li>
