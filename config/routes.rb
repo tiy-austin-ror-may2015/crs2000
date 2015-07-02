@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   authenticate :employee do
 
     resources :rooms
-    resources :companies
+    resources :companies, except: :index
     get 'admin/invitations/show', to: "invitations#show"
     delete 'invitations/:id', to: "invitations#destroy", as: 'invitation'
     resources :meetings
