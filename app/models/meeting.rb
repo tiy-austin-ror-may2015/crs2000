@@ -34,6 +34,5 @@ class Meeting < ActiveRecord::Base
   def self.capacity(meeting)
     self.find(meeting).room.max_occupancy
   end
-
 end
 
