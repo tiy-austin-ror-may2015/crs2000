@@ -37,7 +37,11 @@ var formatCountdown = function () {
     var countdown_times = $('.countDown');
     countdown_times.each(function () {
       var time_text = $(this).attr("data-id");
-      var formatted_time = moment(time_text).fromNow();
+      if (time_text === 'N/A') {
+        var formatted_time = 'N/A';
+      } else {
+        var formatted_time = moment(time_text).fromNow();
+      };
       $(this).html(formatted_time);
     });
   };

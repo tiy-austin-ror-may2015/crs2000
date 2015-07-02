@@ -77,3 +77,16 @@ footer {
 }
 
 
+.asc{
+  color: lighten(black, 50%);
+  background-color: darken(white, 20%);
+}
+
+.desc{
+  color: darken(white, 20%);
+  background-color: lighten(black, 50%);
+}
+
+.limit{
+  margin-left: 15px;
+}
