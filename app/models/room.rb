@@ -10,8 +10,6 @@
 #  location                 :string
 #  company_id               :integer
 #  meetings_count           :integer          default(0)
-#  available                :boolean          default(TRUE)
-#  hours_until_next_meeting :integer          default(-1)
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #

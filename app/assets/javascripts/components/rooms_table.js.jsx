@@ -6,7 +6,7 @@ var RoomsTable = React.createClass({
     return {
       rooms_array: this.props.rooms_array,
       page: 1,
-      limit: this.props.limit
+      limit: parseInt(this.props.limit)
     };
   },
   render: function () {
@@ -17,80 +17,88 @@ var RoomsTable = React.createClass({
     if (this.state.rooms_array.length < (this.state.page * this.state.limit)) {
       i_f = this.state.rooms_array.length;
     } else {
-      i_f = i_0 + parseInt(this.state.limit);
+      i_f = i_0 + this.state.limit;
     }
 
     for (var i = i_0; i < i_f; i++) {
       rows.push(<DataRow elem={ this.state.rooms_array[i] } current_employee={ this.props.current_employee } />);
     }
 
-    if (this.state.page === 1 && i_f === this.state.rooms_array.length) {
-      return (
-        <div>
-          <section className='panel panel-default'>
-            <table className='table'>
-              <TableHead parent={ this } />
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
-          </section>
+    return(
+      <div>
+        <section className='panel panel-default'>
+          <table className='table'>
+            <TableHead parent={ this } />
+            <tbody>
+              {rows}
+            </tbody>
+          </table>
+        </section>
+        <Paginate parent={ this } />
+        <RoomsSearch parent={ this } />
+      </div>
+    );
+  }
+});
+
+var Paginate = React.createClass({
+  getInitialState: function () {
+    return {
+      limit: this.props.parent.state.limit
+    };
+  },
+  render: function () {
+    var rooms_table = this.props.parent;
+    var current_page = rooms_table.state.page;
+    var data = rooms_table.state.rooms_array;
+    var data_length = data.length;
+    var last_page = Math.ceil(data_length / this.state.limit);
+    var pages = [];
+
+    for (var i = 1; i <= last_page; i++) {
+      pages.push(<PageButton grandparent={ rooms_table } page={ i } />);
+    };
+
+    if (current_page === 1 && current_page === last_page) {
+      return(<div></div>);
+    } else if (current_page === 1 && current_page !== last_page) {
+      return(
+        <div className='row'>
+          <div className='col-sm-2 next-prev'></div>
+          <div onClick={ this.clicked.bind(this, 1)  } className='col-sm-2 btn btn-default next-prev'>Next</div>
+          <div>{ pages }</div>
         </div>
       );
-    } else if (this.state.page === 1 && i_f < this.state.rooms_array.length) {
-      return (
-        <div>
-          <section className='panel panel-default'>
-            <table className='table'>
-              <TableHead parent={ this } />
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
-          </section>
-          <div className='row'>
-            <div className='col-sm-2 next-prev'></div>
-            <div onClick={ this.clicked.bind(this, 1)  } className='col-sm-2 btn btn-default next-prev'>Next</div>
-          </div>
-        </div>
-      );
-    } else if (i_f < this.state.rooms_array.length) {
-      return (
-        <div>
-          <section className='panel panel-default'>
-            <table className='table'>
-              <TableHead parent={ this } />
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
-          </section>
-          <div className='row'>
-            <div onClick={ this.clicked.bind(this, -1)  } className='col-sm-2 btn btn-default next-prev'>Prev</div>
-            <div onClick={ this.clicked.bind(this, 1)  } className='col-sm-2 btn btn-default next-prev'>Next</div>
-          </div>
+    } else if (current_page === last_page) {
+      return(
+        <div className='row'>
+          <div onClick={ this.clicked.bind(this, -1)  } className='col-sm-2 btn btn-default next-prev'>Prev</div>
+          <div className='col-sm-2 next-prev'></div>
+          <div>{ pages }</div>
         </div>
       );
     } else {
-      return (
-        <div>
-          <section className='panel panel-default'>
-            <table className='table'>
-              <TableHead parent={ this } />
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
-          </section>
-          <div className='row'>
-            <div onClick={ this.clicked.bind(this, -1) } className='col-sm-2 btn btn-default next-prev'>Prev</div>
-          </div>
+      return(
+        <div className='row'>
+          <div onClick={ this.clicked.bind(this, -1)  } className='col-sm-2 btn btn-default next-prev'>Prev</div>
+          <div onClick={ this.clicked.bind(this, 1)  } className='col-sm-2 btn btn-default next-prev'>Next</div>
+          <div>{ pages }</div>
         </div>
       );
-    }
+    };
   },
   clicked: function (val) {
-    this.setState({ page: this.state.page + val });
+    var rooms_table = this.props.parent;
+    rooms_table.setState({ page: rooms_table.state.page + val });
+  }
+});
+
+var PageButton = React.createClass({
+  render: function () {
+    return(<a className='btn btn-default next-prev' onClick={ this.clicked } >{ this.props.page }</a>);
+  },
+  clicked: function () {
+    this.props.grandparent.setState({ page: this.props.page });
   }
 });
 
@@ -113,11 +121,6 @@ var TableHead = React.createClass({
 });
 
 var SortButton = React.createClass({
-  // getInitialState: function () {
-  //   return {
-  //     className: ''
-  //   };
-  // },
   componentWillMount: function () {
     this.setState({sort_dir: 'asc'});
   },
