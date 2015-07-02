@@ -9,7 +9,7 @@
             <th>STARTS</th>
             <th>FINISHES</th>
             <th>VISIBILITY</th>
-            <th>ROOM ID</th>
+            <th>ROOM</th>
             <th>HOST</th>
           </tr>
         </thead>
@@ -22,8 +22,8 @@
             <td><%= reports_meeting.start_time %></td>
             <td><%= reports_meeting.end_time %></td>
             <td><%= reports_meeting.private %></td>
-            <td><%= reports_meeting.room_id %></td>
-            <td><%= reports_meeting.employee_id %></td>
+            <td><%= reports_meeting.room.room_number %></td>
+            <td><%= reports_meeting.employee.name %></td>
           </tr>
         <% end %>
       </tbody>

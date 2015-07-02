@@ -13,10 +13,6 @@ class AdminController < ApplicationController
       @all_future_meetings = Meeting.where("start_time >= ?", Time.now.midnight)
   end
 
-  def reports_meetings
-      @reports_meetings = Meeting.all
-  end
-
   def room_table
       @rooms = Room.all
       pdf = RoomsPdf.new(Room.all)
@@ -31,6 +27,10 @@ class AdminController < ApplicationController
       send_data pdf.render, filename: "meeting.pdf",
                             type: 'appliciation/pdf',
                             disposition: "inline"
+  end
+
+  def reports_meetings
+      @reports_meetings = Meeting.all
   end
 
   def reports_rooms
