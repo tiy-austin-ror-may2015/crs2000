@@ -29,7 +29,18 @@ var RoomsTable = React.createClass({
         <div>
           <section className='panel panel-default'>
             <table className='table'>
-              <TableHead parent={ this } />
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Room Number</th>
+                  <th>Location</th>
+                  <th>Amenities</th>
+                  <th>Company</th>
+                  <th>Max Occupancy</th>
+                  <th>Time Until Next Meeting</th>
+                  <th>Available</th>
+                </tr>
+              </thead>
               <tbody>
                 {rows}
               </tbody>
@@ -42,7 +53,18 @@ var RoomsTable = React.createClass({
         <div>
           <section className='panel panel-default'>
             <table className='table'>
-              <TableHead parent={ this } />
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Room Number</th>
+                  <th>Location</th>
+                  <th>Amenities</th>
+                  <th>Company</th>
+                  <th>Max Occupancy</th>
+                  <th>Time Until Next Meeting</th>
+                  <th>Available</th>
+                </tr>
+              </thead>
               <tbody>
                 {rows}
               </tbody>
@@ -59,7 +81,18 @@ var RoomsTable = React.createClass({
         <div>
           <section className='panel panel-default'>
             <table className='table'>
-              <TableHead parent={ this } />
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Room Number</th>
+                  <th>Location</th>
+                  <th>Amenities</th>
+                  <th>Company</th>
+                  <th>Max Occupancy</th>
+                  <th>Time Until Next Meeting</th>
+                  <th>Available</th>
+                </tr>
+              </thead>
               <tbody>
                 {rows}
               </tbody>
@@ -76,7 +109,18 @@ var RoomsTable = React.createClass({
         <div>
           <section className='panel panel-default'>
             <table className='table'>
-              <TableHead parent={ this } />
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Room Number</th>
+                  <th>Location</th>
+                  <th>Amenities</th>
+                  <th>Company</th>
+                  <th>Max Occupancy</th>
+                  <th>Time Until Next Meeting</th>
+                  <th>Available</th>
+                </tr>
+              </thead>
               <tbody>
                 {rows}
               </tbody>
@@ -94,44 +138,23 @@ var RoomsTable = React.createClass({
   }
 });
 
-var TableHead = React.createClass({
+var DataRow = React.createClass({
   render: function () {
-    return(
-      <thead>
-        <tr>
-          <SortButton name='Name' grandparent={ this.props.parent } />
-          <SortButton name='Room Number' grandparent={ this.props.parent } />
-          <SortButton name='Location' grandparent={ this.props.parent } />
-          <SortButton name='Amenities' grandparent={ this.props.parent } />
-          <SortButton name='Max Occupancy' grandparent={ this.props.parent } />
-          <SortButton name='Time Until Next Meeting' grandparent={ this.props.parent } />
-          <SortButton name='Available' grandparent={ this.props.parent } />
-        </tr>
-      </thead>
-    );
-  }
-});
+    var room = this.props.elem[0];
+    var company = this.props.elem[1];
+    var amenities = this.props.elem[2];
+    var meetings = this.props.elem[3];
+    var amenity_names = [];
+    var now = new Date();
+    var time = 'N/A';
+    var available = 'yes';
 
-var SortButton = React.createClass({
-  // getInitialState: function () {
-  //   return {
-  //     className: ''
-  //   };
-  // },
-  componentWillMount: function () {
-    this.setState({sort_dir: 'asc'});
-  },
-  render: function () {
-    return (
-      <th className={ this.state.className } onClick={ this.clicked } >{ this.props.name }</th>
-    );
-  },
-  clicked: function () {
-    var all_buttons = $('th');
-      all_buttons.each(function () {
-      $(this).removeClass('asc desc');
+    amenities.forEach(function(amenity) {
+      amenity_names.push(amenity.perk);
     });
+    amenity_names.join(', ');
 
+<<<<<<< HEAD
     var grandparent = this.props.grandparent;
     var array = grandparent.state.rooms_array;
 
@@ -227,6 +250,21 @@ var DataRow = React.createClass({
       } else {
         var meeting_url = '/meetings/' + next_meeting.id;
       };
+=======
+    if (meetings.length > 0) {
+      var next_start_time = new Date(meetings[0].start_time);
+      meetings.forEach(function(meeting, i) {
+        var start_time = new Date(meeting.start_time);
+        var end_time = new Date(meeting.end_time);
+        if (start_time <= now && end_time >= now) {
+          available = 'no';
+        };
+        if (start_time > now && start_time <= next_start_time) {
+          next_start_time = start_time;
+          time = next_start_time.toString();
+        };
+      });
+>>>>>>> master
     };
 
     return (
@@ -237,11 +275,18 @@ var DataRow = React.createClass({
         <td className='well'>{ room.room_number }</td>
         <td>{ room.location }</td>
         <td className='well'>{ amenity_names }</td>
+<<<<<<< HEAD
         <td>{ room.max_occupancy }</td>
         <td className='well' >
           <NavLink className='countDown' dataID={ time } name='' url={ meeting_url }  />
         </td>
         <td>{ available }</td>
+=======
+        <td>{ company.name }</td>
+        <td className='well'>{ room.max_occupancy }</td>
+        <td className='countDown' data-id={ time }></td>
+        <td className='well'>{ available }</td>
+>>>>>>> master
       </tr>
     );
   }
@@ -252,6 +297,16 @@ var NavLink = React.createClass({
     return (<a className={ this.props.className } data-id={ this.props.dataID } onClick={ this.clicked } >{ this.props.name }</a>);
   },
   clicked: function () {
-    window.location.href = this.props.url;
+    if (this.props.method === 'DELETE') {
+      $.ajax({
+        url: this.props.url,
+        type: 'DELETE',
+        error: function () {
+          this.state.grandparent.setState({ show: 'false'});
+        }.bind(this)
+      });
+    } else {
+      window.location.href = this.props.url;
+    }
   }
 });

@@ -44,7 +44,7 @@ var ready = function() {
       $(this).html(formatted_time);
     });
   };
-  setInterval(setTime, 100);
+  setInterval(setTime, 5000);
   setTimeout(setTime, 0);
 };
 

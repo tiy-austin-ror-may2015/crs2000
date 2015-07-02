@@ -2,18 +2,25 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
+<<<<<<< HEAD
     @company = employee_company
     @current_employee = current_employee
     @rooms_array = get_rooms_array
+=======
+    @company = current_employee.company
+    @rooms = Room.where(company_id: current_employee.company_id)
+    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
+>>>>>>> master
   end
 
   def show
+    @room = Room.find(params[:id])
   end
 
   def new
     if user_is_admin?
       @room = Room.new
-      @all_rooms = company_rooms.pluck(:name)
+      @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
     else
       redirect_to :back, alert: "Access Denied"
     end
@@ -33,8 +40,9 @@ class RoomsController < ApplicationController
     render :search
   end
 
-  def create
-    if user_is_admin?
+ def create
+  if user_is_admin?
+
       user               = current_employee
       @company           = user.company
       @room              = Room.new(room_params)
@@ -48,10 +56,13 @@ class RoomsController < ApplicationController
      else
       redirect_to :back, alert: "Access Denied"
     end
-  end
+ end
 
   def update
       if user_is_admin?
+
+      @room = Room.find(params[:id])
+
       @room = Room.updated_room(@room, params)
 
       if @room.save
@@ -66,6 +77,8 @@ class RoomsController < ApplicationController
 
   def destroy
     if user_is_admin?
+
+      @room = Room.find(params[:id])
       @room.destroy
       redirect_to rooms_url, notice: 'Room was successfully destroyed.'
     else

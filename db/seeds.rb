@@ -21,7 +21,8 @@ image =
 
 amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
 
-random_start_times = [5.minutes.ago, 5.minutes.from_now, 2.hours.ago, 2.hours.from_now]
+
+random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12.hours),(Time.now + 13.hours)]
 3.times do
   company = Company.create(name: Faker::Company.name)
   50.times do
