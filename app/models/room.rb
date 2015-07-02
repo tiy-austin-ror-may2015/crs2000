@@ -94,4 +94,24 @@ end
                     OR max_occupancy > #{max_occupancy}" + amenity_query
     self.where(search_query)
   end
+
+  def get_next_meeting_details
+    time = "N/A"
+    available = "yes"
+    next_meeting = nil
+    now = Time.now
+    unless meetings.none?
+      next_start_time = self.meetings.first.start_time
+      self.meetings.each do |meeting|
+        start_time = meeting.start_time
+        available = "no" if start_time <= now && meeting.end_time >= now
+        if start_time > now && start_time <= next_start_time
+          next_start_time = start_time
+          time = start_time
+          next_meeting = meeting
+        end
+      end
+    end
+    [time, available, next_meeting]
+  end
 end

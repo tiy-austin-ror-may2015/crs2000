@@ -20,7 +20,7 @@ class RoomsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:rooms)
+    assert_not_nil assigns(:rooms_array)
   end
 
   test "should get new" do

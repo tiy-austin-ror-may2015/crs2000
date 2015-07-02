@@ -21,7 +21,7 @@ var RoomsTable = React.createClass({
     }
 
     for (var i = i_0; i < i_f; i++) {
-      rows.push(<DataRow elem={ this.state.rooms_array[i] } />);
+      rows.push(<DataRow elem={ this.state.rooms_array[i] } current_employee={ this.props.current_employee } />);
     }
 
     if (this.state.page === 1 && i_f === this.state.rooms_array.length) {
@@ -154,46 +154,124 @@ var DataRow = React.createClass({
     });
     amenity_names.join(', ');
 
-    if (meetings.length > 0) {
-      var next_start_time = new Date(meetings[0].start_time);
-      meetings.forEach(function(meeting, i) {
-        var start_time = new Date(meeting.start_time);
-        var end_time = new Date(meeting.end_time);
-        if (start_time <= now && end_time >= now) {
-          available = 'no';
+    var grandparent = this.props.grandparent;
+    var array = grandparent.state.rooms_array;
+
+    var new_rooms_array = array.sort(
+      function (a, b) {
+        switch (this.props.name) {
+          case 'Name':
+            a = a[0].name.replace(/^(the )/i,'');
+            b = b[0].name.replace(/^(the )/i,'');
+            break;
+          case 'Room Number':
+            a = a[0].room_number;
+            b = b[0].room_number;
+            break;
+          case 'Location':
+            a = a[0].location;
+            b = b[0].location;
+            break;
+          case 'Amenities':
+            a = a[1]
+            b = b[1]
+            break;
+          case 'Max Occupancy':
+            a = a[0].max_occupancy;
+            b = b[0].max_occupancy;
+            break;
+          case 'Time Until Next Meeting':
+            a = a[2][0];
+            b = b[2][0];
+            if (a === 'N/A') {
+              a = new Date(2038);;
+            };
+            if (b === 'N/A') {
+              b = new Date(2038);;
+            };
+            a = new Date(a);
+            b = new Date(b);
+            break;
+          case 'Available':
+            a = a[2][1];
+            b = b[2][1];
+        }
+
+        if (this.state.sort_dir === 'asc') {
+          this.setState({
+            sort_dir: 'desc',
+            className: 'desc'
+          });
+          if (a > b) {
+            return 1;
+          }
+          if (a < b) {
+            return -1;
+          }
+          return 0;
+        } else {
+          this.setState({
+            sort_dir: 'asc',
+            className: 'asc'
+          });
+          if (a < b) {
+            return 1;
+          }
+          if (a > b) {
+            return -1;
+          }
+          return 0;
+        }
+      }.bind(this)
+    );
+    grandparent.setState({ rooms_array: new_rooms_array, page: 1 })
+  }
+});
+
+var DataRow = React.createClass({
+  render: function () {
+    var room = this.props.elem[0];
+    var amenity_names = this.props.elem[1];
+    var time = this.props.elem[2][0];
+    var available = this.props.elem[2][1];
+    var next_meeting = this.props.elem[2][2];
+    var current_employee = this.props.current_employee;
+    var room_url = '/rooms/' + room.id;
+    if (next_meeting === null) {
+      var meeting_url = '';
+    } else {
+      if (next_meeting.private === true) {
+        if (current_employee.admin === true) {
+          var meeting_url = '/meetings/' + next_meeting.id;
+        } else {
+          var meeting_url = '';
         };
-        if (start_time > now && start_time <= next_start_time) {
-          next_start_time = start_time;
-          time = next_start_time.toString();
-        };
-      });
+      } else {
+        var meeting_url = '/meetings/' + next_meeting.id;
+      };
     };
 
     return (
       <tr>
         <td>
-          <NavLink name={ room.name } url={ '/rooms/' + room.id } method='GET' parent={ this } />
+          <NavLink className='' dataID='' name={ room.name } url={ room_url } parent={ this } />
         </td>
         <td className='well'>{ room.room_number }</td>
         <td>{ room.location }</td>
         <td className='well'>{ amenity_names }</td>
-        <td>{ company.name }</td>
-        <td className='well'>{ room.max_occupancy }</td>
-        <td className='countDown' data-id={ time }></td>
-        <td className='well'>{ available }</td>
+        <td>{ room.max_occupancy }</td>
+        <td className='well' >
+          <NavLink className='countDown' dataID={ time } name='' url={ meeting_url }  />
+        </td>
+        <td>{ available }</td>
       </tr>
     );
   }
 });
 
 var NavLink = React.createClass({
-  getInitialState: function () {
-    return {
-      grandparent: this.props.grandparent
-    };
-  },
   render: function () {
-    return (<a onClick={ this.clicked } >{ this.props.name }</a>);
+    return (<a className={ this.props.className } data-id={ this.props.dataID } onClick={ this.clicked } >{ this.props.name }</a>);
   },
   clicked: function () {
     if (this.props.method === 'DELETE') {
