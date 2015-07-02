@@ -1,9 +1,9 @@
 Given(/^I have an account$/) do
-  company = Company.create(name: 'fooo inc')
+  @company = Company.create(name: 'fooo inc')
   @employee = Employee.create!(name: 'foobar', email: 'user@example.com',
                                  password: 'password',
                               password_confirmation: 'password',
-                              company_id: company.id)
+                              company_id: @company.id)
 end
 
 When(/^I login$/) do
