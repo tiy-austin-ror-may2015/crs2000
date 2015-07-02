@@ -6,6 +6,10 @@ Feature:
     Given I have an account
     When I login
 
+  Scenario: I click on CRS2000
+    And I click "CRS2000"
+    Then I should be on the root_path
+
   Scenario: I click on new meetings
     And I click "new_meeting"
     Then I should be on the "/meetings/new"
