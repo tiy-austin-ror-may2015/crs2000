@@ -51,8 +51,8 @@ var ready = function() {
   setTimeout(setTime, 0);
 };
 
--$(document).ready(ready);
--$(document)on.("page:load", ready);
+$(document).ready(ready);
+$(document).on("page:load", ready);
 
 
 
