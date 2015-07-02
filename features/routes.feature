@@ -77,10 +77,6 @@ Feature:
     When I navigate to "/rooms/1"
     Then I should be on the "/employees/sign_in"
 
-  Scenario: Routing to companies index
-    When I navigate to "/companies"
-    Then I should be on the "/employees/sign_in"
-
   Scenario: Routing to new company
     When I navigate to "/companies/new"
     Then I should be on the "/employees/sign_in"
