@@ -8,8 +8,12 @@
 @import 'meetings';
 @import 'employee';
 @import 'invitations';
+@import 'companies';
 
 //You need to now manually import every other scss file.
+
+$form-border-color: #BFBFBF;
+$form-background-color: #F8F8F8;
 
 .pull-right{
   margin-right: 20px;
@@ -78,4 +82,10 @@ footer {
   .invite {
     width:50%
   }
-
+.form-box {
+  border: 1px solid $form-border-color;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: $form-background-color;
+  margin-top: 30px;
+}
