@@ -12,8 +12,8 @@
 // about supported directives.
 //
 //= require jquery
-//= require bootstrap-sprockets
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require dataTables/jquery.dataTables
 //= require turbolinks
 //= require react
@@ -44,6 +44,7 @@ var ready = function() {
   setTimeout(setTime, 0);
 };
 
+<<<<<<< HEAD
 $(document).ready(ready);
 $(document).on("page:load", ready);
 
@@ -54,7 +55,4 @@ $(document).on("page:load", ready);
 //   $(this).html(formatted_time);
 // });
 // moment().startOf('hour').fromNow();
-
-
-
 

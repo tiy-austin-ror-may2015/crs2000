@@ -1,2 +1,3 @@
 jQuery ->
   $('#rooms').dataTable()
+
