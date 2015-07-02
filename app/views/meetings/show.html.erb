@@ -49,26 +49,18 @@
     <br>
     <br>
     <h2>Invite Employees</h2>
-    <p><strong>Company: </strong><%= link_to @invitees[0].company.name, @invitees[0].company %> </p>
+    <p><strong>Company: </strong><%= link_to current_employee.company.name,  current_employee.company %> </p>
     <% if @invitees.count > 0 %>
-        <div class="well center" style="width:50%">
+        <div class="well center invite" >
             <input type='text' id='search' placeholder="name" />
-            <script>
-              $("#search").on("keyup paste change", function(){
-                  var re = new RegExp(this.value,"i");
-                  $("#invitees tr").each(function(index){
-                      var invitee_name = $("#invitee_name", this).html();
-                      this.hidden = ! re.test(invitee_name);
-                  });
-              });
-            </script>
+         
         </div>
 
 
 
 
 
-        <table class="table" style="width:50%">
+        <table class="table invite" >
           <thead>
           <tr>
             <th>Invite?</th>
