@@ -23,15 +23,9 @@ class RoomsController < ApplicationController
   end
 
   def search
-    @current_employee = current_employee
-    @rooms_array = get_rooms_array(company_rooms.search_for(params[:search].downcase))
-  end
-
-  def search_advance
-    @current_employee = current_employee
-    @rooms_array = get_rooms_array(company_rooms.search_with(params))
+    @rooms_array = get_rooms_array(company_rooms.search_for(params))
     respond_to do |format|
-      format.html { render :search }
+      format.html
       format.json { render json: @rooms_array }
     end
   end

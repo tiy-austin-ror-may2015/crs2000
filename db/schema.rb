@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20150701183308) do
     t.integer  "max_occupancy"
     t.integer  "room_number"
     t.string   "imgurl"
-    t.string   "location"
+    t.string   "location",                   null: false
     t.integer  "company_id"
     t.integer  "meetings_count", default: 0
     t.datetime "created_at",                 null: false

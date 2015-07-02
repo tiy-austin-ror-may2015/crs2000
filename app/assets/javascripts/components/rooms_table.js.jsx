@@ -6,6 +6,7 @@ var RoomsTable = React.createClass({
     return {
       rooms_array: this.props.rooms_array,
       page: 1,
+      search: this.props.search,
       limit: parseInt(this.props.limit)
     };
   },
@@ -24,12 +25,26 @@ var RoomsTable = React.createClass({
       rows.push(<DataRow elem={ this.state.rooms_array[i] } current_employee={ this.props.current_employee } />);
     }
 
+    if (this.state.search === '') {
+      var search_results = 'Search Results';
+    } else {
+      var search_results = 'Search Results for ';
+    };
+
     return(
       <div>
+        <h1 class="col-md-6">
+          { search_results }<i class="results">{ this.state.search }</i>
+        </h1>
         <div className='row'>
-          <span>show </span>
-          <input id='limit' type='text' size= '3' onKeyUp={ this.changed.bind(this) } />
-          <span> rooms per page</span>
+          <section className='col-md-3 panel panel-default limit'>
+            <span>show </span>
+            <input id='limit' type='text' size= '3' onKeyUp={ this.changed.bind(this) } />
+            <span> rooms per page</span>
+          </section>
+          <div className='pull-right'>
+            <RoomsSearchBar parent={ this } />
+          </div>
         </div>
         <section className='panel panel-default'>
           <table className='table'>
@@ -40,14 +55,15 @@ var RoomsTable = React.createClass({
           </table>
         </section>
         <Paginate parent={ this } />
-        <RoomsSearch parent={ this } />
       </div>
     );
   },
   changed: function (key) {
     if (key.keyCode === 13) {
       var new_limit = parseInt(key.target.value.trim());
-      this.setState({ limit: new_limit });
+      if (new_limit > 0) {
+        this.setState({ limit: new_limit });
+      }
     }
   }
 });
@@ -59,7 +75,7 @@ var Paginate = React.createClass({
     var current_page = rooms_table.state.page;
     var data = rooms_table.state.rooms_array;
     var data_length = data.length;
-    var last_page = Math.ceil(data_length / limit);
+    var last_page = Math.ceil((data_length || 1) / limit);
     var pages = [];
 
     for (var i = 1; i <= last_page; i++) {
@@ -73,7 +89,7 @@ var Paginate = React.createClass({
         <div className='row'>
           <div className='col-sm-2 next-prev'></div>
           <div onClick={ this.clicked.bind(this, 1)  } className='col-sm-2 btn btn-default next-prev'>Next</div>
-          <div>{ pages }</div>
+          <div className='col-sm-7'>{ pages }</div>
         </div>
       );
     } else if (current_page === last_page) {
@@ -81,7 +97,7 @@ var Paginate = React.createClass({
         <div className='row'>
           <div onClick={ this.clicked.bind(this, -1)  } className='col-sm-2 btn btn-default next-prev'>Prev</div>
           <div className='col-sm-2 next-prev'></div>
-          <div>{ pages }</div>
+          <div className='col-sm-7'>{ pages }</div>
         </div>
       );
     } else {
@@ -89,7 +105,7 @@ var Paginate = React.createClass({
         <div className='row'>
           <div onClick={ this.clicked.bind(this, -1)  } className='col-sm-2 btn btn-default next-prev'>Prev</div>
           <div onClick={ this.clicked.bind(this, 1)  } className='col-sm-2 btn btn-default next-prev'>Next</div>
-          <div>{ pages }</div>
+          <div className='col-sm-7'>{ pages }</div>
         </div>
       );
     };
@@ -259,7 +275,11 @@ var DataRow = React.createClass({
 
 var NavLink = React.createClass({
   render: function () {
-    return (<a className={ this.props.className } data-id={ this.props.dataID } onClick={ this.clicked } >{ this.props.name }</a>);
+    if (this.props.url !== ''){
+      return (<a className={ this.props.className } data-id={ this.props.dataID } onClick={ this.clicked } >{ this.props.name }</a>);
+    } else {
+      return (<a className={ this.props.className } data-id={ this.props.dataID } >{ this.props.name }</a>);
+    };
   },
   clicked: function () {
     window.location.href = this.props.url;

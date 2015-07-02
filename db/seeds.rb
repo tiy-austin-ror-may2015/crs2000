@@ -18,8 +18,8 @@ image =
  "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg",
  "http://i.ytimg.com/vi/bDUkzYWxR7E/hqdefault.jpg"]
 
-amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
-
+perks = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
+amenities = perks.map { |perk| Amenity.create(perk: perk) }
 
 earliest = 5.hours.ago
 latest = 5.hours.from_now
@@ -35,8 +35,11 @@ latest = 5.hours.from_now
                   room_number: rand(200..400),
                        imgurl: image.sample,
                      location: Faker::App.name, company_id: company.id)
-      amenity = Amenity.create(perk: amenities.sample,
-                               room_id: room.id)
+
+        room_amenities = amenities.sample(rand(4))
+        room_amenities.each { |amenity| RoomAmenity.create(room_id: room.id, amenity_id: amenity.id) }
+
+
         rand(3).times do
           random_start_time = Time.at((latest.to_f - earliest.to_f)*rand + earliest.to_f)
           meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,

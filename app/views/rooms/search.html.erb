@@ -1,20 +1,5 @@
 <div class="container">
   <p id='notice'><%= notice %></p>
   <p id='alert'><%= alert %> </p>
-
-  <div class='row pull-right margin-top well margin-right'>
-    <form action='/search/rooms' method='GET'>
-      <input type='text' name='search'
-             placeholder="Room name, location, or amenity" size="30"/>
-      <input type='submit' value='Search' class='btn btn-primary' />
-    </form>
-  </div>
-  <% if params[:search] %>
-    <h1 class="col-md-6">Search Results for
-      <i class="results"><%= params[:search].titleize %></i>
-    </h1>
-  <% else %>
-    <h1 class="col-md-6">Search Results</h1>
-  <% end %>
-  <%= react_component("RoomsTable", { current_employee: @current_employee, rooms_array: @rooms_array, page: 1, limit: 10 }) %>
+  <%= react_component("RoomsTable", { current_employee: current_employee, rooms_array: @rooms_array, page: 1, limit: 10, search: params[:search].to_s.titleize }) %>
 </div>
