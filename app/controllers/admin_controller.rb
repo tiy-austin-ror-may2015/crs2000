@@ -1,5 +1,4 @@
 class AdminController < ApplicationController
-  before_filter :authenticate_employee!
   before_filter do
     redirect_to root_path unless current_employee && user_is_admin?
   end
