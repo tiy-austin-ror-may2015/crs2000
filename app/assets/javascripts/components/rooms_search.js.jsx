@@ -26,7 +26,6 @@ var RoomsSearch = React.createClass({
     var location = $('#location').val();
     var room_number = $('#room_number').val();
     var max_occupancy = $('#max_occupancy').val();
-    var available = $('#available').val();
     var rooms_table = this.props.parent;
     var url = '/search_advance/rooms'
     $.getJSON(url,
