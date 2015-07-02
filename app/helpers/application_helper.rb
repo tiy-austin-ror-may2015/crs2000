@@ -22,6 +22,7 @@ module ApplicationHelper
     else
       "no"
     end
+  end
 
    def add_class_if(path_to_turn_on, class_name)
     class_name if request.fullpath == path_to_turn_on
