@@ -154,7 +154,6 @@ var DataRow = React.createClass({
     });
     amenity_names.join(', ');
 
-<<<<<<< HEAD
     var grandparent = this.props.grandparent;
     var array = grandparent.state.rooms_array;
 
@@ -250,21 +249,6 @@ var DataRow = React.createClass({
       } else {
         var meeting_url = '/meetings/' + next_meeting.id;
       };
-=======
-    if (meetings.length > 0) {
-      var next_start_time = new Date(meetings[0].start_time);
-      meetings.forEach(function(meeting, i) {
-        var start_time = new Date(meeting.start_time);
-        var end_time = new Date(meeting.end_time);
-        if (start_time <= now && end_time >= now) {
-          available = 'no';
-        };
-        if (start_time > now && start_time <= next_start_time) {
-          next_start_time = start_time;
-          time = next_start_time.toString();
-        };
-      });
->>>>>>> master
     };
 
     return (
@@ -275,18 +259,11 @@ var DataRow = React.createClass({
         <td className='well'>{ room.room_number }</td>
         <td>{ room.location }</td>
         <td className='well'>{ amenity_names }</td>
-<<<<<<< HEAD
         <td>{ room.max_occupancy }</td>
         <td className='well' >
           <NavLink className='countDown' dataID={ time } name='' url={ meeting_url }  />
         </td>
         <td>{ available }</td>
-=======
-        <td>{ company.name }</td>
-        <td className='well'>{ room.max_occupancy }</td>
-        <td className='countDown' data-id={ time }></td>
-        <td className='well'>{ available }</td>
->>>>>>> master
       </tr>
     );
   }

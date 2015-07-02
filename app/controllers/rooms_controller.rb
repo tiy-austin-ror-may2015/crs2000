@@ -2,15 +2,9 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
-<<<<<<< HEAD
     @company = employee_company
     @current_employee = current_employee
     @rooms_array = get_rooms_array
-=======
-    @company = current_employee.company
-    @rooms = Room.where(company_id: current_employee.company_id)
-    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
->>>>>>> master
   end
 
   def show
