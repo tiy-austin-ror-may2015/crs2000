@@ -8,7 +8,7 @@ Feature:
   Scenario: Create a new room as an admin
     And I am an admin
     And I create a new room
-    Then I should be on "/rooms/2"
+    Then I should see "test_room has been created"
 
   Scenario: Create a new room not as an admin
     And I navigate to "/rooms/new"
