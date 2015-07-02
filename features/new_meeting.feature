@@ -5,4 +5,4 @@ Feature:
     Given I have an account
     When I login
     And I create a meeting
-    Then I should be on the "/meetings/1"
+    Then I should be on the that meeting's page
