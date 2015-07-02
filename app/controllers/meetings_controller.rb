@@ -90,12 +90,12 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new(meeting_params)
     if room_is_available?(@meeting) && no_meeting_overlap?(@meeting)
       @meeting.employee = current_employee
-        if @meeting.save
-          MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
-          redirect_to @meeting, notice: 'Meeting was successfully created.'
-        else
-          render :new
-        end
+      if @meeting.save
+        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
+        redirect_to @meeting, notice: 'Meeting was successfully created.'
+      else
+        render :new
+      end
     else
       flash[:alert] = "The room is occupied or you have a meeting during that time."
       redirect_to :back
