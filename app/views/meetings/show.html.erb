@@ -41,12 +41,12 @@
   </div>
   </div>
 
-
+<div class="invite-table">
   <% if @meeting_owner == true %>
-  <div class="row">
+  <div class="col-md-12">
     <br>
     <br>
-    <h2>Invite Employees</h2>
+    <h3>Invite Employees to this Meeting</h3>
     <p><strong>Company: </strong><%= link_to current_company.name,  current_company %> </p>
     <% if @invitees.count > 0 %>
         <div class="well center invite" >
@@ -70,7 +70,7 @@
             <tr>
               <td>
                 <% if invitee.invitations.where(meeting_id: @meeting.id).exists? %>
-                    <br><p style="font-style: italic">Already invited!</p>
+                    <br><p style="font-style: italic">Invite Sent!</p>
                 <% else %>
                     <%= link_to 'Invite', send_invitation_path(@meeting.id, invitee.id), method: 'POST', class: 'btn btn-default' %>
                 <% end %>
@@ -88,6 +88,7 @@
     <% end %>
   </div>
   <% end %>
+</div>
 </div>
 </div>
 
