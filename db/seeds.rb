@@ -21,7 +21,7 @@ image =
 
 amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
 
-random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12.hours),(Time.now + 13.hours)]
+random_start_times = [(Time.now - 5.minutes),(Time.now + 5.minutes),(Time.now - 2.hours),(Time.now + 2.hours)]
 3.times do
   company = Company.create(name: Faker::Company.name)
   50.times do
@@ -36,10 +36,11 @@ random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12
                      location: Faker::App.name, company_id: company.id)
       amenity = Amenity.create(perk: amenities.sample,
                                room_id: room.id)
-        2.times do
+        rand(3).times do
           meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
                             start_time: random_start_times.sample,
-                             end_time: random_start_times.sample + 4.hours,
+                             end_time: random_start_times.sample + rand(15..45).minutes,
+                             private: [true, true, true, false].sample,
                                room_id: room.id, employee_id: employee.id)
           employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
                                                  employee_id: employee.id,
