@@ -48,3 +48,6 @@ random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12
     end
   end
 end
+
+Employee.create!(name: 'example user', email: 'user@example.com', password: 'password', password_confirmation: 'password', company_id: Company.first.id, admin: false)
+Employee.create!(name: 'example admin', email: 'admin@example.com', password: 'password', password_confirmation: 'password', company_id: Company.first.id, admin: true)
