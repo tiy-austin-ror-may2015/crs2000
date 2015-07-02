@@ -59,22 +59,16 @@ class MeetingsController < ApplicationController
     if EmployeeMeeting.where(meeting_id: params[:id], employee_id: @current_employee.id).count == 0
       meeting = Meeting.find(params[:id])
       if no_meeting_overlap? (meeting)
-        message = {alert: 'You own or are already in another meeting at this time.'}
-      else
         em = EmployeeMeeting.new(meeting_id: params[:id], employee_id: @current_employee.id)
         em.save
         message = {notice: 'Employee successfully joined!'}
+      else
+        message = {alert: 'You own or are already in another meeting at this time.'}
       end
     else
       message = {alert: 'Employee already joined!'}
     end
     redirect_to meeting_path(params[:id]), message
-  end
-
-  def get_occupancy
-    @max_occupancy = Meeting.capacity(params[:id])
-    attending = EmployeeMeeting.attending(params[:id])
-    @current_occupancy = @max_occupancy  - attending
   end
 
   def new
@@ -104,7 +98,7 @@ class MeetingsController < ApplicationController
     if room_is_available?(@meeting) && no_meeting_overlap?(@meeting)
       @meeting.employee = current_employee
         if @meeting.save
-          em = EmployeeMeeting.new(meeting_id: @meeting.id, employee_id: @current_employee.id)
+          em = EmployeeMeeting.new(meeting_id: @meeting.id, employee_id: current_employee.id)
           em.save
           MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
           redirect_to @meeting, notice: 'Meeting was successfully created.'
