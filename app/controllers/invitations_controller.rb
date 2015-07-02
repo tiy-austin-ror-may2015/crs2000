@@ -18,9 +18,9 @@ class InvitationsController < ApplicationController
 
   def show
     @invitations = Invitation.all
-    all_employees = Employee.where(company_id: current_employee.company_id)
+    all_employees = Employee.where(company_id: current_company_id)
     @employee_options = all_employees.map { |employee| [employee.name, employee.id]}
-    @current_company = current_employee.company
+    @current_company = current_company
     @meeting_options = @current_company.meetings.map { |meeting| [meeting.title, meeting.id] }
   end
 

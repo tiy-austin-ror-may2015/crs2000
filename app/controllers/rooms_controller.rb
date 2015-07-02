@@ -2,8 +2,8 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
-    @company = current_employee.company
-    @rooms = Room.where(company_id: current_employee.company_id)
+    @company = current_company
+    @rooms = Room.where(company_id: current_company_id)
     @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
   end
 
@@ -14,7 +14,7 @@ class RoomsController < ApplicationController
   def new
     if user_is_admin?
       @room = Room.new
-      @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+      @all_rooms = Room.where(company_id: current_company_id).pluck(:name)
     else
       redirect_to :back, alert: "Access Denied"
     end
@@ -82,7 +82,7 @@ class RoomsController < ApplicationController
   end
 
   def employee_company
-    current_employee.company
+    current_company
   end
 
   private
