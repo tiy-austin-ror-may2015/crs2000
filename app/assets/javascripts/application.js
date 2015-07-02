@@ -44,7 +44,6 @@ var ready = function() {
   setTimeout(setTime, 0);
 };
 
-<<<<<<< HEAD
 $(document).ready(ready);
 $(document).on("page:load", ready);
 
