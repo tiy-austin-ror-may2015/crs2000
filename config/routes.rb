@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
   get '/search_advance/rooms', to: 'rooms#search_advance'
-  root to:'rooms#index'
+  root to:'meetings#index'
   end
 end
 

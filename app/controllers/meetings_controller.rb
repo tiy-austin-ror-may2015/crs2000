@@ -74,6 +74,7 @@ class MeetingsController < ApplicationController
   def new
     @meeting = Meeting.new
     @room_options = Room.company_rooms(current_employee.company_id)
+    @location_options = Room.
   end
 
   def edit

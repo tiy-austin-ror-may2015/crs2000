@@ -23,6 +23,10 @@
     <%= f.select :room_id, @room_options %>
   </div>
   <div class="field">
+    <%= f.label :location %><br>
+    <%= f.select :location, @room_options %>
+  </div>
+  <div class="field">
     <%= f.label :start_time %><br>
     <%= f.text_field :start_time, class: 'datetimepicker' %>
   </div>

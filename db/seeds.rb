@@ -19,7 +19,9 @@ image =
  "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg",
  "http://i.ytimg.com/vi/bDUkzYWxR7E/hqdefault.jpg"]
 
-amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
+amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'VideoConferencing Capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
+
+location = ['Design Building', 'Engineering Building', 'Research Lab', 'Skunkworks Center', 'Corporate']
 
 random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12.hours),(Time.now + 13.hours)]
 3.times do
@@ -29,11 +31,12 @@ random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12
                                password: 'password', password_confirmation: 'password',
                              company_id: company.id)
 
-    2.times do
+    1.times do
       room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room", max_occupancy: Faker::Number.number(2),
                   room_number: rand(200..400),
                        imgurl: image.sample,
-                     location: Faker::App.name, company_id: company.id)
+                     location: location.sample,
+                      company_id: company.id)
       amenity = Amenity.create(perk: amenities.sample,
                                room_id: room.id)
         2.times do
