@@ -43,32 +43,42 @@
   </div>
   </div>
 
+
   <% if @meeting_owner == true %>
   <div class="row">
     <br>
     <br>
     <h2>Invite Employees</h2>
+    <p><strong>Company: </strong><%= link_to current_employee.company.name,  current_employee.company %> </p>
     <% if @invitees.count > 0 %>
-        <table class="table" style="width:50%">
+        <div class="well center invite" >
+            <input type='text' id='search' placeholder="name" />
+         
+        </div>
+
+
+
+
+
+        <table class="table invite" >
           <thead>
           <tr>
             <th>Invite?</th>
             <th>Employee</th>
           </tr>
           </thead>
-          <tbody>
+          <tbody id="invitees">
             <% @invitees.each do |invitee|%>
             <tr>
               <td>
                 <% if invitee.invitations.where(meeting_id: @meeting.id).exists? %>
                     <br><p style="font-style: italic">Already invited!</p>
                 <% else %>
-                    <%= link_to 'Invite', invitation_path(@meeting.id, invitee.id), method: 'POST', class: 'btn btn-default' %>
+                    <%= link_to 'Invite', send_invitation_path(@meeting.id, invitee.id), method: 'POST', class: 'btn btn-default' %>
                 <% end %>
               </td>
               <td>
-                <h5><strong><%= invitee.name %></strong></h5>
-                <p><strong>Company: </strong><%= link_to invitee.company.name, invitee.company %> </p>
+                <h5><strong id="invitee_name"><%= invitee.name %></strong></h5>
                 <p><strong>Email: </strong><%= invitee.email %></p>
               </td>
             </tr>

@@ -39,6 +39,13 @@ var ready = function() {
       var formatted_time = moment(time_text).fromNow();
       $(this).html(formatted_time);
     });
+      $("#search").on("keyup paste change", function(){
+          var re = new RegExp(this.value,"i");
+          $("#invitees tr").each(function(index){
+              var invitee_name = $("#invitee_name", this).html();
+              this.hidden = ! re.test(invitee_name);
+          });
+      });
   };
   setInterval(setTime, 5000);
   setTimeout(setTime, 0);
