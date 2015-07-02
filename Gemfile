@@ -24,7 +24,6 @@ gem "rails_12factor", "~> 0.0", {:group=>:production}
 gem "rails", "~> 4.2"
 gem "pg", "~> 0.18"
 gem "sass-rails", "~> 5.0"
-gem "uglifier", "~> 2.7"
 gem "coffee-rails", "~> 4.1"
 gem "devise", "~> 3.5"
 gem "figaro", "~> 1.1"
@@ -33,22 +32,14 @@ gem "jquery-rails", "~> 4.0"
 gem "turbolinks", "~> 2.5"
 gem "jbuilder", "~> 2.3"
 gem "mocha", "~> 1.1"
-gem "pg", "~> 0.18"
 gem "puma", "~> 2.11"
-gem "rails_12factor", "~> 0.0"
-gem "rails", "~> 4.2"
 gem "react-rails", "~> 1.0"
-gem "sass-rails", "~> 5.0"
 gem "sdoc", "~> 0.4", {:group=>:doc}
 gem "uglifier", "~> 2.7"
 gem "will_paginate", "~> 3.0"
 gem "will_paginate-bootstrap", "~> 1.0"
-
-gem "bootstrap_form", "~> 2.3"
-gem "codeclimate-test-reporter", "~> 0.4", {:group=>:test, :require=>nil}
 gem 'prawn', '~> 2.0.1'
 gem 'prawn-table', '~> 0.2.1'
-gem "annotate", "~> 2.6"
 
  source "https://rails-assets.org" do
    gem 'rails-assets-moment'
