@@ -17,8 +17,8 @@
       <thead>
         <tr>
           <th class='well'>Title</th>
-          <th>Room</th>
-          <th class='well'>Agena</th>
+          <th>Room and Location</th>
+          <th class='well'>Agenda</th>
           <th>Start Time</th>
           <th class = 'well'>End Time</th>
         </tr>
@@ -28,7 +28,7 @@
         <% @meetings.each do |meeting| %>
           <tr>
             <td class='well'><%= link_to meeting.title, meeting %></td>
-            <td><%= meeting.room.name %> </td>
+            <td><%= link_to meeting.room.name, meeting.room %> at <%= meeting.room.location %></td>
              <td class='well' ><%= meeting.agenda %></td>
             <td><p class="timeDisplay"><%= meeting.start_time %></p></td>
             <td><p class="timeDisplay"><%= meeting.end_time %></p></td>
