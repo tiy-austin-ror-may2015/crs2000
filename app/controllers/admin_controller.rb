@@ -9,7 +9,7 @@ class AdminController < ApplicationController
                                       Time.now.midnight, Time.now.midnight + 1.day)
       @all_future_meetings = Meeting.where("start_time >= ?", Time.now.midnight)
     else
-      redirect_to :back, alert: "Access Denied"
+      redirect_to root_path, alert: "Access Denied"
     end
   end
 
