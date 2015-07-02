@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  helper_method :user_is_admin?, :current_company
+
   def user_is_admin?
     @user_is_admin ||= current_employee ? current_employee.admin : false
   end
@@ -35,9 +37,6 @@ class ApplicationController < ActionController::Base
       true
     end
   end
-
-  helper_method :user_is_admin?
-  helper_method :current_company
 
   def current_company
     @current_company ||= current_employee.company if current_employee
