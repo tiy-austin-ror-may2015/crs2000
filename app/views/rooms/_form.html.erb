@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name , class: "input-field" %>
   </div>
   <div class="field">
     <%= f.label :max_occupancy %><br>
@@ -32,6 +32,6 @@
     <%= f.text_field :location %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'btn btn-default' %>
   </div>
 <% end %>
