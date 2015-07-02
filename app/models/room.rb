@@ -60,7 +60,6 @@ end
     room_ids = amenities.map{ |amenity| amenity.rooms.pluck(:id) }.flatten.uniq
 
     amenity_query = room_ids.map{ |id| "id = #{id}" }.join(" OR ")
-    100.times { puts room_ids}
     amenity_query.empty? ? amenity_query = " AND id = 0)" : amenity_query.prepend(" AND (") << "))"
     search_query = "(lower(name) LIKE '%#{search}%'
                     OR lower(location) LIKE ('%#{search}%'))
