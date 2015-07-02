@@ -27,8 +27,7 @@
             <td class='well'><%= link_to employee.name, employee %></td>
             <td><%= employee.email %></td>
             <% if user_is_admin? %>
-              <td><%= link_to 'Show', employee %></td>
-              <td class="well"><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td class="well"><%= link_to 'Remove', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <% end %>
           </tr>
         <% end %>

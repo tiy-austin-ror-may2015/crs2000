@@ -1,10 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @companies = Company.all
-  end
-
   def show
   end
 
