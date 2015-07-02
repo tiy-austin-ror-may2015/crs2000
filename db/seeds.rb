@@ -1,4 +1,3 @@
-
 image =
 ["http://www.coolbusinessideas.com/wp-content/uploads/2014/05/modern-meeting-room.jpg",
  "http://montvilleoffice.com/wp-content/uploads/2014/07/169979447_conference-room.jpg",
@@ -52,6 +51,7 @@ random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12
       employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
                                              employee_id: @employee.id,
                                         meeting_id: meeting.id)
+
     end
   end
 end
