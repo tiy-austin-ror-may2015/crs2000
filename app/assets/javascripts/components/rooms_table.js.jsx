@@ -247,6 +247,8 @@ var DataRow = React.createClass({
 
     if ((next_meeting === null) || (current_employee.admin !== true && next_meeting.private === true)) {
       meeting_url = '';
+    } else {
+      meeting_url += next_meeting.id;
     };
 
     return (
