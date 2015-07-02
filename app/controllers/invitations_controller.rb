@@ -13,7 +13,7 @@ class InvitationsController < ApplicationController
         else
           message = {alert: 'invitation has been already sent!'}
         end
-      redirect_to invitations_show_path, message
+      redirect_to admin_invitations_show_path, message
   end
 
   def show
@@ -32,7 +32,7 @@ class InvitationsController < ApplicationController
     @invitation = Invitation.find(params[:id])
     @invitation.destroy
     message = { alert: 'Meeting was successfully deleted'}
-    redirect_to invitations_show_path, message
+    redirect_to admin_invitations_show_path, message
   end
 
 end

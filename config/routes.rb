@@ -9,10 +9,9 @@ Rails.application.routes.draw do
 
     resources :rooms
     resources :companies
-    get 'invitations/show', to: "invitations#show"
+    get 'admin/invitations/show', to: "invitations#show"
     delete 'invitations/:id', to: "invitations#destroy", as: 'invitation'
     resources :meetings
-    resources :admin
 
   #ADMIN (Will / Alex)
   get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
