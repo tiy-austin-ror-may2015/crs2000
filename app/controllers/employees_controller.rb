@@ -8,7 +8,7 @@ class EmployeesController < ApplicationController
 
   def show
     @employee = Employee.find(params[:id])
-    @next_meeting = @employee.confirmed_meetings.where("start_time >= ?", Time.now - 5.minute).order(:start_time).limit(1).first
+    @next_meeting = Employee.next_meeting(@employee)
   end
 
 
