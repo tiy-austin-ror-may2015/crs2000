@@ -8,7 +8,7 @@ class EmployeesController < ApplicationController
 
   def show
     @employee = Employee.find(params[:id])
-    @next_meeting = Employee.next_meeting(@employee)
+    @next_meeting = @employee.next_meeting
   end
 
 

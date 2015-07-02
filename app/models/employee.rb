@@ -32,10 +32,12 @@ class Employee < ActiveRecord::Base
   has_many :viewable_meetings, through: :invitations, source: :meeting
   has_many :confirmed_meetings, through: :employee_meetings, source: :meeting
 
-  scope :next_meeting, -> employee { employee.confirmed_meetings.where("start_time >= ?", Time.now - 5.minute).order(:start_time).limit(1).first }
-
   def self.search(search)
     self.where("lower(name) LIKE ? OR lower(email) LIKE ?",
                "%#{search}%", "%#{search}%")
+  end
+
+  def next_meeting
+    confirmed_meetings.where("start_time >= ?", Time.now - 5.minute).order(:start_time).limit(1).first
   end
 end
