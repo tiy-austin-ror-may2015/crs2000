@@ -40,7 +40,7 @@ var ready = function() {
       $(this).html(formatted_time);
     });
   };
-  setInterval(setTime, 5000);
+  setInterval(setTime, 100);
   setTimeout(setTime, 0);
 };
 
