@@ -47,7 +47,9 @@ var ready = function() {
 $(document).ready(ready);
 $(document).on("page:load", ready);
 
-
+$(document).ready( function () {
+    $('#reports_rooms').DataTable();
+} );
 
 
 
