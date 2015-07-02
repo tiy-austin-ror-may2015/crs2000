@@ -22,6 +22,7 @@ class Meeting < ActiveRecord::Base
   has_many :invitations
   has_many :room_amenities
   has_many :employees, through: :employee_meetings
+  has_one  :company, through: :employee
   scope :today_forward, -> { where("start_time >= ?", Time.now.midnight).order(:start_time) }
 
 
