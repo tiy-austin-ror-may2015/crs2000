@@ -89,5 +89,17 @@ footer {
   background-color: $form-background-color;
   margin-top: 30px;
   text-align: center;
+}
+.asc{
+  color: lighten(black, 50%);
+  background-color: darken(white, 20%);
+}
 
+.desc{
+  color: darken(white, 20%);
+  background-color: lighten(black, 50%);
+}
+
+.limit{
+  margin-left: 15px;
 }
