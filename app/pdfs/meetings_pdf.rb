@@ -9,7 +9,7 @@ class MeetingsPdf < Prawn::Document
 
   def meetings
     move_down 10
-    table meetings_rows do
+    table meetings_rows, position: :center do
       row(0).font_style = :bold
       columns(1..3).align = :right
       self.header = true
