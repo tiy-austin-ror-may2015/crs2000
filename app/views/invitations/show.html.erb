@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <h2>Meeting invitations </h2>
+
+    <p id="notice"><%= notice %></p>
+    <p id="alert"><%= alert %></p>
+
+    <div class="panel">
+      <h4>New meeting invite</h4>
+      <%= form_for (Invitation.new) do |f| %>
+      <div class="invite-row">
+        <%= f.label :employee_id %><br>
+        <%= f.select :employee_id, @employee_options %>
+      </div>
+      <div class="invite-row">
+        <%= f.label :meeting_id %><br>
+        <%= f.select :meeting_id, @meeting_options %>
+      </div>
+      <div class="invite-row">
+        <%= f.submit %>
+      </div>
+      <% end %>
+    </div>
+    <hr>
+    <h4>All meeting invites</h4>
+    <% if @invitations.count == 0 %>
+      <p>There are no pending invites.</p>
+    <% else %>
+    <div class="panel panel-default">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Meeting title</th>
+            <th>Start time</th>
+            <th>Employee invited</th>
+            <th>Private</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @invitations.each do |invitation| %>
+          <tr>
+            <td><%= link_to invitation.meeting.title.capitalize, invitation.meeting %></td>
+            <td class="timeDisplay"><%= invitation.meeting.start_time %></td>
+            <td><%= link_to invitation.employee.name, invitation.employee %></td>
+            <td><%= invitation.meeting.private  %></td>
+            <td><%= link_to 'Destroy', invitation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      </div>
+    <% end %>
+  </div>
+</div>
+

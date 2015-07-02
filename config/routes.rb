@@ -7,6 +7,12 @@ Rails.application.routes.draw do
 
   authenticate :employee do
 
+    resources :rooms
+    resources :companies
+    get 'admin/invitations/show', to: "invitations#show"
+    delete 'invitations/:id', to: "invitations#destroy", as: 'invitation'
+    resources :meetings
+
   #ADMIN (Will / Alex)
   get 'admin/dashboard', to: 'admin#dashboard', as: 'dashboard'
   get 'admin/reports_meetings', to: 'admin#reports_meetings'
@@ -23,20 +29,16 @@ Rails.application.routes.draw do
   get '/search/employees', to: 'employees#employee_search'
 
 
-  post 'meetings/invite/:meeting_id/:employee_id', to: 'meetings#invite', as: :invitation
+  post 'invitations/new', to: 'invitations#create', as: :invitations
   post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
 
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
   get '/search_advance/rooms', to: 'rooms#search_advance'
 
-
-  resources :rooms
-  resources :companies
-  resources :meetings
+  end
 
   root to:'rooms#index'
-  end
 
 end
 
