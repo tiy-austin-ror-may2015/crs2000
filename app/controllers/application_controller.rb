@@ -8,10 +8,6 @@ class ApplicationController < ActionController::Base
     @user_is_admin ||= current_employee ? current_employee.admin : false
   end
 
-  def toggle_off_or_to(class_name, path_to_turn_on)
-    class_name if request.fullpath == path_to_turn_on
-  end
-
   def no_meeting_overlap? (requested_meeting)
     employee_meetings = Meeting.where(employee_id: current_employee.id)
     employee_meetings += EmployeeMeeting.where(employee_id: current_employee.id).map{ |em| em.meeting }
