@@ -1,11 +1,10 @@
 class MeetingsPdf < Prawn::Document
-  def initialize(room)
+  def initialize(meeting)
     super()
     @meeting = meeting
     meetings
     meetings_rows
   end
-
 
   def meetings
     move_down 10
@@ -18,9 +17,9 @@ class MeetingsPdf < Prawn::Document
   end
 
   def meetings_rows
-      [["Title", "Agenda", "Room ID" "Start Time", "End Time", "Private"]] +
+      [["Title", "Agenda", "Start Time", "End Time"]] +
     @meeting.map do |item|
-      [item.title, item.agenda, item.room_id, item.private.inspect ]
+      [item.title, item.agenda,  item.start_time.strftime("%m-%e-%y %H:%M"), item.end_time.strftime("%m-%e-%y %H:%M")]
     end
   end
 end
