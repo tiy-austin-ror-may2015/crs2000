@@ -3,6 +3,7 @@ class RoomsController < ApplicationController
 
   def index
     @company = employee_company
+    @current_employee = current_employee
     @rooms_array = get_rooms_array
   end
 
@@ -22,10 +23,12 @@ class RoomsController < ApplicationController
   end
 
   def search
+    @current_employee = current_employee
     @rooms_array = get_rooms_array(company_rooms.search_for(params[:search].downcase))
   end
 
   def search_advance
+    @current_employee = current_employee
     @rooms_array = get_rooms_array(company_rooms.search_with(params))
     render :search
   end
@@ -84,7 +87,7 @@ class RoomsController < ApplicationController
     end
 
     def get_rooms_array(rooms = company_rooms)
-      rooms.map { |room| [room, room.amenities.pluck(:perk).sort.join(" , "), room.get_next_meeting_start_time_and_availability(user_is_admin?)] }
+      rooms.map { |room| [room, room.amenities.pluck(:perk).sort.join(" , "), room.get_next_meeting_details] }
     end
 
     def room_params

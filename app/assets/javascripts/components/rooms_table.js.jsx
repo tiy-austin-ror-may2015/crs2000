@@ -21,7 +21,7 @@ var RoomsTable = React.createClass({
     }
 
     for (var i = i_0; i < i_f; i++) {
-      rows.push(<DataRow elem={ this.state.rooms_array[i] } />);
+      rows.push(<DataRow elem={ this.state.rooms_array[i] } current_employee={ this.props.current_employee } />);
     }
 
     if (this.state.page === 1 && i_f === this.state.rooms_array.length) {
@@ -204,17 +204,35 @@ var DataRow = React.createClass({
     var amenity_names = this.props.elem[1];
     var time = this.props.elem[2][0];
     var available = this.props.elem[2][1];
+    var next_meeting = this.props.elem[2][2];
+    var current_employee = this.props.current_employee;
+    var room_url = '/rooms/' + room.id;
+    if (next_meeting === null) {
+      var meeting_url = '';
+    } else {
+      if (next_meeting.private === true) {
+        if (current_employee.admin === true) {
+          var meeting_url = '/meetings/' + next_meeting.id;
+        } else {
+          var meeting_url = '';
+        };
+      } else {
+        var meeting_url = '/meetings/' + next_meeting.id;
+      };
+    };
 
     return (
       <tr>
         <td>
-          <NavLink name={ room.name } url={ '/rooms/' + room.id } method='GET' parent={ this } />
+          <NavLink className='' dataID='' name={ room.name } url={ room_url } parent={ this } />
         </td>
         <td className='well'>{ room.room_number }</td>
         <td>{ room.location }</td>
         <td className='well'>{ amenity_names }</td>
         <td>{ room.max_occupancy }</td>
-        <td className='well countDown' data-id={ time }></td>
+        <td className='well' >
+          <NavLink className='countDown' dataID={ time } name='' url={ meeting_url }  />
+        </td>
         <td>{ available }</td>
       </tr>
     );
@@ -222,13 +240,8 @@ var DataRow = React.createClass({
 });
 
 var NavLink = React.createClass({
-  getInitialState: function () {
-    return {
-      grandparent: this.props.grandparent
-    };
-  },
   render: function () {
-    return (<a onClick={ this.clicked } >{ this.props.name }</a>);
+    return (<a className={ this.props.className } data-id={ this.props.dataID } onClick={ this.clicked } >{ this.props.name }</a>);
   },
   clicked: function () {
     window.location.href = this.props.url;

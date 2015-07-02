@@ -11,7 +11,7 @@
 
   <h1><%= @company.name %> Rooms</h1>
 
-  <%= react_component("RoomsTable", { rooms_array: @rooms_array, page: 1, limit: 10 }) %>
+  <%= react_component("RoomsTable", { current_employee: @current_employee, rooms_array: @rooms_array, page: 1, limit: 10 }) %>
   <div class="row">
     <div class="col-md-9"></div>
     <div class='col-md-3 well center room-search'>
