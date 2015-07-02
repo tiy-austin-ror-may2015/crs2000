@@ -44,14 +44,6 @@ var ready = function() {
   setTimeout(setTime, 0);
 };
 
-$(document).ready(ready);
-$(document).on("page:load", ready);
-
-$(document).ready( function () {
-    $('#reports_rooms').DataTable();
-} );
-
-
 
 
 
