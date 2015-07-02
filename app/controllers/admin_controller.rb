@@ -17,6 +17,22 @@ class AdminController < ApplicationController
     @reports_meetings = Meeting.all
   end
 
+  def room_table
+    @rooms = Room.all
+    pdf = RoomsPdf.new(Room.all)
+    send_data pdf.render, filename: "room.pdf",
+                          type: 'appliciation/pdf',
+                          disposition: "inline"
+  end
+
+  def meeting_table
+    @meetings = Meeting.all
+    pdf = MeetingsPdf.new(Meeting.all)
+    send_data pdf.render, filename: "meeting.pdf",
+                          type: 'appliciation/pdf',
+                          disposition: "inline"
+    end
+
   def reports_rooms
     @reports_rooms = Room.all
     @top_rooms = Meeting.joins(:room).group(:room).order('count_all DESC').limit(3).count
@@ -34,5 +50,5 @@ class AdminController < ApplicationController
       redirect_to root_path, alert: "Access Denied"
     end
   end
-
 end
+
