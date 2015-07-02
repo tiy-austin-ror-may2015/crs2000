@@ -19,6 +19,10 @@ module ApplicationHelper
    def add_class_if(path_to_turn_on, class_name)
     class_name if request.fullpath == path_to_turn_on
   end
+
+  def active_if(path)
+    add_class_if(path, 'active')
+  end
 end
 
 
