@@ -25,6 +25,14 @@ class AdminController < ApplicationController
                           disposition: "inline"
   end
 
+  def meeting_table
+    @meetings = Meeting.all
+    pdf = MeetingsPdf.new(Meeting.all)
+    send_data pdf.render, filename: "meeting.pdf",
+                          type: 'appliciation/pdf',
+                          disposition: "inline"
+    end
+
   def reports_rooms
     @reports_rooms = Room.all
     @top_rooms = Meeting.joins(:room).group(:room).order('count_all DESC').limit(3).count

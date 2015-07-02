@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'admin/add_branding', to: 'admin#add_branding'
   get 'admin', to: 'admin#dashboard'
   get 'admin/room_report', to: 'admin#room_table'
+  get 'admin/meeting_report', to: 'admin#meeting_table'
 
   #EMPLOYEES
   get 'employees/:id', to: 'employees#show', as: 'employee'
@@ -37,10 +38,9 @@ Rails.application.routes.draw do
   resources :companies
   resources :meetings
 
+  root to:'rooms#index'
 
   end
-
-  root to:'rooms#index'
 
 end
 

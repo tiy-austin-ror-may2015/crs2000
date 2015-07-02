@@ -6,10 +6,6 @@ class RoomsPdf < Prawn::Document
      rooms_rows
   end
 
-   def table_data
-    @table_data ||= @events.map { |e| [e.id, e.name, e.created_at.strftime("%m/%d/%y"), e.created_by.try(:full_name)] }
-  end
-
   def rooms
     move_down 10
     table rooms_rows do
@@ -21,7 +17,7 @@ class RoomsPdf < Prawn::Document
   end
 
   def rooms_rows
-      [["Meeting Name", "Location", "Max Occupancy", "Available"]] +
+      [["Room Name", "Location", "Max Occupancy", "Available"]] +
     @room.map do |item|
       [item.name, item.location, item.max_occupancy, item.available.inspect ]
     end
