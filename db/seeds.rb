@@ -1,4 +1,3 @@
-
 image =
 ["http://www.coolbusinessideas.com/wp-content/uploads/2014/05/modern-meeting-room.jpg",
  "http://montvilleoffice.com/wp-content/uploads/2014/07/169979447_conference-room.jpg",
@@ -18,33 +17,40 @@ image =
  "http://azhari.typepad.com/.a/6a0120a6cd4566970b017c38a9059e970b-pi",
  "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg"]
 
-company_name = ['Advanced Digital Creations', 'Prestige WorldWide', 'Capstone Audio Development']
-amenities = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'VideoConferencing Capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
-location = ['Design Building', 'Engineering Building', 'Research Lab', 'Skunkworks Center', 'Corporate']
+perks = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
+amenities = perks.map { |perk| Amenity.create(perk: perk) }
 
-random_start_times = [(Time.now + 10.hours),(Time.now + 11.hours),(Time.now + 12.hours),(Time.now + 13.hours)]
+earliest = 5.hours.ago
+latest = 5.hours.from_now
 3.times do
-  company = Company.create(name: company_name.sample )
+  company = Company.create(name: Faker::Company.name)
   50.times do
-    employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
-                             password: 'password', password_confirmation: 'password',
-                           company_id: company.id)
+      employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
+                               password: 'password', password_confirmation: 'password',
+                             company_id: company.id)
 
-    room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room", max_occupancy: Faker::Number.number(2),
-                room_number: rand(200..400),
-                     imgurl: image.sample,
-                   location: location.sample,
-                    company_id: company.id)
-    amenity = Amenity.create(perk: amenities.sample,
-                             room_id: room.id)
+    2.times do
+      room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room", max_occupancy: Faker::Number.number(2),
+                  room_number: rand(200..400),
+                       imgurl: image.sample,
+                     location: Faker::App.name, company_id: company.id)
 
-    meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
-                      start_time: random_start_times.sample,
-                       end_time: random_start_times.sample + 4.hours,
-                         room_id: room.id, employee_id: employee.id)
-    employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
-                                           employee_id: employee.id,
-                                      meeting_id: meeting.id)
+        room_amenities = amenities.sample(rand(4))
+        room_amenities.each { |amenity| RoomAmenity.create(room_id: room.id, amenity_id: amenity.id) }
+
+
+        rand(3).times do
+          random_start_time = Time.at((latest.to_f - earliest.to_f)*rand + earliest.to_f)
+          meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
+                            start_time: random_start_time,
+                             end_time: random_start_time + rand(15..45).minutes,
+                             private: ([true] + [false] * 5).sample,
+                               room_id: room.id, employee_id: employee.id)
+          employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
+                                                 employee_id: employee.id,
+                                            meeting_id: meeting.id)
+      end
+    end
   end
 end
 

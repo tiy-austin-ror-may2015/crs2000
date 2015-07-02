@@ -12,7 +12,7 @@ group :test, :development do
   gem "spring", "~> 1.3"
   gem "web-console", "~> 2.1"
 end
-gem 'launchy'
+
 gem "faker", "~> 1.4"
 gem "annotate", "~> 2.6"
 gem "bcrypt", "~> 3.1"
