@@ -63,7 +63,7 @@ class MeetingsController < ApplicationController
         em.save
         message = {notice: 'Employee successfully joined!'}
       else
-        message = {alert: 'You own or are already in another meeting at this time.'}
+        message = {alert: 'You own  are already in another meeting at this time.'}
       end
     else
       message = {alert: 'Employee already joined!'}

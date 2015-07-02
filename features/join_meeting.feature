@@ -14,3 +14,11 @@ Feature:
     And a meeting exists
     And I join the meeting
     Then I should see "Employee successfully joined!"
+
+  Scenario: Employee joins a meeting but is already in a meeting
+    # And I create a meeting
+    # And I create a meeting
+    And a meeting exists
+    And I join a meeting
+    Then I should see "You own or are already in another meeting at this time."
+
