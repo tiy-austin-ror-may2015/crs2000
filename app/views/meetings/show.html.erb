@@ -1,7 +1,5 @@
 <div class="container">
   <div class="row">
-    <p id="notice" class="alert"><%= notice %></p>
-    <p style='color:red;'><%= flash[:alert] %></p>
 
 <div>
     <div class="col-md-12">
@@ -72,7 +70,7 @@
             <tr>
               <td>
                 <% if invitee.invitations.where(meeting_id: @meeting.id).exists? %>
-                    <br><p style="font-style: italic">Already invited!</p>
+                    <br><p>Invitation sent!</p>
                 <% else %>
                     <%= link_to 'Invite', send_invitation_path(@meeting.id, invitee.id), method: 'POST', class: 'btn btn-default' %>
                 <% end %>
