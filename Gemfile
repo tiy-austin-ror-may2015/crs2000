@@ -41,7 +41,6 @@ gem "devise", "~> 3.5"
 gem "figaro", "~> 1.1"
 gem "jquery-datatables-rails", github: 'rweng/jquery-datatables-rails'
 gem "jquery-rails", "~> 4.0"
-gem "jquery-ui-rails"
 gem "turbolinks", "~> 2.5"
 gem "jbuilder", "~> 2.3"
 gem "mocha", "~> 1.1"

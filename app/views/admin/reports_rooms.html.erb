@@ -1,58 +1,44 @@
-<!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
-
-<!-- DataTables -->
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-
-
 
 <div class="report-inner">
   <h1>TOP ROOMS</h1>
-    <table display>
       <table id="top_rooms" class="table display">
-        <thead>
 
+        <thead>
           <tr>
             <th>NAME</th>
             <th>NUMBER</th>
             <th>MAX OCC</th>
             <th>IMAGE</th>
             <th>LOCATION</th>
-            </div>
           </tr>
-          </div>
         </thead>
 
         <tbody>
           <% @top_rooms.each do |top_rooms| %>
             <tr>
-            <td>
-                <%= top_rooms.first.name %>
-              </div>
-            </td>
-            <td><%= top_rooms.first.room_number %></td>
-            <td><%= top_rooms.first.max_occupancy %></td>
+              <td><%= top_rooms.first.name %></td>
+              <td><%= top_rooms.first.room_number %></td>
+              <td><%= top_rooms.first.max_occupancy %></td>
 
-            <td>
-            <!-- Button for Image Modal -->
-            <a href="#image_show_modal" role="button" class="btn btn-default" data-toggle="modal">click to see image</a>
+              <td>
+              <!-- Button for Image Modal -->
+              <a href="#image_show_modal" role="button" class="btn btn-default" data-toggle="modal">click to see image</a>
+              <!-- Modal HTML -->
+              <div id="image_show_modal" class="modal fade">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              </div>
+                              <div class="modal-body">
 
-            <!-- Modal HTML -->
-            <div id="image_show_modal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
+                                <!-- IMAGE LINK BELOW -->
+                                <%= image_tag top_rooms.first.imgurl, :class => 'show-room' %>
 
-                              <!-- IMAGE LINK BELOW -->
-                              <%= image_tag top_rooms.first.imgurl, :class => 'show-room' %>
-
-                            <p class="text-warning">
-                              <small>meeting room view</small>
-                            </p>
-                            </div>
+                                <p class="text-warning">
+                                  <small>meeting room view</small>
+                                </p>
+                              </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
                           </div>
@@ -61,20 +47,15 @@
                     </div>
                   </td>
 
-              <td><%= top_rooms.first.location %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </table>
-  </div>
-
-
-
+                <td><%= top_rooms.first.location %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
 
 <div class="report-inner">
   <h1>ROOMS</h1>
-    <table class="table display">
       <table id="rooms" class="table display">
 
         <thead>
@@ -114,6 +95,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+
                           </div>
                         </div>
                       </div>
@@ -125,5 +107,4 @@
             <% end %>
           </tbody>
         </table>
-      </table>
     </div>
