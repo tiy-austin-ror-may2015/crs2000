@@ -28,10 +28,20 @@ var ready = function() {
 
   var times = $('.timeDisplay');
   times.each(function () {
-    var time_text = $(this).html();
-    var formatted_time = moment(time_text).format('MMMM/DD/YYYY hh:mm a');
+    var time_text = $(this).html().format('MMMM/DD/YYYY hh:mm a');
+    var formatted_time = moment(time_text);
     $(this).html(formatted_time);
   });
+  var setTime = function () {
+    var times = $('.countDown');
+    times.each(function () {
+      var time_text = $(this).attr("data-id");
+      var formatted_time = moment(time_text).fromNow();
+      $(this).html(formatted_time);
+    });
+  };
+  setInterval(setTime, 5000);
+  setTimeout(setTime, 0);
 };
 
 $(document).ready(ready);
