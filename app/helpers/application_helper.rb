@@ -16,6 +16,13 @@ module ApplicationHelper
     current_company.secondary_color if current_employee
   end
 
+  def is_private?(query)
+    if query
+      "yes"
+    else
+      "no"
+    end
+  end
 end
 
 
