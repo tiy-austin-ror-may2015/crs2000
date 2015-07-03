@@ -109,7 +109,7 @@
             <% if user_is_admin? %>
               ADMIN:
             <% end %>
-            <%= current_employee.name.titleize %>
+            <%= current_employee.name %>
           </a></li>
           <li><%= link_to 'Log Out', destroy_employee_session_path, :method => :delete %></li>
         <% else %>
