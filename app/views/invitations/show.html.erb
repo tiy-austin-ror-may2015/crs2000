@@ -1,7 +1,6 @@
 <div class="container">
   <div class="row">
     <h2>Meeting invitations </h2>
-
     <div class="panel">
       <h4>New meeting invite</h4>
       <%= form_for (Invitation.new) do |f| %>
@@ -14,7 +13,7 @@
         <%= f.select :meeting_id, @meeting_options %>
       </div>
       <div class="invite-row">
-        <%= f.submit %>
+        <%= f.submit 'Invite', class: "btn btn-default btn-sm" %>
       </div>
       <% end %>
     </div>
