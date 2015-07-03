@@ -2,15 +2,16 @@
 <div class="report-inner">
   <h1>MEETINGS</h1>
       <table id="meetings" class="table display">
+
         <thead>
           <tr>
             <th>TITLE</th>
             <th>AGENDA</th>
             <th>STARTS</th>
             <th>FINISHES</th>
-            <th>VISIBILITY</th>
-            <th>ROOM ID</th>
+            <th>ROOM</th>
             <th>HOST</th>
+            <th>PRIVATE?</th>
           </tr>
         </thead>
 
@@ -21,11 +22,11 @@
             <td><%= reports_meeting.agenda %></td>
             <td><%= reports_meeting.start_time.strftime("%m/%d/%Y %l:%M %p") %></td>
             <td><%= reports_meeting.end_time.strftime("%m/%d/%Y %l:%M %p") %></td>
-            <td><%= reports_meeting.private %></td>
-            <td><%= reports_meeting.room_id %></td>
-            <td><%= reports_meeting.employee_id %></td>
+            <td><%= reports_meeting.room.room_number %></td>
+            <td><%= reports_meeting.employee.name %></td>
+            <td><%= is_private?(reports_meeting.private) %></td>
           </tr>
-        <% end %>
+          <% end %>
       </tbody>
     </table>
 </div>

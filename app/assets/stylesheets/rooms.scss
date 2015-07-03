@@ -20,9 +20,15 @@
   height: auto;
 }
 
-.new-room {
-  width: 250px;
-  margin-left: auto;
-  margin-right: auto;
+.room-header {
+  h2 {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    margin: 0;
+    line-height: 350px;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+  }
 }
 

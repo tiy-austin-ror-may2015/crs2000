@@ -37,7 +37,11 @@ var formatCountdown = function () {
     var countdown_times = $('.countDown');
     countdown_times.each(function () {
       var time_text = $(this).attr("data-id");
-      var formatted_time = moment(time_text).fromNow();
+      if (time_text === 'N/A') {
+        var formatted_time = 'N/A';
+      } else {
+        var formatted_time = moment(time_text).fromNow();
+      };
       $(this).html(formatted_time);
     });
   };
@@ -60,6 +64,10 @@ var ready = function() {
   formatTimes();
   formatCountdown();
   inviteSearchFilter();
+  $('#meetings').dataTable();
+  $('#rooms').dataTable();
+  $('#busiest_employees').dataTable()
+  $('#top_rooms').dataTable()
 };
 
 $(document).ready(ready);

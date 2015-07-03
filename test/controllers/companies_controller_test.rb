@@ -9,11 +9,6 @@ class CompaniesControllerTest < ActionController::TestCase
     sign_in @employee
   end
 
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:companies)
-  end
 
   test "should get new" do
     get :new

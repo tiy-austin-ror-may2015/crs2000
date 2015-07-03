@@ -86,11 +86,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/rooms">
+      <a class="navbar-brand" href="/">
         <% if company_logo == nil %>
-          <a class="navbar-brand" href="/rooms">CRS2000</a>
+          <%= link_to 'CRS2000', root_path, class: "navbar-brand" %>
         <% else %>
-          <img alt="Brand" src="<%= company_logo %>">
+          <img alt="Brand" src="<%= company_logo %>" href="/">
         <% end %>
       </a>
     </div>
@@ -98,17 +98,18 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="/meetings/new">New Meeting</a></li>
+        <li><a href="/meetings/new" id="new_meeting">New Meeting</a></li>
         <li><a href="/meetings">All Meetings</a></li>
         <li><a href="/rooms">All Rooms</a></li>
         <li><a href="/employees">All Employees</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if employee_signed_in? %>
-          <li><a href="/employees/<%= current_employee.id %>"> Logged in as: <%= current_employee.name %>
+          <li><a href="/employees/<%= current_employee.id %>">
             <% if user_is_admin? %>
-              ADMIN
+              ADMIN:
             <% end %>
+            <%= current_employee.name %>
           </a></li>
           <li><%= link_to 'Log Out', destroy_employee_session_path, :method => :delete %></li>
         <% else %>

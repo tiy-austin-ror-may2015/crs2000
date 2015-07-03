@@ -13,10 +13,6 @@ class AdminController < ApplicationController
       @all_future_meetings = Meeting.where("start_time >= ?", Time.now.midnight)
   end
 
-  def reports_meetings
-      @reports_meetings = Meeting.all
-  end
-
   def room_table
       @company = current_employee.company
       @admin = current_employee
@@ -37,6 +33,10 @@ class AdminController < ApplicationController
                             disposition: "inline"
   end
 
+  def reports_meetings
+      @reports_meetings = Meeting.all
+  end
+
   def reports_rooms
       @reports_rooms = Room.all
       @top_rooms = Meeting.joins(:room).group(:room).order('count_all DESC').limit(3).count
@@ -44,7 +44,13 @@ class AdminController < ApplicationController
 
   def busiest_employees
     @busiest_employees = Meeting.joins(:employee).group(:employee).order('count_all DESC').limit(3).count
+    # @busiest_employee = Employee.find(params[:id])
   end
+
+  def show
+    @busiest_employee = Employee.find(params[:id])
+  end
+
 
   def add_branding
       @company = current_company

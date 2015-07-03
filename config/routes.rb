@@ -8,8 +8,9 @@ Rails.application.routes.draw do
   authenticate :employee do
 
     resources :rooms
-    resources :companies
-    get 'admin/invitations/show', to: "invitations#show"
+    resources :companies, except: :index
+    get 'admin/invitations/show', to: "invitations#show", as: 'invitations'
+    post 'admin/invitations/show', to: "invitations#create"
     delete 'invitations/:id', to: "invitations#destroy", as: 'invitation'
     resources :meetings
 
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
 
   post 'meetings/:meeting_id/invite/:employee_id', to: 'meetings#invite', as: 'send_invitation'
   post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
+  post '/invitations', to: 'invitations#create'
 
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
