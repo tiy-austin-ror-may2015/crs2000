@@ -8,6 +8,7 @@ class MeetingsPdf < Prawn::Document
     # footers
     meetings
     meetings_rows
+    footers
   end
 
   def greeting
@@ -16,11 +17,6 @@ class MeetingsPdf < Prawn::Document
     move_down 10
     text "This is the room inventory information for #{@company.name}."
   end
-
-  # def footers
-
-  #   end
-  # end
 
   def meetings
     move_down 10
@@ -37,6 +33,18 @@ class MeetingsPdf < Prawn::Document
     @meeting.map do |item|
       [item.title, item.agenda,  item.start_time.strftime("%m-%e-%y %H:%M"), item.end_time.strftime("%m-%e-%y %H:%M")]
     end
+  end
+
+  def footers
+    string = "page <page> of <total>"
+    # Green page numbers 1 to 7
+    options = { :at => [bounds.right - 150, 0],
+     :width => 150,
+     :align => :right,
+     :page_filter => (1..100),
+     :start_count_at => 1,
+     :color => "000000" }
+    number_pages string, options
   end
 end
 

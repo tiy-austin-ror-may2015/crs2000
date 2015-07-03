@@ -7,6 +7,7 @@ class RoomsPdf < Prawn::Document
     greeting
     rooms
     rooms_rows
+    footers
   end
 
   def greeting
@@ -29,5 +30,17 @@ class RoomsPdf < Prawn::Document
     [["Room Name", "Location", "Max Occupancy", "Available"]] + @room.map do |item|
       [item.name, item.location, item.max_occupancy, item.available.inspect]
     end
+  end
+
+  def footers
+    string = "page <page> of <total>"
+    # Green page numbers 1 to 7
+    options = { :at => [bounds.right - 150, 0],
+     :width => 150,
+     :align => :right,
+     :page_filter => (1..100),
+     :start_count_at => 1,
+     :color => "000000" }
+    number_pages string, options
   end
 end
