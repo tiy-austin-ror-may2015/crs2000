@@ -18,9 +18,11 @@
   </ul>
 </p>
 
-<p>To join this meeting, follow this link and click 'Join': <%= url_for(controller: 'meetings',
+<p>To join this meeting, follow this link and click 'Join': <a href= <%= url_for(
+                                                                        host: 'http://crs2000.herokuapp.com/',
+                                                                        controller: 'meetings',
                                                                         action: 'show',
-                                                                        id: @meeting.id) %> </p>
+                                                                        id: @meeting.id) %> > View Meeting</a> </p>
 
 <p>Sincerely,</p>
 <p><%= @meeting.employee.company.name %> Management</p>

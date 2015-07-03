@@ -13,9 +13,10 @@ You have been invited to the following meeting:
           <%= employee.name %>
         <% end %>
 
-To join this meeting, follow this link and click 'Join': <%= url_for(controller: 'meetings',
-                                                                        action: 'show',
-                                                                        id: @meeting.id) %>
+To join this meeting, follow this link and click 'Join': <%= url_for(host: 'http://crs2000.herokuapp.com/',
+                                                                     controller: 'meetings',
+                                                                     action: 'show',
+                                                                     id: @meeting.id) %>
 
 Sincerely
-<%= @meeting.employee.company.name %> Managemen
+<%= @meeting.employee.company.name %> Management

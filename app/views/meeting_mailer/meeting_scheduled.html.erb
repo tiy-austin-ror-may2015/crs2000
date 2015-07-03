@@ -3,10 +3,10 @@
 <p>This email is to confirm that you scheduled the following meeting:
   <ul>
     <li>Title: <%= @meeting.title %> </li>
+    <li>Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>) </li>
     <li>Location: <%= @meeting.room.location %> </li>
     <li>Start Time: <%= @meeting.start_time %> </li>
     <li>End Time: <%= @meeting.end_time %> </li>
-    <li>Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>) </li>
   </ul>
 </p>
 <p>Please be sure to arrive on time. Thank you.</p>

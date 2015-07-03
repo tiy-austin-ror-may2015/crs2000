@@ -3,10 +3,10 @@ Hello <%=@employee.name%>,
 This email is to inform you that the following meeting has been cancelled:
 
     Title: <%= @meeting.title %>
+    Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>)
     Location: <%= @meeting.room.location %>
     Start Time: <%= @meeting.start_time %>
     End Time: <%= @meeting.end_time %>
-    Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>)
 
 
 Contact your supervisor with any questions.
