@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   post 'meetings/:meeting_id/invite/:employee_id', to: 'meetings#invite', as: 'send_invitation'
   post 'meetings/join/:id', to: 'meetings#join', as: :join_employee
+  post '/invitations', to: 'invitations#create'
 
   get '/search/meetings', to: 'meetings#search'
   get '/search/rooms', to: 'rooms#search'
