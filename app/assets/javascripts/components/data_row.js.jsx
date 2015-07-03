@@ -11,13 +11,39 @@ var DataRow = React.createClass({
     var start_time = next_meeting_details.start_time;
     var available = next_meeting_details.available;
     var next_meeting = next_meeting_details.next_meeting;
+    var inv_emp_ids = next_meeting_details.inv_emp_ids;
     var room_url = '/rooms/' + room.id;
+    var meeting_url = getMeetingUrl(next_meeting, current_employee, inv_emp_ids);
 
-    if ((next_meeting === null) || (current_employee.admin !== true && next_meeting.private === true)) {
-      var meeting_url = '';
-    } else {
-      var meeting_url = '/meetings/' + next_meeting.id;
-    };
+    function getMeetingUrl(next_meeting, current_employee, inv_emp_ids) {
+      if (next_meeting === null) {
+
+        return '';
+
+      } else if (isAdmin(current_employee)) {
+
+        return '/meetings/' + next_meeting.id;
+
+      } else if (isInvited(current_employee, inv_emp_ids)) {
+
+        return '/meetings/' + next_meeting.id;
+
+      } else if (!(next_meeting.private)) {
+
+        return '/meetings/' + next_meeting.id;
+
+      } else {
+
+        return '';
+
+      }
+      function isAdmin(current_employee) {
+        return (current_employee.admin ? true : false);
+      }
+      function isInvited(current_employee, inv_emp_ids) {
+        return (inv_emp_ids.indexOf(current_employee.id) > -1 ? true : false);
+      }
+    }
 
     return (
       <tr>

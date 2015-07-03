@@ -90,7 +90,7 @@ class RoomsController < ApplicationController
     end
 
     def get_rooms_array(rooms = company_rooms)
-      rooms.map { |room| [room, room.amenities.pluck(:perk).sort.join(" , "), room.get_next_meeting_details] }
+      rooms.map { |room| [room, room.amenities.pluck(:perk).sort.join(", "), room.get_next_meeting_details] }
     end
 
     def room_params

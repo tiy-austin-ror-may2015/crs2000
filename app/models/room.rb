@@ -56,7 +56,8 @@ end
     next_meeting_details = {
       "start_time" => "N/A",
       "available" => "yes",
-      "next_meeting" => nil
+      "next_meeting" => nil,
+      "inv_emp_ids" => []
     }
     return next_meeting_details if self.meetings.none?
 
@@ -64,6 +65,7 @@ end
     next_meeting = get_next_meeting
     next_meeting_details["next_meeting"] = next_meeting
     next_meeting_details["start_time"] = next_meeting.nil? ? "N/A" : next_meeting.start_time
+    next_meeting_details["inv_emp_ids"] = get_invited_employee_ids(next_meeting)
     next_meeting_details
   end
 
@@ -74,6 +76,8 @@ end
       return false if start_time <= at_time && meeting.end_time >= at_time
     end
   end
+
+  private
 
   def get_next_meeting(at_time = Time.now)
     next_meeting = nil
@@ -86,5 +90,10 @@ end
       end
     end
     next_meeting
+  end
+
+  def get_invited_employee_ids(next_meeting)
+    return [] if next_meeting.none?
+    next_meeting.invitations.pluck(:employee_id)
   end
 end
