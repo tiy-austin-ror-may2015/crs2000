@@ -17,18 +17,13 @@ image =
  "http://azhari.typepad.com/.a/6a0120a6cd4566970b017c38a9059e970b-pi",
  "http://www.bculik.com/wp-content/uploads/2010/05/office-meeting-room-design-03.jpg"]
 
-
-locations = ['Design Building', 'Research Building', 'Corporate', 'Engineering Dept', 'Skunkworks Lab', 'Development Center', 'Marketing Dept']
 perks = ['Coffeemaker', 'Courtyard View', 'Kitchenette', "Watercooler", 'Teleconferencing Capable', 'Videoconferencing capable', 'Whiteboard', 'Soundproof', 'Central Location', 'Overhead Projector', 'Donuts', 'Includes Holodeck']
 amenities = perks.map { |perk| Amenity.create(perk: perk) }
-
-company_names = ['Krebstar Industries', 'Planet Express', 'Vandelay Industries', 'Oceanic Airlines', 'Initech', 'MomCorp', 'Stark Industries', 'Prestige WorldWide', 'Springfield Nuclear Plant', 'Cyberdyne Systems Corp.']
-
 
 earliest = 5.hours.ago
 latest = 5.hours.from_now
 3.times do
-  company = Company.create(name: company_names.sample)
+  company = Company.create(name: Faker::Company.name)
   50.times do
       employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
                                password: 'password', password_confirmation: 'password',
@@ -38,8 +33,7 @@ latest = 5.hours.from_now
       room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room", max_occupancy: Faker::Number.number(2),
                   room_number: rand(200..400),
                        imgurl: image.sample,
-                     location: locations.sample,
-                     company_id: company.id)
+                     location: Faker::App.name, company_id: company.id)
 
         room_amenities = amenities.sample(rand(4))
         room_amenities.each { |amenity| RoomAmenity.create(room_id: room.id, amenity_id: amenity.id) }
