@@ -41,6 +41,7 @@ gem "will_paginate-bootstrap", "~> 1.0"
 gem 'prawn', '~> 2.0.1'
 gem 'prawn-table', '~> 0.2.1'
 gem 'codeclimate_batch'
+gem 'mandrill_dm'
 
  source "https://rails-assets.org" do
    gem 'rails-assets-moment'
