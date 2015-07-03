@@ -1,37 +1,9 @@
 <div class="container">
-  <div class="row">
-    <h2><%= @room.name %></h2>
-    <div class="room-image">
-      <%=image_tag(@room.imgurl) %>
+  <div class="row room-row">
+    <div style="background-image: url(<%= @room.imgurl %>); background-repeat: no-repeat; background-size: cover; height: 350px;margin-top:2em;">
+      <div class="room-header"><h2><%= @room.name %></h2></div>
     </div>
-    <div class="col-md-6">
-    <h3>Meetings</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Meetings</th>
-          <th>Time</th>
-        </tr>
-      </thead>
-    <tbody>
-      <% @room.meetings.each do |meeting|%>
-        <td class="well"><div class="col-md-6">
-        <%= link_to meeting.title, meeting %>
-        </div></td>
-        <td><div class="col-md-6">
-          <%= meeting.start_time.strftime('%m/%d %I:%M%p') %> to <%= meeting.end_time.strftime('%m/%d %I:%M%p') %></li>
-        </div></td>
-      </tbody>
-      <% end %>
-    </table>
-    </div>
-    <div class="col-md-6">
-      <h3>Details</h3>
-      <p><strong>Location: </strong> <%=@room.location%></p>
-      <p><strong>Occupancy: </strong><%= @room.max_occupancy %></p>
-      <p><strong>Room Number: </strong><%= @room.room_number%></p>
-      <p><strong>Amenity: </strong><% @room.amenities.each do |amenity|%> <%= amenity.perk %><% end %></p>
-      <p><%= link_to 'Schedule A Meeting', new_meeting_path(room_id: @room.id), class: 'btn btn-default' %></p>
-    </div>
+
   </div>
+
 </div>
