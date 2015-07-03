@@ -21,19 +21,21 @@
       </div>
       <div class='col-md-3 col-md-offset-2 panel panel-default dash-panels'>
         <div class="panel-heading"><h3 class='panel-title'>All Scheduled Meetings</h3></div>
-        <div class='panel-body dash-field'><%= @all_future_meetings.count %></div>
-      </div>
+          <div class='panel-body dash-field'><%= @all_future_meetings.count %></div>
+        </div>
+     </div>
   </div>
     <div class="row ">
       <div class='col-md-3 col-md-offset-2'>
          <div class="room">
             <%= link_to 'Room Report PDF', '/admin/room_report', class: "btn btn-info" %>
-            <%= link_to 'Meeting Report PDF', '/admin/meeting_report', class: "btn btn-info" %>
           </div>
         </div>
-      <div class="col-md-3 col-md-offset-2">
-        <div class='room'>
-          <%= link_to 'Meeting Report PDF', 'admin/meeting_report', class: "btn btn-info" %>
+      </div>
+      <div class="row ">
+        <div class='col-md-3 col-md-offset-2'>
+         <div class="room">
+            <%= link_to 'Meeting Report PDF', '/admin/meeting_report', class: "btn btn-info" %>
         </div>
       </div>
     </div>
