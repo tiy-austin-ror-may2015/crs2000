@@ -2,9 +2,8 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
-    @company = current_employee.company
-    @rooms = Room.where(company_id: current_employee.company_id)
-    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
+    @company = employee_company
+    @rooms_array = get_rooms_array
   end
 
   def show
@@ -14,9 +13,9 @@ class RoomsController < ApplicationController
   def new
     if user_is_admin?
       @room = Room.new
-      @all_rooms = Room.where(company_id: current_employee.company_id).pluck(:name)
+      @all_rooms = Room.where(company_id: current_company_id).pluck(:name)
     else
-      redirect_to :back, alert: "Access Denied"
+      redirect_to root_path, alert: "Access Denied"
     end
   end
 
@@ -24,15 +23,11 @@ class RoomsController < ApplicationController
   end
 
   def search
-    @rooms   = Room.search_for(params[:search].downcase)
-    @rooms_array = @rooms.map { |room| [room, room.company, room.amenities, room.meetings] }
-  end
-
-  def search_advance
-    @rooms = Room.search_with(params)
-                 .sort_with(params)
-    @rooms_array = @rooms.map { |room| [room, room.companies, room.amenities, room.meetings] }
-    render :search
+    @rooms_array = get_rooms_array(company_rooms.search_for(params))
+    respond_to do |format|
+      format.html
+      format.json { render json: @rooms_array }
+    end
   end
 
  def create
@@ -46,10 +41,10 @@ class RoomsController < ApplicationController
       if @room.save
          redirect_to @room, notice: "#{@room.name} has been created"
        else
-         redirect_to :back, alert: "Error occured, room not saved"
+         redirect_to root_path, alert: "Error occured, room not saved"
        end
      else
-      redirect_to :back, alert: "Access Denied"
+      redirect_to root_path, alert: "Access Denied"
     end
  end
 
@@ -82,12 +77,20 @@ class RoomsController < ApplicationController
   end
 
   def employee_company
-    current_employee.company
+    current_company
   end
 
   private
     def set_room
       @room = Room.find(params[:id])
+    end
+
+    def company_rooms
+      Room.where(company_id: current_employee.company_id)
+    end
+
+    def get_rooms_array(rooms = company_rooms)
+      rooms.map { |room| [room, room.amenities.pluck(:perk).sort.join(" , "), room.get_next_meeting_details] }
     end
 
     def room_params

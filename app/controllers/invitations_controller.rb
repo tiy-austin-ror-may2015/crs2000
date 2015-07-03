@@ -9,18 +9,18 @@ class InvitationsController < ApplicationController
         @employee = Employee.find(employee_id)
         @meeting = Meeting.find(meeting_id)
         MeetingMailer.invited_to_meeting(@employee, @meeting).deliver_now
-          message = {notice: 'invitation successfully sent!'}
+          message = {notice: 'Invitation successfully sent!'}
         else
-          message = {alert: 'invitation has been already sent!'}
+          message = {alert: 'Invitation has been already sent!'}
         end
       redirect_to admin_invitations_show_path, message
   end
 
   def show
     @invitations = Invitation.all
-    all_employees = Employee.where(company_id: current_employee.company_id)
+    all_employees = Employee.where(company_id: current_company_id)
     @employee_options = all_employees.map { |employee| [employee.name, employee.id]}
-    @current_company = current_employee.company
+    @current_company = current_company
     @meeting_options = @current_company.meetings.map { |meeting| [meeting.title, meeting.id] }
   end
 

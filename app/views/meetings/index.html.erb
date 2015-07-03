@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
   <div class="row pull-right margin-top">
     <form action='/search/meetings' method='GET'>
       <input type='text' name='search' placeholder="Meeting title or agenda"/>
@@ -8,7 +6,6 @@
   </div>
 <div class="container">
   <div class="row">
-    <p id="notice"><%= notice %></p>
 
     <h1><%= @company.name%> Meetings</h1>
     <div class='panel panel-default'>
@@ -27,7 +24,7 @@
       <tbody>
         <% @meetings.each do |meeting| %>
           <tr>
-            <td class='well'><%= link_to meeting.title, meeting %></td>
+            <td class='well'><%= link_to meeting.title.titleize, meeting %></td>
             <td><%= link_to meeting.room.name, meeting.room %> at <%= meeting.room.location %></td>
              <td class='well' ><%= meeting.agenda %></td>
             <td><p class="timeDisplay"><%= meeting.start_time %></p></td>

@@ -2,7 +2,6 @@ source "https://rubygems.org"
 
 group :test, :development do
   gem "byebug", "~> 5.0"
-  gem "faker", "~> 1.4"
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'guard' # NOTE: this is necessary in newer versions
@@ -14,6 +13,7 @@ group :test, :development do
   gem "web-console", "~> 2.1"
 end
 
+gem "faker", "~> 1.4"
 gem "annotate", "~> 2.6"
 gem "bcrypt", "~> 3.1"
 gem "bootstrap_form", "~> 2.3"
@@ -40,6 +40,8 @@ gem "will_paginate", "~> 3.0"
 gem "will_paginate-bootstrap", "~> 1.0"
 gem 'prawn', '~> 2.0.1'
 gem 'prawn-table', '~> 0.2.1'
+gem 'codeclimate_batch'
+gem 'mandrill_dm'
 
  source "https://rails-assets.org" do
    gem 'rails-assets-moment'

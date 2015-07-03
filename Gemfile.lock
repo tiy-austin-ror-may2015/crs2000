@@ -76,6 +76,8 @@ GEM
       xpath (~> 2.0)
     codeclimate-test-reporter (0.4.7)
       simplecov (>= 0.7.1, < 1.0.0)
+    codeclimate_batch (0.2.0)
+      json
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -110,6 +112,7 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
+    excon (0.45.3)
     execjs (2.5.2)
     faker (1.4.3)
       i18n (~> 0.5)
@@ -156,6 +159,11 @@ GEM
     lumberjack (1.0.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mandrill-api (1.0.53)
+      excon (>= 0.16.0, < 1.0)
+      json (>= 1.7.7, < 2.0)
+    mandrill_dm (1.2.0)
+      mandrill-api (~> 1.0.53)
     meta_request (0.3.4)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
@@ -301,6 +309,7 @@ DEPENDENCIES
   bullet (~> 4.14)
   byebug (~> 5.0)
   codeclimate-test-reporter (~> 0.4)
+  codeclimate_batch
   coffee-rails (~> 4.1)
   cucumber-rails
   database_cleaner
@@ -313,6 +322,7 @@ DEPENDENCIES
   jbuilder (~> 2.3)
   jquery-datatables-rails!
   jquery-rails (~> 4.0)
+  mandrill_dm
   meta_request (~> 0.3)
   mocha (~> 1.1)
   pg (~> 0.18)

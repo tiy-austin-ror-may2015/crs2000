@@ -8,4 +8,8 @@ class Invitation < ActiveRecord::Base
     invitations.each { |i| answer = true if i.employee_id == user_id }
     answer
   end
+
+  def self.invitations_to_this_meeting(params)
+    where(meeting_id: params[:meeting_id], employee_id: params[:employee_id]).count
+  end
 end
