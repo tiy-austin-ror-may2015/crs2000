@@ -53,22 +53,26 @@ end
   end
 
   def get_next_meeting_details
-    time = "N/A"
-    available = "yes"
-    next_meeting = nil
+    next_meeting_details = {
+      "start_time": "N/A",
+      "available": "yes",
+      "next_meeting": nil
+    }
+    return next_meeting_details if self.meetings.none?
+
     now = Time.now
-    unless meetings.none?
-      next_start_time = self.meetings.first.start_time
-      self.meetings.each do |meeting|
-        start_time = meeting.start_time
-        available = "no" if start_time <= now && meeting.end_time >= now
-        if start_time > now && start_time <= next_start_time
-          next_start_time = start_time
-          time = start_time
-          next_meeting = meeting
-        end
+    next_earliest_start_time = self.meetings.first.start_time
+    self.meetings.each do |meeting|
+      start_time = meeting.start_time
+      if start_time <= now && meeting.end_time >= now
+        next_meeting_details["available"] = "no"
+      end
+      if start_time > now && start_time <= next_earliest_start_time
+        next_earliest_start_time = start_time
+        next_meeting_details["start_time"] = next_earliest_start_time
+        next_meeting_details["next_meeting"] = meeting
       end
     end
-    [time, available, next_meeting]
+    next_meeting_details
   end
 end

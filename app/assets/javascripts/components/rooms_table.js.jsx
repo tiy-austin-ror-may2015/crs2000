@@ -185,8 +185,8 @@ var SortButton = React.createClass({
             b = b[0].max_occupancy;
             break;
           case 'Time Until Next Meeting':
-            a = a[2][0];
-            b = b[2][0];
+            a = a[2].start_time;
+            b = b[2].start_time;
             if (a === 'N/A') {
               a = new Date(2038);;
             };
@@ -197,8 +197,8 @@ var SortButton = React.createClass({
             b = new Date(b);
             break;
           case 'Available':
-            a = a[2][1];
-            b = b[2][1];
+            a = a[2].available;
+            b = b[2].available;
         }
 
         if (this.state.sort_dir === 'asc') {
@@ -234,25 +234,21 @@ var SortButton = React.createClass({
 
 var DataRow = React.createClass({
   render: function () {
-    var room = this.props.elem[0];
-    var amenity_names = this.props.elem[1];
-    var time = this.props.elem[2][0];
-    var available = this.props.elem[2][1];
-    var next_meeting = this.props.elem[2][2];
     var current_employee = this.props.current_employee;
+    var room_array = this.props.elem;
+    var room = room_array[0];
+    var amenity_names = room_array[1];
+    var next_meeting_details = room_array[2];
+    var start_time = next_meeting_details.start_time;
+    var available = next_meeting_details.available;
+    var next_meeting = next_meeting_details.next_meeting;
     var room_url = '/rooms/' + room.id;
-    if (next_meeting === null) {
-      var meeting_url = '';
+    var meeting_url = '/meetings/';
+
+    if ((next_meeting === null) || (current_employee.admin !== true && next_meeting.private === true)) {
+      meeting_url = '';
     } else {
-      if (next_meeting.private === true) {
-        if (current_employee.admin === true) {
-          var meeting_url = '/meetings/' + next_meeting.id;
-        } else {
-          var meeting_url = '';
-        };
-      } else {
-        var meeting_url = '/meetings/' + next_meeting.id;
-      };
+      meeting_url += next_meeting.id;
     };
 
     return (
@@ -265,7 +261,7 @@ var DataRow = React.createClass({
         <td className='well'>{ amenity_names }</td>
         <td>{ room.max_occupancy }</td>
         <td className='well' >
-          <NavLink className='countDown' dataID={ time } name='' url={ meeting_url }  />
+          <NavLink className='countDown' dataID={ start_time } name='' url={ meeting_url }  />
         </td>
         <td>{ available }</td>
       </tr>
@@ -282,16 +278,6 @@ var NavLink = React.createClass({
     };
   },
   clicked: function () {
-    if (this.props.method === 'DELETE') {
-      $.ajax({
-        url: this.props.url,
-        type: 'DELETE',
-        error: function () {
-          this.state.grandparent.setState({ show: 'false'});
-        }.bind(this)
-      });
-    } else {
-      window.location.href = this.props.url;
-    }
+    window.location.href = this.props.url;
   }
 });
