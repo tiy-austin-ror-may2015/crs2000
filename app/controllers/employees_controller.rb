@@ -1,4 +1,4 @@
-class EmployeesController < ApplicationController
+ class EmployeesController < ApplicationController
 
   def index
     @company = current_company
