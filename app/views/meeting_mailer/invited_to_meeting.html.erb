@@ -6,8 +6,8 @@
     <li>Agenda: <%= @meeting.agenda %> </li>
     <li>Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>) </li>
     <li>Location: <%= @meeting.room.location %> </li>
-    <li>Start Time: <%= @meeting.start_time %> </li>
-    <li>End Time: <%= @meeting.end_time %> </li>
+    <li>Start Time: <%= @meeting.start_time.strftime("%B %-d, %Y at %-I:%M%P") %> </li>
+    <li>End Time: <%= @meeting.end_time.strftime("%B %-d, %Y at %-I:%M%P") %> </li>
     <li>Attendees:
       <ol>
         <% @meeting.employees.each do |employee| %>

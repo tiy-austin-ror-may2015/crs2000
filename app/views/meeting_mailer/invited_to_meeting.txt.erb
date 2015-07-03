@@ -6,8 +6,8 @@ You have been invited to the following meeting:
     Agenda: <%= @meeting.agenda %>
     Room: <%= @meeting.room.name %> (<%= @meeting.room.room_number %>)
     Location: <%= @meeting.room.location %>
-    Start Time: <%= @meeting.start_time %>
-    End Time: <%= @meeting.end_time %>
+    Start Time: <%= @meeting.start_time.strftime("%B %-d, %Y at %-I:%M%P") %>
+    End Time: <%= @meeting.end_time.strftime("%B %-d, %Y at %-I:%M%P") %>
     Attendees:
         <% @meeting.employees.each do |employee| %>
           <%= employee.name %>
