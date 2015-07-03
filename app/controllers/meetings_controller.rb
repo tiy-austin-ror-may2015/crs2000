@@ -41,7 +41,7 @@ class MeetingsController < ApplicationController
   end
 
   def invite
-      if Invitation.where(meeting_id: params[:meeting_id], employee_id: params[:employee_id]).count == 0
+      if Invitation.invitations_to_this_meeting(params) == 0
         invitation = Invitation.new(meeting_id: params[:meeting_id], employee_id: params[:employee_id])
         invitation.save
         @employee = Employee.find(params[:employee_id])

@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
     resources :rooms
     resources :companies, except: :index
-    get 'admin/invitations/show', to: "invitations#show"
+    get 'admin/invitations/show', to: "invitations#show", as: 'invitations'
+    post 'admin/invitations/show', to: "invitations#create"
     delete 'invitations/:id', to: "invitations#destroy", as: 'invitation'
     resources :meetings
 

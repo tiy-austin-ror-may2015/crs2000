@@ -54,9 +54,9 @@ end
 
   def get_next_meeting_details
     next_meeting_details = {
-      "start_time": "N/A",
-      "available": "yes",
-      "next_meeting": nil
+      "start_time" => "N/A",
+      "available" => "yes",
+      "next_meeting" => nil
     }
     return next_meeting_details if self.meetings.none?
 
