@@ -5,13 +5,13 @@ class MeetingsPdf < Prawn::Document
     @admin = admin
     @company = company
     greeting
-    # footers
     meetings
     meetings_rows
     footers
   end
 
   def greeting
+    text "#{@company.name}", size: 18, style: :bold, align: :center
     move_down 2
     text "#{@admin.name.capitalize},"
     move_down 10
