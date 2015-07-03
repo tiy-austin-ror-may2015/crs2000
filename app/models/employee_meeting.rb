@@ -17,5 +17,4 @@ class EmployeeMeeting < ActiveRecord::Base
   def self.attending(meeting)
     self.where(meeting_id: meeting).count
   end
-
 end
