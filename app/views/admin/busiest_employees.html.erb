@@ -5,13 +5,19 @@
         <thead>
           <tr>
             <th>NAME</th>
+            <th>MEETINGS</th>
+            <th>EMAIL</th>
+            <th>FAVORITE AMENITY</th>
           </tr>
         </thead>
 
         <tbody>
           <% @busiest_employees.each do |busiest_employees| %>
             <tr>
-            <td><%= busiest_employees.first.name %></td>
+            <td><%= link_to busiest_employees.first.name %></td>
+            <td><%= busiest_employees.first.meetings.count %></td>
+            <td><%= busiest_employees.first.email %></td>
+            <td><%= ["Donuts", "Espresso-Maker", "Hot-Tub", "Recliners", "Masseuse", "Window"].sample %></td>
           </tr>
         <% end %>
       </tbody>
