@@ -60,19 +60,31 @@ end
     }
     return next_meeting_details if self.meetings.none?
 
-    now = Time.now
+    next_meeting_details["available"] = is_available? ? "yes" : "no"
+    next_meeting = get_next_meeting
+    next_meeting_details["next_meeting"] = next_meeting
+    next_meeting_details["start_time"] = next_meeting.nil? ? "N/A" : next_meeting.start_time
+    next_meeting_details
+  end
+
+  def is_available?(at_time = Time.now)
+    true
+    self.meetings.each do |meeting|
+      start_time = meeting.start_time
+      return false if start_time <= at_time && meeting.end_time >= at_time
+    end
+  end
+
+  def get_next_meeting(at_time = Time.now)
+    next_meeting = nil
     next_earliest_start_time = self.meetings.first.start_time
     self.meetings.each do |meeting|
       start_time = meeting.start_time
-      if start_time <= now && meeting.end_time >= now
-        next_meeting_details["available"] = "no"
-      end
-      if start_time > now && start_time <= next_earliest_start_time
+      if start_time > at_time && start_time <= next_earliest_start_time
         next_earliest_start_time = start_time
-        next_meeting_details["start_time"] = next_earliest_start_time
-        next_meeting_details["next_meeting"] = meeting
+        next_meeting = meeting
       end
     end
-    next_meeting_details
+    next_meeting
   end
 end

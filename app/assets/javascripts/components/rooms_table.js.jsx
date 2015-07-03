@@ -243,12 +243,11 @@ var DataRow = React.createClass({
     var available = next_meeting_details.available;
     var next_meeting = next_meeting_details.next_meeting;
     var room_url = '/rooms/' + room.id;
-    var meeting_url = '/meetings/';
 
     if ((next_meeting === null) || (current_employee.admin !== true && next_meeting.private === true)) {
-      meeting_url = '';
+      var meeting_url = '';
     } else {
-      meeting_url += next_meeting.id;
+      var meeting_url = '/meetings/' + next_meeting.id;
     };
 
     return (
