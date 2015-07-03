@@ -343,6 +343,3 @@ DEPENDENCIES
   web-console (~> 2.1)
   will_paginate (~> 3.0)
   will_paginate-bootstrap (~> 1.0)
-
-BUNDLED WITH
-   1.10.5
