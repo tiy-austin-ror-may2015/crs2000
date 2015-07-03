@@ -22,7 +22,7 @@ class AdminController < ApplicationController
   end
 
   def meeting_table
-      @meetings = Meeting.all
+      @meetings = current_company.meetings.all
       pdf = MeetingsPdf.new(Meeting.all)
       send_data pdf.render, filename: "meeting.pdf",
                             type: 'appliciation/pdf',
