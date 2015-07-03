@@ -99,6 +99,9 @@ class MeetingsController < ApplicationController
       @meeting.employee = current_employee
 
       if @meeting.save
+        em = EmployeeMeeting.new(meeting_id: @meeting.id, employee_id: current_employee.id)
+        em.save
+        MeetingMailer.meeting_scheduled(current_employee, @meeting).deliver_now
         redirect_to @meeting, notice: 'Meeting was successfully created.'
       else
         render :new
