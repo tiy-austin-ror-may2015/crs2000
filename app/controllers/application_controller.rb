@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -9,8 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def no_meeting_overlap? (requested_meeting)
-    employee_meetings = Meeting.where(employee_id: current_employee.id)
-    employee_meetings += EmployeeMeeting.where(employee_id: current_employee.id).map{ |em| em.meeting }
+    employee_meetings = current_employee.confirmed_meetings
     employee_meetings.each do |meeting|
       if requested_meeting.start_time < meeting.end_time && requested_meeting.start_time >= meeting.start_time ||
          requested_meeting.end_time > meeting.start_time && requested_meeting.start_time <= meeting.start_time
