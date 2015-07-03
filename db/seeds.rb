@@ -22,33 +22,49 @@ amenities = perks.map { |perk| Amenity.create(perk: perk) }
 
 earliest = 5.hours.ago
 latest = 5.hours.from_now
+
 3.times do
   company = Company.create(name: Faker::Company.name)
-  50.times do
-      employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
-                               password: 'password', password_confirmation: 'password',
-                             company_id: company.id)
 
-    2.times do
-      room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room", max_occupancy: Faker::Number.number(2),
-                  room_number: rand(200..400),
-                       imgurl: image.sample,
-                     location: Faker::App.name, company_id: company.id)
+  rand(15..50).times do
+    room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room",
+              max_occupancy: rand(1..100),
+                room_number: rand(200..400),
+                     imgurl: image.sample,
+                   location: Faker::App.name, company_id: company.id)
 
-        room_amenities = amenities.sample(rand(4))
-        room_amenities.each { |amenity| RoomAmenity.create(room_id: room.id, amenity_id: amenity.id) }
+    room_amenities = amenities.sample(rand(4))
+    room_amenities.each { |amenity| RoomAmenity.create(room_id: room.id, amenity_id: amenity.id) }
+  end
 
+  rand(25..50).times do
+    employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
+                             password: 'password', password_confirmation: 'password',
+                           company_id: company.id)
 
-        rand(3).times do
-          random_start_time = Time.at((latest.to_f - earliest.to_f)*rand + earliest.to_f)
-          meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
-                            start_time: random_start_time,
-                             end_time: random_start_time + rand(15..45).minutes,
+    rand(3).times do
+      rand_duration = rand(15..45).minutes
+      rand_start_time = Time.at((latest.to_f - earliest.to_f)*rand + earliest.to_f)
+      rand_end_time = rand_start_time + rand_duration
+      meeting_room = Room.all.sample
+      meeting_room = Room.all.sample until meeting_room.is_available?(rand_start_time + rand_duration / 2)
+      meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
+                          start_time: rand_start_time,
+                            end_time: rand_end_time,
                              private: ([true] + [false] * 5).sample,
-                               room_id: room.id, employee_id: employee.id)
-          employee_meeting = EmployeeMeeting.create(enrolled: Faker::Number.digit,
-                                                 employee_id: employee.id,
-                                            meeting_id: meeting.id)
+                             room_id: meeting_room.id, employee_id: employee.id)
+
+      invited_employees = Employee.where.not(id: employee.id).sample(rand(20))
+      max_attendees = meeting_room.max_occupancy - 1
+      max_attendees = max_attendees < invited_employees.size ? max_attendees : invited_employees.size
+      attending_employees = invited_employees.sample(max_attendees)
+
+      invited_employees.each do |employee|
+        meeting.invitations.create(employee_id: employee.id)
+      end
+
+      attending_employees.each do |employee|
+        meeting.employee_meetings.create(employee_id: employee.id)
       end
     end
   end

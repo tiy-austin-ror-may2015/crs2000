@@ -9,10 +9,10 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
-
 class EmployeeMeeting < ActiveRecord::Base
   belongs_to :employee
   belongs_to :meeting
+  validates_with RoomForOneMore
 
   def self.attending(meeting)
     self.where(meeting_id: meeting).count
