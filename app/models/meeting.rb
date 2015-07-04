@@ -24,8 +24,6 @@ class Meeting < ActiveRecord::Base
   has_many :employees, through: :employee_meetings
   has_one  :company, through: :employee
   scope :today_forward, -> { where("start_time >= ?", Time.now.midnight).order(:start_time) }
-  after_save :add_creator_to_attendees
-
 
   def self.search_for(search)
     self.where("lower(title) LIKE ? OR lower(agenda) LIKE ?",
@@ -34,12 +32,6 @@ class Meeting < ActiveRecord::Base
 
   def self.capacity(meeting)
     self.find(meeting).room.max_occupancy
-  end
-
-  private
-
-  def add_creator_to_attendees
-    self.employee_meetings.create(employee_id: self.employee.id)
   end
 end
 
