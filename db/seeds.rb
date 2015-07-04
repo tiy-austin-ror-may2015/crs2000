@@ -23,13 +23,16 @@ amenities = perks.map { |perk| Amenity.create(perk: perk) }
 earliest = 5.hours.ago
 latest = 5.hours.from_now
 
+
 3.times do
   company = Company.create(name: Faker::Company.name)
 
-  rand(15..50).times do
+  possible_room_numbers = (100..399).to_a
+  company_room_number = possible_room_numbers.sample(rand(15..50))
+  company_room_number.each do |room_number|
     room = Room.create(name: "The #{Faker::Commerce.color.capitalize} Room",
               max_occupancy: rand(1..100),
-                room_number: rand(200..400),
+                room_number: room_number,
                      imgurl: image.sample,
                    location: Faker::App.name, company_id: company.id)
 
@@ -39,20 +42,22 @@ latest = 5.hours.from_now
 
   rand(25..50).times do
     employee = Employee.create(name: Faker::Name.name, email: Faker::Internet.safe_email,
-                             password: 'password', password_confirmation: 'password',
-                           company_id: company.id)
+                           password: 'password', password_confirmation: 'password',
+                         company_id: company.id)
 
     rand(3).times do
       rand_duration = rand(15..45).minutes
       rand_start_time = Time.at((latest.to_f - earliest.to_f)*rand + earliest.to_f)
       rand_end_time = rand_start_time + rand_duration
+
       meeting_room = Room.all.sample
       meeting_room = Room.all.sample until meeting_room.is_available?(rand_start_time + rand_duration / 2)
       meeting = Meeting.create(title: Faker::Company.bs, agenda: Faker::Lorem.paragraph,
                           start_time: rand_start_time,
                             end_time: rand_end_time,
                              private: ([true] + [false] * 5).sample,
-                             room_id: meeting_room.id, employee_id: employee.id)
+                             room_id: meeting_room.id,
+                         employee_id: employee.id)
 
       invited_employees = Employee.where.not(id: employee.id).sample(rand(20))
       max_attendees = meeting_room.max_occupancy - 1
