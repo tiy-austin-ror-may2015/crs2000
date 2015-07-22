@@ -10,9 +10,9 @@
   - Link to Wireframes/sketches/etc go here
 
 ## Setup Steps
-  1) `bundle install`
-  2) `rake db:create db:migrate` (or setup)
-  3) ADDITIONAL SETUP STEPS GO HERE
+  1. `bundle install`
+  1. `rake db:create db:migrate` (or setup)
+  1. ADDITIONAL SETUP STEPS GO HERE
 
 ## How to run tests
   - make sure you have migrated `rake db:migrate`
