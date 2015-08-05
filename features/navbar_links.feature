@@ -2,6 +2,7 @@ Feature:
   As a employee I want to be able to navigate the app using the links
     in the navigation bar
 
+
   Background:
     Given I have an account
     When I login
