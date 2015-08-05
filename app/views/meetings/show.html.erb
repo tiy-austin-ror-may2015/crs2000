@@ -5,7 +5,10 @@
     <div class="col-md-12">
       <h2><%= @meeting.title.titleize %> in <%= @meeting.room.name.titleize %></h2>
       <div class="meeting-buttons">
-        <%= link_to 'Join', join_employee_path(@meeting.id), method: 'POST', class: 'btn btn-default join-button' %>
+
+        <% if @meeting_owner == false %>
+            <%= link_to 'Join', join_employee_path(@meeting.id), method: 'POST', class: 'btn btn-default join-button' %>
+        <% end %>
         <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-default" %>
         <%= link_to 'Back to Meetings', meetings_path, class: "btn btn-default" %>
       </div>
@@ -51,6 +54,7 @@
     <% if @invitees.count > 0 %>
         <div class="well center invite" >
             <input type='text' id='search' placeholder="name" />
+
         </div>
         <table class="table invite" >
           <thead>
