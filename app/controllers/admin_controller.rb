@@ -14,16 +14,20 @@ class AdminController < ApplicationController
   end
 
   def room_table
+      @company = current_employee.company
+      @admin = current_employee
       @rooms = Room.all
-      pdf = RoomsPdf.new(Room.all)
+      pdf = RoomsPdf.new(Room.all, @admin, @company)
       send_data pdf.render, filename: "room.pdf",
                             type: 'appliciation/pdf',
                             disposition: "inline"
   end
 
   def meeting_table
-      @meetings = current_company.meetings.all
-      pdf = MeetingsPdf.new(Meeting.all)
+      @company = current_employee.company
+      @admin = current_employee
+      @meetings = Meeting.all
+      pdf = MeetingsPdf.new(Meeting.all, @admin, @company)
       send_data pdf.render, filename: "meeting.pdf",
                             type: 'appliciation/pdf',
                             disposition: "inline"
